@@ -37,5 +37,5 @@ async function autoTranslate(text) {
   return res;
 }
 
-const example = await autoTranslate('Hello world');
+const example = await autoTranslate('systemTemplate');
 console.log(example); // 输出中文翻译

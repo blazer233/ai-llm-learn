@@ -12,6 +12,7 @@ const model = new ChatOllama({
   temperature: 0.7,
 });
 
+// 将文本转换为高维向量（嵌入向量）
 const embedding = new OllamaEmbeddings({
   model: 'bge-m3',
   baseUrl: 'http://localhost:11434',
@@ -31,9 +32,9 @@ const vectorStore = await FaissStore.fromDocuments(splitDocs, embedding);
 const compressor = LLMChainExtractor.fromLLM(model);
 const retriever = new ContextualCompressionRetriever({
   baseCompressor: compressor,
-  baseRetriever: vectorStore.asRetriever(1),
+  baseRetriever: vectorStore.asRetriever(2),
 });
 
-const res = await retriever.invoke('icon-308.png 这张图片的描述是什么');
+const res = await retriever.invoke('icon-298.png 这张图片的描述是什么');
 
 console.log(res, 99);
