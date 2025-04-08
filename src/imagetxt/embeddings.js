@@ -33,6 +33,7 @@ const compressor = LLMChainExtractor.fromLLM(model);
 const retriever = new ContextualCompressionRetriever({
   baseCompressor: compressor,
   baseRetriever: vectorStore.asRetriever(2),
+  verbose: true,
 });
 
 const res = await retriever.invoke('icon-298.png 这张图片的描述是什么');
