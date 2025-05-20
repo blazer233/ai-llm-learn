@@ -6,7 +6,6 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import readline from 'readline';
 import 'dotenv/config';
-
 // import { ChatDeepSeek } from '@langchain/deepseek';
 
 const outputParser = new StringOutputParser();
@@ -15,12 +14,12 @@ const directory = '../db/vector';
 // const model = new ChatDeepSeek({
 //   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
 //   model: 'deepseek-chat', // 指定DeepSeek模型
-//   temperature: 0.7,
+//   temperature: 0.2,
 // });
 const model = new ChatOllama({
   baseUrl: 'http://localhost:11434',
   model: process.env.MODEL_NAME,
-  temperature: 0.7,
+  temperature: 0.2,
 });
 
 const embedding = new OllamaEmbeddings({

@@ -1,6 +1,8 @@
 import { ChatOllama } from '@langchain/ollama';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
+import { ChatDeepSeek } from '@langchain/deepseek';
+import 'dotenv/config';
 
 // 检测是否为中文的正则表达式
 const isChineseRegex = /[\u4e00-\u9fa5]/;
@@ -10,9 +12,10 @@ const systemTemplate =
 const humanTemplate = '请翻译这句话：{text}';
 
 const outputParser = new StringOutputParser();
-const chatModel = new ChatOllama({
-  baseUrl: 'http://localhost:11434',
-  model: 'qwen2.5:7b',
+
+const chatModel = new ChatDeepSeek({
+  apiKey: process.env.DEEPSEEK_API_KEY,
+  model: 'deepseek-chat',
 });
 
 const chain = ChatPromptTemplate.fromMessages([
