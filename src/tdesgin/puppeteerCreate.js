@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 const listItem = '.TDesign-doc-sidenav-group .TDesign-doc-sidenav-item a';
 const desItem = 'td-doc-demo';
+
 const start = async () => {
   try {
     const browser = await puppeteer.launch({
@@ -36,12 +37,24 @@ const start = async () => {
         timeout: 30000,
       });
       try {
-        await componentPage.waitForSelector(desItem, { timeout: 10000 });
+        await componentPage.waitForSelector(desItem, { timeout: 30000 });
+
         const demoCode = await componentPage.$$eval(desItem, demos =>
-          demos.map(demo => ({
-            code: demo.getAttribute('data-javascript'),
-            desc: demo.parentNode.previousSibling.outerHTML,
-          }))
+          demos.map(demo => {
+            // 替换高亮代码
+            const getNodeTdCode = node => {
+              if (!node) return '';
+              const tdCodeElements = node?.querySelectorAll?.('td-code') || [];
+              tdCodeElements.forEach?.((tdCode = {}) => {
+                tdCode.textContent = tdCode.getAttribute('text') || '';
+              });
+              return node?.textContent;
+            };
+            return {
+              code: demo.getAttribute('data-javascript'),
+              desc: getNodeTdCode(demo.parentNode.previousSibling),
+            };
+          })
         );
         console.log(
           `当前是：${componentName} ,还剩${componentLinks.length - i}个组件`

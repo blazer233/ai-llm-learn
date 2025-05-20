@@ -5,13 +5,21 @@ import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import readline from 'readline';
+import 'dotenv/config';
+
+// import { ChatDeepSeek } from '@langchain/deepseek';
 
 const outputParser = new StringOutputParser();
 const directory = '../db/vector';
 
+// const model = new ChatDeepSeek({
+//   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
+//   model: 'deepseek-chat', // 指定DeepSeek模型
+//   temperature: 0.7,
+// });
 const model = new ChatOllama({
   baseUrl: 'http://localhost:11434',
-  model: 'qwen2.5:7b',
+  model: process.env.MODEL_NAME,
   temperature: 0.7,
 });
 
@@ -21,8 +29,25 @@ const embedding = new OllamaEmbeddings({
 });
 
 const promptTemplate = PromptTemplate.fromTemplate(
-  `你是一个专业的react前端开发，你的任务是参考{document}中的代码以及相关描述，结合你自身的react知识，
-  实现"{query}"中提出的功能，请勿引入除tdesign-react之外的其他库，输出代码块，不要输出其他内容。`
+  `
+你是一名专业的 React 前端开发专家，专注于使用 TDesign 组件库开发。请严格遵循以下要求：
+
+1. 代码实现要求：
+- 仅使用 tdesign-react、tdesign-icons-react 和 lodash-es 这三个库
+- 完全基于提供的 {document} 中的代码示例和描述
+- 实现 "{query}" 中描述的功能需求
+- 确保代码符合 React 最佳实践
+
+2. 输出格式要求：
+- 只输出完整的代码块，不要包含任何解释或额外文本
+- 代码格式整洁，包含必要的注释（使用中文注释）
+- 如果是组件代码，需要是可直接运行的完整组件
+
+3. 特别注意事项：
+- 不添加任何超出指定库的功能
+- 保持代码简洁高效
+- 遵循 TDesign 的设计规范
+`
 );
 
 let vectorStore;
@@ -34,7 +59,7 @@ const initRetriever = async () => {
   retriever = new ContextualCompressionRetriever({
     baseCompressor: LLMChainExtractor.fromLLM(model),
     baseRetriever: vectorStore.asRetriever(5),
-    verbose: true,
+    // verbose: true,
   });
 };
 
@@ -58,7 +83,7 @@ const rl = readline.createInterface({
 // 启动问答循环
 async function startChat() {
   await initRetriever();
-  console.log('React开发助手已启动，输入"exit"退出\n');
+  console.log('TDesign eact开发助手已启动，输入"exit"退出\n');
 
   const askQuestion = () => {
     rl.question('您想实现什么功能？: ', async query => {

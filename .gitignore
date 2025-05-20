@@ -22,6 +22,7 @@ yarn-error.log*
 # lock
 package-lock.json
 yarn.lock
+.env
 
 # code editor setting
 /.vscode
