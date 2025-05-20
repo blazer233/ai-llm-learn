@@ -41,7 +41,6 @@ const start = async () => {
           demos.map(demo => ({
             code: demo.getAttribute('data-javascript'),
             desc: demo.parentNode.previousSibling.outerHTML,
-            descType: 'html',
           }))
         );
         console.log(
