@@ -32,7 +32,7 @@ const promptTemplate = PromptTemplate.fromTemplate(
 你是一名专业的 React 前端开发专家，专注于使用 TDesign 组件库开发。请严格遵循以下要求：
 
 1. 代码实现要求：
-- 仅使用 tdesign-react、tdesign-icons-react 和 lodash-es 这三个库
+- 仅使用 tdesign-react、tdesign-icons-react 这两个库，如果有使用 lodash-es 库的地方，则将对应的方法转为js的原生方法
 - 完全基于提供的 {document} 中的代码示例和描述
 - 实现 "{query}" 中描述的功能需求
 - 确保代码符合 React 最佳实践
@@ -58,7 +58,8 @@ const initRetriever = async () => {
   retriever = new ContextualCompressionRetriever({
     baseCompressor: LLMChainExtractor.fromLLM(model),
     baseRetriever: vectorStore.asRetriever(5),
-    // verbose: true,
+    queryCount: 4,
+    verbose: true,
   });
 };
 
