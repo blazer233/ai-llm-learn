@@ -1,18 +1,18 @@
 import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
+import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { JSONLoader } from 'langchain/document_loaders/fs/json';
 const directory = '../db/vector';
-const JSON_SOURCE_FILE = './output/index.json';
+const JSON_SOURCE_FILE = './output/index.txt';
 const start = async () => {
   try {
-    const loader = new JSONLoader(JSON_SOURCE_FILE);
+    const loader = new TextLoader(JSON_SOURCE_FILE);
     const docs = await loader.load();
     console.log(`成功加载${docs.length}个文档`);
 
     const splitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1024,
-      chunkOverlap: 500,
+      chunkSize: 1000,
+      chunkOverlap: 200,
     });
     const splitDocs = await splitter.splitDocuments(docs);
 

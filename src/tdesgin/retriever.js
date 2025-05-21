@@ -4,23 +4,24 @@ import { LLMChainExtractor } from 'langchain/retrievers/document_compressors/cha
 import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
+import { ChatDeepSeek } from '@langchain/deepseek';
 import readline from 'readline';
 import 'dotenv/config';
-// import { ChatDeepSeek } from '@langchain/deepseek';
 
 const outputParser = new StringOutputParser();
 const directory = '../db/vector';
 
-// const model = new ChatDeepSeek({
-//   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
-//   model: 'deepseek-chat', // 指定DeepSeek模型
-//   temperature: 0.2,
-// });
-const model = new ChatOllama({
-  baseUrl: 'http://localhost:11434',
-  model: process.env.MODEL_NAME,
+const model = new ChatDeepSeek({
+  apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
+  model: 'deepseek-chat', // 指定DeepSeek模型
   temperature: 0.2,
 });
+
+// const model = new ChatOllama({
+//   baseUrl: 'http://localhost:11434',
+//   model: process.env.MODEL_NAME,
+//   temperature: 0.2,
+// });
 
 const embedding = new OllamaEmbeddings({
   model: 'bge-m3',
@@ -110,3 +111,12 @@ async function startChat() {
   askQuestion();
 }
 startChat().catch(err => console.error('初始化失败:', err));
+// FaissStore.load(directory, embedding).then(res => {
+//   res
+//     .asRetriever(5)
+//     .invoke('实现一个动态表单')
+//     .then(docs => {
+//       console.log(docs);
+//       process.exit(0);
+//     });
+// });

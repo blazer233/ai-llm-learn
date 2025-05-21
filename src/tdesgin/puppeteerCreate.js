@@ -28,7 +28,7 @@ const start = async () => {
       )
     ).slice(7);
 
-    const components = [];
+    let components = '';
     for (let i = 0; i < componentLinks.length; i++) {
       const { link, componentName } = componentLinks[i];
       const componentPage = await browser.newPage();
@@ -50,16 +50,18 @@ const start = async () => {
               });
               return node?.textContent;
             };
-            return {
-              code: demo.getAttribute('data-javascript'),
-              desc: getNodeTdCode(demo.parentNode.previousSibling),
-            };
+            return `说明：${getNodeTdCode(
+              demo.parentNode.previousSibling
+            )}释例代码：${demo.getAttribute('data-javascript')}`;
           })
         );
         console.log(
           `当前是：${componentName} ,还剩${componentLinks.length - i}个组件`
         );
-        components.push({ name: `<${componentName}/>`, demoCode });
+        components += `<${componentName}/>组建
+        ${demoCode.join('\n')}
+
+        `;
       } catch (e) {
         console.log(e, `跳过 ${link} (未找到描述信息)`);
       } finally {
@@ -68,11 +70,8 @@ const start = async () => {
       }
     }
     // 输出文档
-    if (!fs.existsSync('./output')) fs.mkdirSync('./output');
-    fs.writeFileSync(
-      `./output/index.json`,
-      JSON.stringify(components, null, 2)
-    );
+    if (!fs.existsSync('./txt')) fs.mkdirSync('./txt');
+    fs.writeFileSync(`./output/index.txt`, components);
 
     // 7. 关闭浏览器
     await browser.close();
