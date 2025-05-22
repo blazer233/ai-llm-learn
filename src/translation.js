@@ -1,6 +1,7 @@
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { model } from './config.js';
+import readline from 'readline';
 
 // 检测是否为中文的正则表达式
 const isChineseRegex = /[\u4e00-\u9fa5]/;
@@ -32,6 +33,34 @@ async function autoTranslate(text) {
 
   return res;
 }
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+async function startChat() {
+  console.log('翻译助手已启动，输入"exit"退出\n');
+  const askQuestion = () => {
+    rl.question('请输入翻译的词: ', async query => {
+      if (query.toLowerCase() === 'q') {
+        rl.close();
+        return;
+      }
 
-const example = await autoTranslate('systemTemplate');
-console.log(example); // 输出中文翻译
+      try {
+        console.log('\n思考中...');
+        const startTime = Date.now();
+        const response = await autoTranslate(query);
+        const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+
+        console.log(`\n回答(耗时${elapsedTime}秒):`);
+        console.log(response + '\n');
+      } catch (error) {
+        console.error('处理请求时出错:', error);
+      }
+      askQuestion(); // 继续下一个问题
+    });
+  };
+
+  askQuestion();
+}
+startChat().catch(err => console.error('初始化失败:', err));
