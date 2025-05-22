@@ -11,17 +11,17 @@ import 'dotenv/config';
 const outputParser = new StringOutputParser();
 const directory = '../db/vector';
 
-const model = new ChatDeepSeek({
-  apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
-  model: 'deepseek-chat', // 指定DeepSeek模型
-  temperature: 0.2,
-});
-
-// const model = new ChatOllama({
-//   baseUrl: 'http://localhost:11434',
-//   model: process.env.MODEL_NAME,
+// const model = new ChatDeepSeek({
+//   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
+//   model: 'deepseek-chat', // 指定DeepSeek模型
 //   temperature: 0.2,
 // });
+
+const model = new ChatOllama({
+  baseUrl: 'http://localhost:11434',
+  model: process.env.MODEL_NAME,
+  temperature: 0.2,
+});
 
 const embedding = new OllamaEmbeddings({
   model: 'bge-m3',
