@@ -4,7 +4,8 @@ import { LLMChainExtractor } from 'langchain/retrievers/document_compressors/cha
 import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { directory, model } from './common.js';
+import { model } from '../config.js';
+import { directory } from './common.js';
 import readline from 'readline';
 import 'dotenv/config';
 

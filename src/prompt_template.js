@@ -1,15 +1,9 @@
-import { ChatOllama } from '@langchain/ollama';
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
 } from '@langchain/core/prompts';
-
-const model = new ChatOllama({
-  baseUrl: 'http://localhost:11434',
-  model: 'qwen2.5:7b',
-  temperature: 0.7,
-});
+import { model } from './config.js';
 
 const systemMessageContent = `
 你是一位经验丰富的电商文案撰写专家。你的任务是根据给定的产品信息创作吸引人的商品描述。
