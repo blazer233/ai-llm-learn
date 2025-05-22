@@ -1,27 +1,14 @@
-import { ChatOllama, OllamaEmbeddings } from '@langchain/ollama';
+import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { LLMChainExtractor } from 'langchain/retrievers/document_compressors/chain_extract';
 import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { ChatDeepSeek } from '@langchain/deepseek';
-import { directory } from './common';
+import { directory, model } from './common.js';
 import readline from 'readline';
 import 'dotenv/config';
 
 const outputParser = new StringOutputParser();
-
-// const model = new ChatDeepSeek({
-//   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
-//   model: 'deepseek-chat', // 指定DeepSeek模型
-//   temperature: 0.2,
-// });
-
-const model = new ChatOllama({
-  baseUrl: 'http://localhost:11434',
-  model: process.env.MODEL_NAME,
-  temperature: 0.2,
-});
 
 const embedding = new OllamaEmbeddings({
   model: 'bge-m3',

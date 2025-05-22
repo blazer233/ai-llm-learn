@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
-import { FILE_PATH, SPLIT_SIGN } from './common';
+import { FILE_PATH, SPLIT_SIGN } from './common.js';
 const listItem = '.TDesign-doc-sidenav-group .TDesign-doc-sidenav-item a';
 const desItem = 'td-doc-demo';
 
