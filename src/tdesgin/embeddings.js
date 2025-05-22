@@ -1,7 +1,7 @@
 import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { CustomDelimiterTextSplitter } from './splitter.js';
 const directory = '../db/vector';
 const JSON_SOURCE_FILE = './output/index.txt';
 const start = async () => {
@@ -10,12 +10,9 @@ const start = async () => {
     const docs = await loader.load();
     console.log(`成功加载${docs.length}个文档`);
 
-    const splitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
-      chunkOverlap: 200,
-    });
+    const splitter = new CustomDelimiterTextSplitter('===SPLIT===');
     const splitDocs = await splitter.splitDocuments(docs);
-
+    console.log('拆分完成：', splitDocs);
     const embedding = new OllamaEmbeddings({
       model: 'bge-m3',
       baseUrl: 'http://localhost:11434',

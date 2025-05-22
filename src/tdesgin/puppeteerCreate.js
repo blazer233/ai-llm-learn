@@ -50,18 +50,23 @@ const start = async () => {
               });
               return node?.textContent;
             };
-            return `说明：${getNodeTdCode(
-              demo.parentNode.previousSibling
-            )}释例代码：${demo.getAttribute('data-javascript')}`;
+            return {
+              code: demo.getAttribute('data-javascript'),
+              desc: getNodeTdCode(demo.parentNode.previousSibling),
+            };
           })
         );
+        components += `${demoCode
+          .map(
+            i => `组建:<${componentName}/>
+                  使用描述：${i.desc}
+                  代码示例：${i.code}
+                  `
+          )
+          .join('===SPLIT===')}`;
         console.log(
           `当前是：${componentName} ,还剩${componentLinks.length - i}个组件`
         );
-        components += `<${componentName}/>组建
-        ${demoCode.join('\n')}
-
-        `;
       } catch (e) {
         console.log(e, `跳过 ${link} (未找到描述信息)`);
       } finally {
