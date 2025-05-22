@@ -22,7 +22,6 @@ export class CustomDelimiterTextSplitter extends TextSplitter {
       .split(this.delimiter)
       .map(s => s.trim())
       .filter(s => s.length > 0);
-    console.log(splits.length, splits[0], 888);
     const finalChunks = [];
 
     for (const split of splits) {
