@@ -1,13 +1,14 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+import { FILE_PATH, SPLIT_SIGN } from './common';
 const listItem = '.TDesign-doc-sidenav-group .TDesign-doc-sidenav-item a';
 const desItem = 'td-doc-demo';
 
 const start = async () => {
   try {
     const browser = await puppeteer.launch({
-      headless: true, // 设为 true 则无头模式运行
-      defaultViewport: null, // 使用默认视口大小
+      headless: true,
+      defaultViewport: null,
     });
 
     const page = await browser.newPage();
@@ -63,20 +64,19 @@ const start = async () => {
                   代码示例：${i.code}
                   `
           )
-          .join('===SPLIT===')}`;
+          .join(SPLIT_SIGN)}`;
         console.log(
           `当前是：${componentName} ,还剩${componentLinks.length - i}个组件`
         );
       } catch (e) {
-        console.log(e, `跳过 ${link} (未找到描述信息)`);
+        console.log(e, `跳过 ${link}`);
       } finally {
         // 关闭当前组件页
         await componentPage.close();
       }
     }
     // 输出文档
-    if (!fs.existsSync('./txt')) fs.mkdirSync('./txt');
-    fs.writeFileSync(`./output/index.txt`, components);
+    fs.writeFileSync(FILE_PATH, components);
 
     // 7. 关闭浏览器
     await browser.close();

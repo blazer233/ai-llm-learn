@@ -2,15 +2,15 @@ import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { CustomDelimiterTextSplitter } from './splitter.js';
-const directory = '../db/vector';
-const JSON_SOURCE_FILE = './output/index.txt';
+import { directory, FILE_PATH, SPLIT_SIGN } from './common.js';
+
 const start = async () => {
   try {
-    const loader = new TextLoader(JSON_SOURCE_FILE);
+    const loader = new TextLoader(FILE_PATH);
     const docs = await loader.load();
     console.log(`成功加载${docs.length}个文档`);
 
-    const splitter = new CustomDelimiterTextSplitter('===SPLIT===');
+    const splitter = new CustomDelimiterTextSplitter(SPLIT_SIGN);
     const splitDocs = await splitter.splitDocuments(docs);
     console.log('拆分完成：', splitDocs);
     const embedding = new OllamaEmbeddings({

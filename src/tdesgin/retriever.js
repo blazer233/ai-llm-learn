@@ -5,11 +5,11 @@ import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { ChatDeepSeek } from '@langchain/deepseek';
+import { directory } from './common';
 import readline from 'readline';
 import 'dotenv/config';
 
 const outputParser = new StringOutputParser();
-const directory = '../db/vector';
 
 // const model = new ChatDeepSeek({
 //   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
