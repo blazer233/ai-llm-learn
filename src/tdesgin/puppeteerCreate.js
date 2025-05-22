@@ -1,12 +1,13 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+import { FILE_PATH } from './common';
 const listItem = '.TDesign-doc-sidenav-group .TDesign-doc-sidenav-item a';
 const desItem = 'td-doc-demo';
 const start = async () => {
   try {
     const browser = await puppeteer.launch({
-      headless: true, // 设为 true 则无头模式运行
-      defaultViewport: null, // 使用默认视口大小
+      headless: true,
+      defaultViewport: null,
     });
 
     const page = await browser.newPage();
@@ -48,18 +49,14 @@ const start = async () => {
         );
         components.push({ 组建: `<${componentName}/>`, demoCode });
       } catch (e) {
-        console.log(e, `跳过 ${link} (未找到描述信息)`);
+        console.log(e, `跳过 ${link}`);
       } finally {
         // 关闭当前组件页
         await componentPage.close();
       }
     }
     // 输出文档
-    if (!fs.existsSync('./output')) fs.mkdirSync('./output');
-    fs.writeFileSync(
-      `./output/index.json`,
-      JSON.stringify(components, null, 2)
-    );
+    fs.writeFileSync(FILE_PATH, JSON.stringify(components, null, 2));
 
     // 7. 关闭浏览器
     await browser.close();

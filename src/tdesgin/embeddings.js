@@ -2,9 +2,9 @@ import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { JSONLoader } from 'langchain/document_loaders/fs/json';
-const directory = '../db/vector';
+import { directory, FILE_PATH } from './common.js';
 
-const loader = new JSONLoader('./output/index.json');
+const loader = new JSONLoader(FILE_PATH);
 
 const docs = await loader.load();
 
