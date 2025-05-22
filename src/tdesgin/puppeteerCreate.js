@@ -2,7 +2,6 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 const listItem = '.TDesign-doc-sidenav-group .TDesign-doc-sidenav-item a';
 const desItem = 'td-doc-demo';
-
 const start = async () => {
   try {
     const browser = await puppeteer.launch({
@@ -28,7 +27,7 @@ const start = async () => {
       )
     ).slice(7);
 
-    let components = '';
+    const components = [];
     for (let i = 0; i < componentLinks.length; i++) {
       const { link, componentName } = componentLinks[i];
       const componentPage = await browser.newPage();
@@ -37,36 +36,17 @@ const start = async () => {
         timeout: 30000,
       });
       try {
-        await componentPage.waitForSelector(desItem, { timeout: 30000 });
-
+        await componentPage.waitForSelector(desItem, { timeout: 10000 });
         const demoCode = await componentPage.$$eval(desItem, demos =>
-          demos.map(demo => {
-            // 替换高亮代码
-            const getNodeTdCode = node => {
-              if (!node) return '';
-              const tdCodeElements = node?.querySelectorAll?.('td-code') || [];
-              tdCodeElements.forEach?.((tdCode = {}) => {
-                tdCode.textContent = tdCode.getAttribute('text') || '';
-              });
-              return node?.textContent;
-            };
-            return {
-              code: demo.getAttribute('data-javascript'),
-              desc: getNodeTdCode(demo.parentNode.previousSibling),
-            };
-          })
+          demos.map(demo => ({
+            代码示例: demo.getAttribute('data-javascript'),
+            使用描述: demo.parentNode.previousSibling.outerHTML,
+          }))
         );
-        components += `${demoCode
-          .map(
-            i => `组建:<${componentName}/>
-                  使用描述：${i.desc}
-                  代码示例：${i.code}
-                  `
-          )
-          .join('===SPLIT===')}`;
         console.log(
           `当前是：${componentName} ,还剩${componentLinks.length - i}个组件`
         );
+        components.push({ 组建: `<${componentName}/>`, demoCode });
       } catch (e) {
         console.log(e, `跳过 ${link} (未找到描述信息)`);
       } finally {
@@ -75,8 +55,11 @@ const start = async () => {
       }
     }
     // 输出文档
-    if (!fs.existsSync('./txt')) fs.mkdirSync('./txt');
-    fs.writeFileSync(`./output/index.txt`, components);
+    if (!fs.existsSync('./output')) fs.mkdirSync('./output');
+    fs.writeFileSync(
+      `./output/index.json`,
+      JSON.stringify(components, null, 2)
+    );
 
     // 7. 关闭浏览器
     await browser.close();
