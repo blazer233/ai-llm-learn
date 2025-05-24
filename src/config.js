@@ -14,14 +14,12 @@ export const SPLIT_SIGN = '===SPLIT===';
 export const model = new ChatOllama({
   baseUrl: 'http://localhost:11434',
   model: process.env.MODEL_NAME,
-  temperature: 0.2,
 });
 
 // DeepSeek 模型
 // export const model = new ChatDeepSeek({
 //   apiKey: process.env.DEEPSEEK_API_KEY, // 从环境变量获取API key
 //   model: 'deepseek-chat', // 指定DeepSeek模型
-//   temperature: 0.2,
 // });
 
 // 华为云模型
@@ -47,19 +45,19 @@ export const model = new ChatOllama({
  */
 
 // 本地向量模型
-export const embedding = new OllamaEmbeddings({
-  model: 'bge-m3',
-  baseUrl: 'http://localhost:11434',
-});
+// export const embedding = new OllamaEmbeddings({
+//   model: 'bge-m3',
+//   baseUrl: 'http://localhost:11434',
+// });
 
 // 百度向量模型
-// export const embedding = new OpenAIEmbeddings({
-//   model: 'embedding-v1',
-//   openAIApiKey: process.env.BAIDU_KEY,
-//   configuration: {
-//     baseURL: 'https://aistudio.baidu.com/llm/lmapi/v3',
-//   },
-// });
+export const embedding = new OpenAIEmbeddings({
+  model: 'embedding-v1',
+  openAIApiKey: process.env.BAIDU_KEY,
+  configuration: {
+    baseURL: 'https://aistudio.baidu.com/llm/lmapi/v3',
+  },
+});
 
 /**以下已欠费 */
 

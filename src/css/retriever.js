@@ -52,33 +52,48 @@ const initRetriever = async () => {
 };
 
 // 计算字符串的近似token数 (1个token≈4个英文字符)
-const countTokens = (text) => Math.ceil(text.length / 4);
+const countTokens = text => Math.ceil(text.length / 4);
 
 const search = async query => {
   const docs = await retriever.invoke(query);
   const documentContent = docs.map(d => d.pageContent).join('\n\n');
-  
-  // 计算输入token数
-  const inputTokens = countTokens(query) + countTokens(documentContent);
-  
+
+  // 使用模型回调获取真实Token数
+  let inputTokens = 0;
+  let outputTokens = 0;
+
+  const callbacks = [
+    {
+      handleLLMStart: (_, prompts) => {
+        inputTokens = Math.ceil(JSON.stringify(prompts).length / 4);
+      },
+      handleLLMEnd: output => {
+        outputTokens =
+          output.llmOutput?.eval_count ||
+          output.llmOutput?.tokenUsage?.totalTokens ||
+          Math.ceil(output.generations[0][0].text.length / 4);
+      },
+    },
+  ];
+
   const formattedResult = await promptTemplate
     .pipe(model)
     .pipe(outputParser)
-    .invoke({
-      query,
-      document: documentContent,
-    });
-  
-  // 计算输出token数
-  const outputTokens = countTokens(formattedResult);
-  
+    .invoke(
+      {
+        query,
+        document: documentContent,
+      },
+      { callbacks }
+    );
+
   return {
     content: formattedResult,
     tokens: {
       input: inputTokens,
       output: outputTokens,
-      total: inputTokens + outputTokens
-    }
+      total: inputTokens + outputTokens,
+    },
   };
 };
 
@@ -105,8 +120,12 @@ async function startChat() {
         const response = await search(query);
         const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
 
-        console.log(`\n回答(耗时${elapsedTime}秒, 消耗token: ${response.tokens.total})`);
-        console.log(`输入token: ${response.tokens.input}, 输出token: ${response.tokens.output}`);
+        console.log(
+          `\n回答(耗时${elapsedTime}秒, 消耗token: ${response.tokens.total})`
+        );
+        console.log(
+          `输入token: ${response.tokens.input}, 输出token: ${response.tokens.output}`
+        );
         console.log(response.content + '\n');
       } catch (error) {
         console.error('处理请求时出错:', error);
