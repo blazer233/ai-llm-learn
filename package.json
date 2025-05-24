@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev:css": "node src/css/retriever.js",
     "dev": "node src/tdesgin/retriever.js",
     "db": "node src/tdesgin/embeddings.js",
     "puppeteer": "node src/tdesgin/puppeteerCreate.js"
