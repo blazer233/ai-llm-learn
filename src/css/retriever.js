@@ -2,6 +2,8 @@ import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { LLMChainExtractor } from 'langchain/retrievers/document_compressors/chain_extract';
 import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
+import { HydeRetriever } from 'langchain/retrievers/hyde';
+import { MultiQueryRetriever } from 'langchain/retrievers/multi_query';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { model } from '../config.js';
@@ -18,22 +20,35 @@ const embedding = new OllamaEmbeddings({
 
 const promptTemplate = PromptTemplate.fromTemplate(
   `
-你是一名专业的前端开发专家，专注于css样式。请严格遵循以下要求：
+你是一名专业的前端开发专家，专注于CSS样式实现。请严格遵循以下规则：
 
-1. 代码实现要求：
-- 完全基于提供的 {document} 中的类名和描述
-- 实现 "{query}" 中描述的功能需求
-- 如果实现的样式在 {document} 中没有描述，请使用通用的css属性，如果有描述，请直接使用对应的类名，无需再<style>中添加
-- 确保代码符合前端开发最佳实践
+1. 嵌套元素处理规则：
+- 当描述中包含"父级"、"包含"、"嵌套"等关系词时，必须构建正确的DOM层级结构
+- 父元素属性应应用在父元素class上，子元素属性应用在子元素class上
+- 示例输入："宽为24，高度为36，内边距为24的元素父级为高度为108，宽度为100%，颜色为红色的元素"
+- 示例输出：
+  <div class="h-108 w-100p bg-red">
+    <div class="h-36 w-24 p-24"></div>
+  </div>
 
-2. 输出格式要求：
-- 只输出完整的HTML代码，不要包含任何解释或额外文本
-- 代码格式整洁，包含必要的注释（使用中文注释）
-- 如果是组件代码，需要是可直接运行的完整组件
+2. 类名使用规则：
+- 首先在 {document} 中查找与 "{query}" 需求匹配的类名
+- 使用简洁的实用类名（如：w-24表示width:24px）
+- 禁止重复定义已有类名的样式
+- 找不到匹配类名时才新增样式（需添加注释说明）
 
-3. 特别注意事项：
-- 不添加任何第三方库
-- 保持代码简洁高效
+3. 输出要求：
+- 只输出完整的HTML代码
+- 保持类名语义明确（如：bg-red、text-lg）
+- 使用标准HTML结构，不要省略必要的闭合标签
+
+4. 响应格式示例：
+对于复杂嵌套需求，应按此格式输出：
+<div class="[父元素类名]">
+  <div class="[子元素类名]">
+    <!-- 更多嵌套内容 -->
+  </div>
+</div>
 `
 );
 
@@ -43,16 +58,22 @@ let retriever;
 // 初始化检索器
 const initRetriever = async () => {
   vectorStore = await FaissStore.load(directory, embedding);
-  retriever = new ContextualCompressionRetriever({
-    baseCompressor: LLMChainExtractor.fromLLM(model),
-    baseRetriever: vectorStore.asRetriever(5),
-    queryCount: 4,
+  retriever = MultiQueryRetriever.fromLLM({
+    llm: model,
+    retriever: vectorStore.asRetriever(5),
     verbose: true,
   });
+  // retriever = new HydeRetriever({
+  //   llm: model,
+  //   vectorStore,
+  //   verbose: true,
+  // });
+  // retriever = new ContextualCompressionRetriever({
+  //   baseCompressor: LLMChainExtractor.fromLLM(model),
+  //   baseRetriever: vectorStore.asRetriever(5),
+  //   // verbose: true,
+  // });
 };
-
-// 计算字符串的近似token数 (1个token≈4个英文字符)
-const countTokens = text => Math.ceil(text.length / 4);
 
 const search = async query => {
   const docs = await retriever.invoke(query);
@@ -136,11 +157,14 @@ async function startChat() {
 
   askQuestion();
 }
-startChat().catch(err => console.error('初始化失败:', err));
+startChat().catch(err => {
+  console.error('初始化失败:', err);
+  process.exit(0);
+});
 // FaissStore.load(directory, embedding).then(res => {
 //   res
-//     .asRetriever(5)
-//     .invoke('实现一个动态表单')
+//     .asRetriever(3)
+//     .invoke('宽为24，高度为36，内边距为24的元素，父级为高度为108，宽度为100%，颜色为红色的元素')
 //     .then(docs => {
 //       console.log(docs);
 //       process.exit(0);

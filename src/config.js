@@ -22,15 +22,6 @@ export const model = new ChatOllama({
 //   model: 'deepseek-chat', // 指定DeepSeek模型
 // });
 
-// 华为云模型
-// export const model = new ChatOpenAI({
-//   model: 'DeepSeek-V3',
-//   openAIApiKey: process.env.HUAWEI_KEY,
-//   configuration: {
-//     baseURL: 'https://api.modelarts-maas.com/v1',
-//   },
-// });
-
 // 百度模型
 // export const model = new ChatOpenAI({
 //   model: 'DeepSeek-V3',
@@ -45,19 +36,28 @@ export const model = new ChatOllama({
  */
 
 // 本地向量模型
-// export const embedding = new OllamaEmbeddings({
-//   model: 'bge-m3',
-//   baseUrl: 'http://localhost:11434',
+export const embedding = new OllamaEmbeddings({
+  model: 'bge-m3',
+  baseUrl: 'http://localhost:11434',
+});
+
+// 华为云模型
+// export const model = new ChatOpenAI({
+//   model: 'DeepSeek-V3',
+//   openAIApiKey: process.env.HUAWEI_KEY,
+//   configuration: {
+//     baseURL: 'https://api.modelarts-maas.com/v1',
+//   },
 // });
 
 // 百度向量模型
-export const embedding = new OpenAIEmbeddings({
-  model: 'embedding-v1',
-  openAIApiKey: process.env.BAIDU_KEY,
-  configuration: {
-    baseURL: 'https://aistudio.baidu.com/llm/lmapi/v3',
-  },
-});
+// export const embedding = new OpenAIEmbeddings({
+//   model: 'embedding-v1',
+//   openAIApiKey: process.env.BAIDU_KEY,
+//   configuration: {
+//     baseURL: 'https://aistudio.baidu.com/llm/lmapi/v3',
+//   },
+// });
 
 /**以下已欠费 */
 
