@@ -1,9 +1,10 @@
 import * as tf from '@tensorflow/tfjs-node';
-import { FILE_PATH } from './common.js';
+import { FILE_PATH, chars } from './common.js';
 
-// 定义与训练时相同的字符集和编码函数
-const chars = ['a', 'b', 'c'];
-const charToIndex = { a: 0, b: 1, c: 2 };
+const charToIndex = {};
+chars.forEach((char, index) => {
+  charToIndex[char] = index;
+});
 
 function charToOneHot(char) {
   const arr = new Array(chars.length).fill(0);
@@ -30,7 +31,7 @@ async function loadAndPredict() {
     // 可选：将预测结果转换为可读格式
     const results = await prediction.array();
     const predictedChar = chars[results[0].indexOf(Math.max(...results[0]))];
-    console.log(`预测下一个字母是: ${predictedChar}`);
+    console.log(`预测下一个字母是: ${predictedChar}`, results);
   } catch (err) {
     console.error('加载或预测时出错:', err);
   }

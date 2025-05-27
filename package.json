@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev:pre": "node src/tensorflow/predict.js",
     "dev:tf": "node src/tensorflow/index.js",
     "dev:css": "node src/css/retriever.js",
     "dev": "node src/tdesgin/retriever.js",
