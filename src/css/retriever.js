@@ -1,4 +1,3 @@
-import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { LLMChainExtractor } from 'langchain/retrievers/document_compressors/chain_extract';
 import { ContextualCompressionRetriever } from 'langchain/retrievers/contextual_compression';
@@ -6,17 +5,12 @@ import { HydeRetriever } from 'langchain/retrievers/hyde';
 import { MultiQueryRetriever } from 'langchain/retrievers/multi_query';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { model } from '../config.js';
+import { embedding, model } from '../config.js';
 import { directory } from './common.js';
 import readline from 'readline';
 import 'dotenv/config';
 
 const outputParser = new StringOutputParser();
-
-const embedding = new OllamaEmbeddings({
-  model: 'bge-m3',
-  baseUrl: 'http://localhost:11434',
-});
 
 const promptTemplate = PromptTemplate.fromTemplate(
   `
@@ -157,16 +151,16 @@ async function startChat() {
 
   askQuestion();
 }
-startChat().catch(err => {
-  console.error('初始化失败:', err);
-  process.exit(0);
-});
-// FaissStore.load(directory, embedding).then(res => {
-//   res
-//     .asRetriever(3)
-//     .invoke('宽为24，高度为36，内边距为24的元素，父级为高度为108，宽度为100%，颜色为红色的元素')
-//     .then(docs => {
-//       console.log(docs);
-//       process.exit(0);
-//     });
+// startChat().catch(err => {
+//   console.error('初始化失败:', err);
+//   process.exit(0);
 // });
+FaissStore.load(directory, embedding).then(res => {
+  res
+    .asRetriever(3)
+    .invoke('transform')
+    .then(docs => {
+      console.log(docs);
+      process.exit(0);
+    });
+});

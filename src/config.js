@@ -4,6 +4,7 @@ import { ChatDeepSeek } from '@langchain/deepseek';
 import { ChatOllama, OllamaEmbeddings } from '@langchain/ollama';
 import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
 import 'dotenv/config';
+import { UseEmbeddings } from './tensorflow_embedding.js';
 
 export const SPLIT_SIGN = '===SPLIT===';
 
@@ -35,11 +36,13 @@ export const model = new ChatOllama({
  * 向量模型 embedding
  */
 
+export const embedding = new UseEmbeddings();
+
 // 本地向量模型
-export const embedding = new OllamaEmbeddings({
-  model: 'bge-m3',
-  baseUrl: 'http://localhost:11434',
-});
+// export const embedding = new OllamaEmbeddings({
+//   model: 'bge-m3',
+//   baseUrl: 'http://localhost:11434',
+// });
 
 // 华为云模型
 // export const model = new ChatOpenAI({

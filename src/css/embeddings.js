@@ -3,7 +3,7 @@ import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { CustomDelimiterTextSplitter } from './splitter.js';
 import { directory, FILE_PATH } from './common.js';
-import { SPLIT_SIGN } from '../config.js';
+import { embedding, SPLIT_SIGN } from '../config.js';
 
 const start = async () => {
   try {
@@ -14,10 +14,6 @@ const start = async () => {
     const splitter = new CustomDelimiterTextSplitter(SPLIT_SIGN);
     const splitDocs = await splitter.splitDocuments(docs);
     console.log('拆分完成：', splitDocs);
-    const embedding = new OllamaEmbeddings({
-      model: 'bge-m3',
-      baseUrl: 'http://localhost:11434',
-    });
 
     const vectorStore = await FaissStore.fromDocuments(splitDocs, embedding);
     return await vectorStore.save(directory);
