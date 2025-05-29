@@ -1,108 +1,100 @@
 import * as tf from '@tensorflow/tfjs-node';
-import { chars, FILE_PATH } from './common.js';
+import { chars, FILE_PATH, charToOneHot } from './common.js';
 
-// 创建字母到索引的映射
+// 创建字符到索引的映射字典
+// 例如：{'a':0, 'b':1, ...}
 const charToIndex = {};
+// 遍历字符集创建映射关系
 chars.forEach((char, index) => {
   charToIndex[char] = index;
 });
 
-// 构造训练数据（one-hot 编码）
-function charToOneHot(char) {
-  const arr = new Array(chars.length).fill(0);
-  const idx = charToIndex[char];
-  if (idx === undefined) throw new Error(`Unknown char: ${char}`);
-  arr[idx] = 1;
-  return arr;
-}
+// 初始化训练数据容器
+const xsData = []; // 输入数据（当前字符）
+const ysData = []; // 输出数据（下一个字符）
 
-// 生成训练数据：每个字母预测下一个字母
-const xsData = [];
-const ysData = [];
+// 生成训练数据对：当前字符 -> 下一个字符
 for (let i = 0; i < chars.length - 1; i++) {
-  xsData.push([charToOneHot(chars[i])]); // 当前字母
-  ysData.push(charToOneHot(chars[i + 1])); // 下一个字母
+  // 将当前字符转为one-hot编码并存入输入集
+  xsData.push([charToOneHot(charToIndex, chars[i])]);
+  // 将下一个字符转为one-hot编码并存入输出集
+  ysData.push(charToOneHot(charToIndex, chars[i + 1]));
 }
-
-// 转换为Tensor
+console.log(ysData);
+// 将JavaScript数组转换为TensorFlow张量
+// 输入张量：3D形状 [样本数, 1, 字符集长度]
 const xs = tf.tensor3d(xsData, [xsData.length, 1, chars.length]);
+// 输出张量：2D形状 [样本数, 字符集长度]
 const ys = tf.tensor2d(ysData, [ysData.length, chars.length]);
 
-// 定义更强大的LSTM模型
-const model = tf.sequential();
-model.add(
-  tf.layers.lstm({
-    units: 128, // 增加LSTM单元数量
-    inputShape: [1, chars.length],
-    returnSequences: false, // 只输出最后一步的结果
-  })
-);
-model.add(
-  tf.layers.dense({
-    units: chars.length,
-    activation: 'softmax',
-  })
-);
+// 定义Transformer模型构建函数
+// 参数说明：
+// - vocabSize: 词汇表大小（字符集长度）
+// - seqLength: 序列长度（默认为1）
+// - embedDim: 嵌入维度（默认为32）
+function buildTransformerModel(vocabSize, seqLength = 1, embedDim = 32) {
+  // 定义模型输入层，指定输入形状
+  const input = tf.input({ shape: [seqLength, vocabSize] });
 
-// 编译模型
-model.compile({
-  optimizer: tf.train.adam(0.01), // 调整学习率
-  loss: 'categoricalCrossentropy',
-  metrics: ['accuracy'],
-});
+  // 添加LSTM层作为简化版的序列处理
+  const lstmLayer = tf.layers
+    .lstm({
+      units: embedDim, // LSTM单元数
+      inputShape: [seqLength, vocabSize], // 输入形状
+    })
+    .apply(input); // 将输入连接到该层
 
-// 训练模型
+  // 添加全连接输出层
+  const output = tf.layers
+    .dense({
+      units: vocabSize, // 输出单元数等于字符集大小
+      activation: 'softmax', // 使用softmax激活函数
+    })
+    .apply(lstmLayer); // 将LSTM层输出连接到该层
+
+  // 创建并返回模型实例
+  return tf.model({
+    inputs: input, // 指定模型输入
+    outputs: output, // 指定模型输出
+  });
+}
+
+// 定义模型训练函数
 async function train() {
   console.log('开始训练字母预测模型...');
 
-  // 增加训练轮次
-  await model.fit(xs, ys, {
-    epochs: 500,
-    batchSize: 8,
+  // 调整输入张量形状以匹配模型输入要求
+  const reshapedXs = tf.reshape(xs, [xs.shape[0], 1, chars.length]);
+
+  // 执行模型训练
+  await model.fit(reshapedXs, ys, {
+    epochs: 100, // 训练轮数
+    batchSize: 4, // 批处理大小
     callbacks: {
+      // 训练回调函数
       onEpochEnd: (epoch, logs) => {
-        if (epoch % 50 === 0) {
-          console.log(
-            `Epoch ${epoch}: 损失=${logs.loss.toFixed(
-              4
-            )}, 准确率=${logs.acc.toFixed(4)}`
-          );
+        // 每10轮打印一次损失值
+        if (epoch % 10 === 0) {
+          console.log(`Epoch ${epoch}: 损失=${logs.loss.toFixed(4)}`);
         }
       },
     },
   });
 
-  // 保存模型
+  // 训练完成后保存模型
   await model.save(FILE_PATH);
   console.log(`模型已保存到: ${FILE_PATH}`);
-
-  // 测试预测功能
-  await predictSequence('a', 10); // 从a开始预测10个字母
 }
 
-// 预测连续字母序列
-async function predictSequence(startChar, length) {
-  let currentChar = startChar;
-  let sequence = [currentChar];
+// 创建模型实例，传入字符集长度作为词汇表大小
+const model = buildTransformerModel(chars.length);
 
-  for (let i = 0; i < length; i++) {
-    const input = tf.tensor3d(
-      [[charToOneHot(currentChar)]],
-      [1, 1, chars.length]
-    );
-    const prediction = await model.predict(input).data();
+// 编译模型，配置训练参数
+model.compile({
+  optimizer: tf.train.adam(0.01), // 使用Adam优化器，学习率0.01
+  loss: 'categoricalCrossentropy', // 使用分类交叉熵损失函数
+  metrics: ['accuracy'], // 监控准确率指标
+});
 
-    // 获取概率最高的字母
-    const predictedIndex = prediction.indexOf(Math.max(...prediction));
-    currentChar = chars[predictedIndex];
-    sequence.push(currentChar);
-
-    input.dispose(); // 释放内存
-  }
-
-  console.log(`预测序列: ${sequence.join(' → ')}`);
-  return sequence;
-}
-
-// 启动训练
+// 启动训练过程，捕获并打印可能的错误
 train().catch(err => console.error('训练出错:', err));

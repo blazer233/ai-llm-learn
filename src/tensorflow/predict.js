@@ -1,27 +1,19 @@
 import * as tf from '@tensorflow/tfjs-node';
-import { FILE_PATH, chars } from './common.js';
+import { FILE_PATH, chars, charToOneHot } from './common.js';
 
-const charToIndex = {};
-chars.forEach((char, index) => {
-  charToIndex[char] = index;
-});
-
-function charToOneHot(char) {
-  const arr = new Array(chars.length).fill(0);
-  const idx = charToIndex[char];
-  if (idx === undefined) throw new Error(`未知字符: ${char}`);
-  arr[idx] = 1;
-  return arr;
-}
-
-async function loadAndPredict() {
+async function loadAndPredict(word) {
   try {
     // 加载已保存的模型
     const model = await tf.loadLayersModel(`${FILE_PATH}/model.json`);
     console.log('模型加载成功！');
 
     // 准备输入数据（示例：预测字母a的下一个字母）
-    const inputData = [[charToOneHot('a')]];
+    const charMap = chars.reduce((acc, char, index) => {
+      acc[char] = index;
+      return acc;
+    }, {});
+
+    const inputData = [[charToOneHot(charMap, word)]];
     const input = tf.tensor3d(inputData, [1, 1, chars.length]);
 
     // 进行预测
@@ -31,10 +23,10 @@ async function loadAndPredict() {
     // 可选：将预测结果转换为可读格式
     const results = await prediction.array();
     const predictedChar = chars[results[0].indexOf(Math.max(...results[0]))];
-    console.log(`预测下一个字母是: ${predictedChar}`, results);
+    console.log(`预测 ${word} 下一个字母是: ${predictedChar}`, results);
   } catch (err) {
     console.error('加载或预测时出错:', err);
   }
 }
 
-loadAndPredict();
+loadAndPredict('a');
