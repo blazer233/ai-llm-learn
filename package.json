@@ -20,8 +20,8 @@
     "@baiducloud/qianfan": "^0.2.3",
     "@huggingface/transformers": "^3.5.1",
     "@langchain/baidu-qianfan": "^0.1.0",
-    "@langchain/community": "^0.3.39",
-    "@langchain/core": "^0.3.43",
+    "@langchain/community": "^0.3.50",
+    "@langchain/core": "^0.3.68",
     "@langchain/deepseek": "^0.0.1",
     "@langchain/ollama": "^0.2.0",
     "@langchain/openai": "^0.5.11",
@@ -29,12 +29,14 @@
     "@tensorflow/tfjs-node": "^4.22.0",
     "@xenova/transformers": "^2.17.2",
     "acorn": "^8.14.1",
+    "canvas": "^3.1.2",
     "cheerio": "^1.0.0",
     "dotenv": "^16.5.0",
     "faiss-node": "^0.5.1",
     "langchain": "^0.3.19",
     "node-fetch": "^3.3.2",
     "pocketflow": "^1.0.4",
-    "puppeteer": "^24.8.2"
+    "puppeteer": "^24.8.2",
+    "sharp": "^0.34.3"
   }
 }
