@@ -22,4 +22,24 @@ export const modelConfigs = {
     description: '智谱AI GLM视觉模型',
     enabled: true,
   },
+  // 混元模型配置
+  hunyuan: {
+    name: 'hunyuan',
+    displayName: 'HunYuan',
+    apiKey: process.env.HUNYUAN_API_KEY,
+    baseURL: 'http://hunyuanapi.woa.com/openapi/v1/',
+    model: 'hunyuan-exp',
+    description: 'HunYuan AI Vision Model',
+    enabled: true,
+  },
+  // 深seek模型配置
+  deepseek: {
+    name: 'deepseek',
+    displayName: 'DeepSeek',
+    apiKey: process.env.DEEPSEEK_API_KEY,
+    baseURL: 'https://api.deepseek.com/v1/',
+    model: 'DeepSeek-Janus-Pro',
+    description: 'DeepSeek AI Vision Model',
+    enabled: true,
+  },
 };

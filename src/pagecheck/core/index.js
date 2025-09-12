@@ -9,7 +9,7 @@ import { modelConfigs } from './model-config.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // 1.生成一个dist文件来保存生成的json和截图
 const outputDir = path.join(__dirname, '..', 'dist');
-
+const checkDomainArr = ['damp.woa.com'];
 function getDomain(url) {
   try {
     const parsedUrl = new URL(url);
@@ -30,12 +30,9 @@ async function inspectPage(url) {
   const sessionFile = path.join(outputDir, `${domain}.json`);
 
   try {
-    console.log('🚀 正在启动浏览器...');
-
-    const needsLogin = ['woa'].some(i => domain.includes(i));
+    console.log('正在启动浏览器...');
     const sessionExists = existsSync(sessionFile);
-
-    if (needsLogin && !sessionExists) {
+    if (checkDomainArr.includes(domain) && !sessionExists) {
       console.log('需要登录，请在打开的浏览器窗口中完成登录...');
       browser = await chromium.launch({ headless: false });
       context = await browser.newContext();
@@ -75,7 +72,7 @@ async function inspectPage(url) {
   } finally {
     if (browser) {
       await browser.close();
-      console.log('✅ 浏览器已关闭,开始分析图片...');
+      console.log('浏览器已关闭,开始分析图片...');
     }
   }
 }
@@ -89,10 +86,10 @@ const run = async name => {
   }
   const url = process.argv[2];
   if (!url) {
-    console.error('Please provide a URL as an argument.');
+    console.log('请提供有效的URL参数');
     process.exit(1);
   }
-  console.log(`🔍 开始对页面进行 AI 巡检: ${url} `);
+  console.log(`开始对页面进行 AI 巡检: ${url} `);
   const startTime = Date.now();
   try {
     await fs.mkdir(outputDir, { recursive: true });
@@ -128,4 +125,4 @@ const run = async name => {
   }
 };
 
-run('qianwen');
+run('hunyuan');
