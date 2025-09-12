@@ -30,3 +30,5 @@ yarn.lock
 /.vscode
 ignoremock*
 node_modules
+
+dist
