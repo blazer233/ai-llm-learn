@@ -6,10 +6,8 @@ import { existsSync } from 'fs';
 import { handleModel } from './tool.js';
 import { modelConfigs } from './model-config.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// 1.生成一个dist文件来保存生成的json和截图
-const outputDir = path.join(__dirname, '..', 'dist');
-const checkDomainArr = ['damp.woa.com'];
+const checkDomainArr = ['damp.woa.com', 'tapd.woa.com', 'yzftest.woa.com'];
+
 function getDomain(url) {
   try {
     const parsedUrl = new URL(url);
@@ -20,6 +18,8 @@ function getDomain(url) {
   }
 }
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const outputDir = path.join(__dirname, '..', 'dist');
 async function inspectPage(url) {
   let browser;
   let context;
@@ -35,7 +35,7 @@ async function inspectPage(url) {
     if (checkDomainArr.includes(domain) && !sessionExists) {
       console.log('需要登录，请在打开的浏览器窗口中完成登录...');
       browser = await chromium.launch({ headless: false });
-      context = await browser.newContext();
+      context = await browser.newContext({ ignoreHTTPSErrors: true });
       const page = await context.newPage();
       await page.goto(url, { waitUntil: 'domcontentloaded' });
       await page.pause();
@@ -45,8 +45,14 @@ async function inspectPage(url) {
       return await inspectPage(url);
     }
 
-    browser = await chromium.launch({ headless: true });
-    context = await browser.newContext({ storageState: sessionFile || null });
+    browser = await chromium.launch({
+      headless: true,
+      args: ['--ignore-certificate-errors'],
+    });
+    context = await browser.newContext({
+      ignoreHTTPSErrors: true,
+      storageState: sessionExists ? sessionFile : undefined,
+    });
     console.log(' 浏览器已启动');
     const page = await context.newPage();
     page.setDefaultTimeout(20000);
@@ -125,4 +131,4 @@ const run = async name => {
   }
 };
 
-run('hunyuan');
+run('qianwen');
