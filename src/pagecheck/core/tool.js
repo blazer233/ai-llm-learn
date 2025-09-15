@@ -66,23 +66,27 @@ const prompt = `
 `;
 
 export const handleModel = async (name, imageAsBase64) => {
-  const { apiKey, baseURL, model } = modelConfigs[name];
+  const { apiKey, baseURL, model, headers } = modelConfigs[name];
   const openai = new OpenAI({ apiKey, baseURL });
-  const res = await openai.chat.completions.create({
-    model,
-    messages: [
-      {
-        role: 'user',
-        content: [
-          {
-            type: 'image_url',
-            image_url: { url: `data:image/jpeg;base64,${imageAsBase64}` },
-          },
-          { type: 'text', text: prompt },
-        ],
-      },
-    ],
-    stream: false,
-  });
+  const otherData = headers ? { headers } : {};
+  const res = await openai.chat.completions.create(
+    {
+      model,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/jpeg;base64,${imageAsBase64}` },
+            },
+            { type: 'text', text: prompt },
+          ],
+        },
+      ],
+      stream: false,
+    },
+    otherData
+  );
   return [res.usage, res.choices[0].message.content];
 };

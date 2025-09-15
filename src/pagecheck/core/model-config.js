@@ -28,9 +28,14 @@ export const modelConfigs = {
     displayName: 'HunYuan',
     apiKey: process.env.HUNYUAN_API_KEY,
     baseURL: 'http://hunyuanapi.woa.com/openapi/v1/',
-    model: 'hunyuan-exp',
+    model: 'hunyuan-vision',
     description: 'HunYuan AI Vision Model',
     enabled: true,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.HUNYUAN_API_KEY}`,
+      Wsid: 10144,
+    },
   },
   // 深seek模型配置
   deepseek: {
@@ -38,7 +43,7 @@ export const modelConfigs = {
     displayName: 'DeepSeek',
     apiKey: process.env.DEEPSEEK_API_KEY,
     baseURL: 'https://api.deepseek.com/v1/',
-    model: 'DeepSeek-Janus-Pro',
+    model: 'deepseek-vl-chat',
     description: 'DeepSeek AI Vision Model',
     enabled: true,
   },

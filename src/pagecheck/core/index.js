@@ -5,8 +5,14 @@ import path from 'path';
 import { existsSync } from 'fs';
 import { handleModel } from './tool.js';
 import { modelConfigs } from './model-config.js';
+import sharp from 'sharp';
 
-const checkDomainArr = ['damp.woa.com', 'tapd.woa.com', 'yzftest.woa.com'];
+const checkDomainArr = [
+  'damp.woa.com',
+  'tapd.woa.com',
+  'yzftest.woa.com',
+  'kfqm.woa.com',
+];
 
 function getDomain(url) {
   try {
@@ -113,9 +119,43 @@ const run = async name => {
       const [usage, content] = res;
       console.log(' AI 分析结果:', content);
       console.log(modelinfo.model + `总耗时: ${totalDuration}秒`);
-
-      // 2.将ai输出的一同保存到dist文件下
+      const llmRes = JSON.parse(content);
       const domain = getDomain(url);
+      if (llmRes.anomalies && llmRes.anomalies.length) {
+        console.log('发现异常，正在标记截图...');
+        const screenshotPath = path.join(
+          outputDir,
+          `${domain}_screenshot.jpeg`
+        );
+        const annotatedImagePath = path.join(
+          outputDir,
+          `${domain}_annotated.jpeg`
+        );
+
+        const image = sharp(screenshotPath);
+        const metadata = await image.metadata();
+        const width = metadata.width;
+        const height = metadata.height;
+
+        const svgElements = llmRes.anomalies
+          .map(anomaly => {
+            const [x1, y1, x2, y2] = anomaly.bbox;
+            // 创建一个半透明的红色矩形
+            return `<rect x="${x1}" y="${y1}" width="${x2 - x1}" height="${
+              y2 - y1
+            }" style="stroke:red; stroke-width:5; fill:none" />`;
+          })
+          .join('');
+
+        const svgOverlay = `<svg width="${width}" height="${height}">${svgElements}</svg>`;
+
+        await image
+          .composite([{ input: Buffer.from(svgOverlay), blend: 'over' }])
+          .toFile(annotatedImagePath);
+
+        console.log(`已将标记的截图保存至: ${annotatedImagePath}`);
+      }
+
       if (domain) {
         const resultPath = path.join(outputDir, `${domain}_result.json`);
         await fs.writeFile(
