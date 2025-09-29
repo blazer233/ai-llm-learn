@@ -28,7 +28,7 @@ export const modelConfigs = {
     displayName: 'HunYuan',
     apiKey: process.env.HUNYUAN_API_KEY,
     baseURL: 'http://hunyuanapi.woa.com/openapi/v1/',
-    model: 'hunyuan-vision',
+    model: 'hunyuan-t1-vision-latest',
     description: 'HunYuan AI Vision Model',
     enabled: true,
     headers: {
