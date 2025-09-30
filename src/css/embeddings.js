@@ -1,4 +1,3 @@
-import { OllamaEmbeddings } from '@langchain/ollama';
 import { FaissStore } from '@langchain/community/vectorstores/faiss';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { CustomDelimiterTextSplitter } from './splitter.js';

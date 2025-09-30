@@ -53,7 +53,7 @@ export const embedding = new OllamaEmbeddings({
 //   },
 // });
 
-// 百度向量模型
+// 百度向量模型 - 输入长度限制太严格，不适合我们的场景
 // export const embedding = new OpenAIEmbeddings({
 //   model: 'embedding-v1',
 //   openAIApiKey: process.env.BAIDU_KEY,
