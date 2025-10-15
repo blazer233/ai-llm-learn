@@ -1,0 +1,17 @@
+{
+  "watch": [
+    "server.js",
+    "../config.js"
+  ],
+  "ext": "js,json",
+  "ignore": [
+    "node_modules/",
+    "screenshots/",
+    "dist/"
+  ],
+  "delay": 1000,
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "verbose": true
+}
