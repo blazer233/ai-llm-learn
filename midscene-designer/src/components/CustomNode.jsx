@@ -43,7 +43,7 @@ const CustomNode = ({ data, id }) => {
       fontSize: 12,
       position: 'relative'
     }}>
-      <Handle type="target" position={Position.Top} />
+      <Handle type="target" position={Position.Left} />
       
       <div style={{ 
         fontWeight: 'bold', 
@@ -159,7 +159,49 @@ const CustomNode = ({ data, id }) => {
             </button>
             <button
               onClick={() => {
-                window.open(data.screenshotData, '_blank');
+                const newWindow = window.open('', '_blank');
+                if (newWindow) {
+                  newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                      <head>
+                        <title>截图预览</title>
+                        <style>
+                          body { 
+                            margin: 0; 
+                            padding: 20px;
+                            display: flex; 
+                            justify-content: center; 
+                            align-items: center; 
+                            min-height: 100vh; 
+                            background: #f0f0f0;
+                            font-family: Arial, sans-serif;
+                          }
+                          img { 
+                            max-width: 100%; 
+                            max-height: 100vh; 
+                            object-fit: contain;
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                            border-radius: 4px;
+                          }
+                          .error {
+                            text-align: center;
+                            color: #666;
+                          }
+                        </style>
+                      </head>
+                      <body>
+                        ${data.screenshotData ? 
+                          `<img src="${data.screenshotData}" alt="截图预览" />` : 
+                          '<div class="error">截图数据不可用</div>'
+                        }
+                      </body>
+                    </html>
+                  `);
+                  newWindow.document.close();
+                } else {
+                  alert('无法打开新窗口，请检查浏览器弹窗设置');
+                }
               }}
               style={{
                 padding: '4px 8px',
@@ -207,42 +249,40 @@ const CustomNode = ({ data, id }) => {
         <>
           <Handle 
             type="source" 
-            position={Position.Bottom} 
+            position={Position.Right} 
             id="success"
-            style={{ left: '25%', background: '#10b981' }}
+            style={{ top: '25%', background: '#10b981' }}
           />
           <div style={{
             position: 'absolute',
-            bottom: -15,
-            left: '15%',
+            right: -15,
+            top: '15%',
             fontSize: 8,
             color: '#10b981',
             fontWeight: 'bold'
           }}>
-            成功
           </div>
           
           <Handle 
             type="source" 
-            position={Position.Bottom} 
+            position={Position.Right} 
             id="failure"
-            style={{ left: '75%', background: '#ef4444' }}
+            style={{ top: '75%', background: '#ef4444' }}
           />
           <div style={{
             position: 'absolute',
-            bottom: -15,
-            right: '15%',
+            right: -15,
+            bottom: '15%',
             fontSize: 8,
             color: '#ef4444',
             fontWeight: 'bold'
           }}>
-            失败
           </div>
         </>
       ) : data.type === 'end' ? (
         null
       ) : (
-        <Handle type="source" position={Position.Bottom} />
+        <Handle type="source" position={Position.Right} />
       )}
     </div>
   );

@@ -39,7 +39,7 @@ export const MIDSCENE_NODE_TYPES = {
     color: '#3182ce',
     supportsBranch: true,
   },
-  aiWaitFor: {
+  waitForTimeout: {
     name: '⏰等待',
     description: '等待条件',
     category: 'ai',

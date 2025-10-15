@@ -283,8 +283,8 @@ async function runTest() {
         case 'screenshot':
           code += `    await page.screenshot({ path: 'screenshot.png' });\n`;
           break;
-        case 'aiWaitFor':
-          code += `    await page.aiWaitFor(${config.value});\n`;
+        case 'waitForTimeout':
+          code += `    await page.waitForTimeout(${config.value});\n`;
           break;
         case 'end':
           code += `    // 测试结束\n`;

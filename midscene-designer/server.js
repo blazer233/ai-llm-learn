@@ -4,8 +4,8 @@ import cors from 'cors';
 import { PlaywrightAgent } from '@midscene/web';
 import playwright from 'playwright';
 import dotenv from 'dotenv';
-
-dotenv.config();
+ 
+dotenv.config(); 
 const app = express();
 const PORT = 3002;
 
@@ -57,7 +57,6 @@ function getNextNode(currentNodeId, currentResult, edgeMap, nodeMap) {
 app.post('/api/execute', async (req, res) => {
   try {
     const { nodes, edges } = req.body;
-
     // 初始化浏览器
     if (!browser) {
       browser = await playwright.chromium.launch({ headless: false });
@@ -84,10 +83,9 @@ app.post('/api/execute', async (req, res) => {
     let currentNode = startNodes[0];
     let executionCount = 0;
     const maxExecutions = nodes.length * 2; // 防止无限循环
-
     // 按流程执行节点
     while (currentNode && executionCount < maxExecutions) {
-      executionCount++;
+      executionCount += 1;
       console.log(
         `📍 [${executionCount}] 执行节点: ${currentNode.id} (${currentNode.data.type})`
       );
@@ -212,16 +210,18 @@ app.post('/api/execute', async (req, res) => {
               screenshotData: screenshotBase64,
               executionTime: screenshotTime,
             };
-            break;
+            break; 
 
-          case 'aiWaitFor':
+          case 'waitForTimeout':
             console.log(`⏰ 等待: ${data.config.value}`);
             const waitStartTime = Date.now();
-            await page.aiWaitFor(data.config.value);
+            isNaN(Number(data.config.value))
+              ? await agent.aiWaitFor(data.config.value)
+              : await page.waitForTimeout(Number(data.config.value));
             const actualWaitTime = Date.now() - waitStartTime;
             result = {
               success: true,
-              message: `等待 ${data.config.duration}ms`,
+              message: `等待 ${data.config.value}ms`,
               executionTime: actualWaitTime,
             };
             break;
