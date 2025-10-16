@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server.js",
-    "server:dev": "nodemon server.js",
-    "dev:full": "concurrently \"npm run dev\" \"npm run server:dev\"",
+    "server:dev": "nodemon server/index.js",
     "start": "npm run dev:full"
   },
   "dependencies": {

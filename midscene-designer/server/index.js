@@ -4,6 +4,7 @@ import cors from 'cors';
 import { PlaywrightAgent } from '@midscene/web';
 import playwright from 'playwright';
 import dotenv from 'dotenv';
+import { nodeExecutors, buildExecutionFlow, getNextNode } from './node.js';
 
 dotenv.config();
 const app = express();
@@ -13,160 +14,6 @@ app.use(cors());
 app.use(express.json());
 
 let browser, context, page, agent;
-
-// 节点执行器映射 - 将每个节点类型映射到对应的执行函数
-const nodeExecutors = {
-  navigate: async (data, { page }) => {
-    console.log(`🌐 导航到: ${data.config.url}`);
-    const startTime = Date.now();
-    await page.goto(data.config.url);
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: `导航到 ${data.config.url}`,
-      executionTime,
-    };
-  },
-
-  aiTap: async (data, { agent }) => {
-    console.log(`👆 AI点击: "${data.config.target}"`);
-    const startTime = Date.now();
-    const aiResult = await agent.aiTap(data.config.target);
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: `AI点击: ${data.config.target}`,
-      executionTime,
-      aiResult,
-    };
-  },
-
-  aiAction: async (data, { agent }) => {
-    console.log(`⌨️ AI Action: "${data.config.target}"`);
-    const startTime = Date.now();
-    const aiResult = await agent.aiInput(data.config.target);
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: `AI aiAction: ${data.config.target}`,
-      executionTime,
-      aiResult,
-    };
-  },
-
-  aiInput: async (data, { agent }) => {
-    console.log(`⌨️ AI输入: "${data.config.target}" = "${data.config.value}"`);
-    const startTime = Date.now();
-    const aiResult = await agent.aiInput(data.config.value, data.config.target);
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: `AI输入: ${data.config.value}`,
-      executionTime,
-      aiResult,
-    };
-  },
-
-  aiBoolean: async (data, { agent, page }) => {
-    console.log(`✅ AI验证: "${data.config.instruction}"`);
-    await page.waitForLoadState('networkidle');
-    const startTime = Date.now();
-    const assertResult = await agent.aiBoolean(data.config.instruction);
-    const executionTime = Date.now() - startTime;
-    console.log(`✅ 验证成功，将走成功分支`);
-    return {
-      success: true,
-      message: `AI验证成功: ${data.config.instruction}`,
-      executionTime,
-      data: assertResult,
-      branchType: assertResult ? 'success' : 'failure',
-    };
-  },
-
-  end: async (_, { browser, setBrowserState }) => {
-    console.log(`🏁 到达结束节点，关闭浏览器`);
-    if (browser) {
-      await browser.close();
-      setBrowserState(null, null, null, null);
-    }
-    return {
-      success: true,
-      message: '测试结束，浏览器已关闭',
-      executionTime: 0,
-    };
-  },
-
-  screenshot: async (_, { page }) => {
-    console.log(`📸 截取整张页面截图`);
-    const startTime = Date.now();
-    // 截图到内存中，不保存到本地文件
-    const screenshotBuffer = await page.screenshot({ type: 'png' });
-    // 转换为 base64 格式
-    const screenshotBase64 = `data:image/png;base64,${screenshotBuffer.toString(
-      'base64'
-    )}`;
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: '截图已生成',
-      screenshotData: screenshotBase64,
-      executionTime,
-    };
-  },
-
-  waitForTimeout: async (data, { agent, page }) => {
-    console.log(`⏰ 等待: ${data.config.value}`);
-    const startTime = Date.now();
-    isNaN(Number(data.config.value))
-      ? await agent.aiWaitFor(data.config.value)
-      : await page.waitForTimeout(Number(data.config.value));
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: `等待 ${data.config.value}ms`,
-      executionTime,
-    };
-  },
-};
-
-// 根据边连接关系构建节点执行流程
-function buildExecutionFlow(nodes, edges) {
-  const nodeMap = new Map(nodes.map(node => [node.id, node]));
-  const edgeMap = new Map();
-
-  // 按源节点分组边
-  edges.forEach(edge => {
-    if (!edgeMap.has(edge.source)) {
-      edgeMap.set(edge.source, []);
-    }
-    edgeMap.get(edge.source).push(edge);
-  });
-
-  return { nodeMap, edgeMap };
-}
-
-// 获取下一个要执行的节点
-function getNextNode(currentNodeId, currentResult, edgeMap, nodeMap) {
-  const edges = edgeMap.get(currentNodeId) || [];
-
-  for (const edge of edges) {
-    // 检查边的条件
-    if (edge.data?.condition) {
-      const condition = edge.data.condition;
-      if (condition === 'success' && currentResult.success) {
-        return nodeMap.get(edge.target);
-      }
-      if (condition === 'failure' && !currentResult.success) {
-        return nodeMap.get(edge.target);
-      }
-    } else {
-      // 无条件边，直接连接
-      return nodeMap.get(edge.target);
-    }
-  }
-
-  return null;
-}
 
 // 执行API
 app.post('/api/execute', async (req, res) => {
@@ -216,11 +63,11 @@ app.post('/api/execute', async (req, res) => {
             agent,
             browser,
             context,
-            setBrowserState: (newBrowser, newContext, newPage, newAgent) => {
-              browser = newBrowser;
-              context = newContext;
-              page = newPage;
-              agent = newAgent;
+            setBrowserState: () => {
+              browser = null;
+              context = null;
+              page = null;
+              agent = null;
             },
           };
           result = await executor(data, executionContext);
@@ -317,14 +164,6 @@ app.post('/api/execute', async (req, res) => {
     console.error('执行错误:', error);
     res.status(500).json({ success: false, error: error.message });
   }
-});
-
-// 清理资源
-process.on('SIGINT', async () => {
-  if (browser) {
-    await browser.close();
-  }
-  process.exit(0);
 });
 
 // 启动服务器
