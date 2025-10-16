@@ -31,8 +31,8 @@ export const MIDSCENE_NODE_TYPES = {
     config: { target: '输入框', value: '测试文本' },
     color: '#3182ce',
   },
-  aiQuery: {
-    name: '✅ AI验证',
+  aiBoolean: {
+    name: '✅ AI判断',
     description: 'AI验证页面状态（支持分支）',
     category: 'ai',
     config: { instruction: '检查页面是否加载完成' },

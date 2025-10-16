@@ -16,7 +16,8 @@ import { MIDSCENE_NODE_TYPES, getNodeTypesByCategory } from './nodeTypes';
 import CustomNode from './components/CustomNode';
 import CustomEdge from './components/CustomEdge';
 import MidsceneExecutionService from './services/executionService';
-
+// const localDataStr = 'midscene-flow-data'
+const localDataStr = 'midscene-flow-data1'
 const nodeTypes = {
   custom: CustomNode,
 };
@@ -26,10 +27,10 @@ const edgeTypes = {
 };
 
 // ReactFlow 内容组件
-function ReactFlowContent({ 
-  nodes, edges, onNodesChange, onEdgesChange, onConnect, 
-  nodeTypes, edgeTypes, setNodes, isExecuting, executionResults, 
-  setExecutionResults, executeFlow, generateCode 
+function ReactFlowContent({
+  nodes, edges, onNodesChange, onEdgesChange, onConnect,
+  nodeTypes, edgeTypes, setNodes, isExecuting, executionResults,
+  setExecutionResults, executeFlow, generateCode
 }) {
   const { screenToFlowPosition } = useReactFlow();
 
@@ -37,7 +38,7 @@ function ReactFlowContent({
     (event) => {
       event.preventDefault();
       const type = event.dataTransfer.getData('application/reactflow');
-      
+
       if (!type) return;
 
       // 使用 screenToFlowPosition 将屏幕坐标转换为流程图坐标
@@ -85,7 +86,7 @@ function ReactFlowContent({
       <Controls />
       <MiniMap />
       <Background variant="dots" gap={12} size={1} />
-      
+
       <Panel position="top-right">
         <div style={{ display: 'flex', gap: 10 }}>
           <button
@@ -176,23 +177,21 @@ function App() {
     // 检查源节点是否是验证节点
     const sourceNode = nodes.find(n => n.id === params.source);
     let newEdge = { ...params, type: 'custom' };
-    
-    if (sourceNode?.data.type === 'aiQuery') {
+    if (sourceNode?.data.type === 'aiBoolean') {
       // 为验证节点的连接添加条件标识
       const condition = params.sourceHandle === 'success' ? 'success' : 'failure';
       newEdge.data = { condition };
     }
-    
     setEdges((eds) => addEdge(newEdge, eds));
   }, [setEdges, nodes]);
 
   const executeFlow = useCallback(async () => {
     if (nodes.length === 0) return;
-    
+
     setIsExecuting(true);
-    
+
     // 重置所有节点的执行状态
-    setNodes(prevNodes => 
+    setNodes(prevNodes =>
       prevNodes.map(node => ({
         ...node,
         data: {
@@ -202,15 +201,15 @@ function App() {
         }
       }))
     );
-    
+
     try {
       const executionService = new MidsceneExecutionService();
       const results = await executionService.executeFlow(nodes, edges);
       setExecutionResults(results);
-      
+
       // 更新节点状态和截图数据
       if (results.nodeResults) {
-        setNodes(prevNodes => 
+        setNodes(prevNodes =>
           prevNodes.map(node => {
             const nodeResult = results.nodeResults.find(r => r.nodeId === node.id);
             if (nodeResult) {
@@ -230,9 +229,9 @@ function App() {
     } catch (error) {
       console.error('执行失败:', error);
       alert(`执行失败: ${error.message}`);
-      
+
       // 标记所有节点为错误状态
-      setNodes(prevNodes => 
+      setNodes(prevNodes =>
         prevNodes.map(node => ({
           ...node,
           data: {
@@ -248,7 +247,7 @@ function App() {
 
   const generateCode = () => {
     if (nodes.length === 0) return '';
-    
+
     let code = `// MidsceneJS 自动生成代码
 import { PlaywrightAgent } from '@midscene/web';
 import playwright from 'playwright';
@@ -277,8 +276,8 @@ async function runTest() {
         case 'aiInput':
           code += `    await agent.aiInput('${config.target}', '${config.value}');\n`;
           break;
-        case 'aiQuery':
-          code += `    await agent.aiQuery('${config.instruction}');\n`;
+        case 'aiBoolean':
+          code += `    await agent.aiBoolean('${config.instruction}');\n`;
           break;
         case 'screenshot':
           code += `    await page.screenshot({ path: 'screenshot.png' });\n`;
@@ -298,7 +297,7 @@ async function runTest() {
 }
 
 runTest();`;
-    
+
     return code;
   };
 
@@ -310,8 +309,8 @@ runTest();`;
         edges: edges,
         timestamp: Date.now()
       };
-      
-      localStorage.setItem('midscene-flow-data', JSON.stringify(flowData));
+
+      localStorage.setItem(localDataStr, JSON.stringify(flowData));
       alert('流程图已保存到本地！');
     } catch (error) {
       console.error('保存流程图失败:', error);
@@ -322,10 +321,10 @@ runTest();`;
   // 从本地存储加载流程图
   const loadFlowFromLocal = () => {
     try {
-      const savedFlow = localStorage.getItem('midscene-flow-data');
+      const savedFlow = localStorage.getItem(localDataStr);
       if (savedFlow) {
         const flowData = JSON.parse(savedFlow);
-        
+
         if (flowData.nodes && flowData.edges) {
           setNodes(flowData.nodes);
           setEdges(flowData.edges);
@@ -347,7 +346,7 @@ runTest();`;
       {/* 节点面板 */}
       <div style={{ width: 250, background: '#f5f5f5', padding: 20, overflowY: 'auto' }}>
         <h3>🤖 MidsceneJS 节点</h3>
-        
+
         {/* 流程图保存按钮 */}
         <div style={{ marginBottom: 20 }}>
           <button
@@ -371,10 +370,10 @@ runTest();`;
         {Object.entries(getNodeTypesByCategory()).map(([category, nodeTypes]) => (
           <div key={category} style={{ marginBottom: 20 }}>
             <h4 style={{ fontSize: 14, margin: '10px 0 5px 0', color: '#666' }}>
-              {category === 'basic' ? '🌐 基础' : 
-               category === 'ai' ? '🤖 AI功能' : 
-               category === 'tool' ? '🛠️ 工具' : 
-               category === 'control' ? '🎮 流程控制' : category}
+              {category === 'basic' ? '🌐 基础' :
+                category === 'ai' ? '🤖 AI功能' :
+                  category === 'tool' ? '🛠️ 工具' :
+                    category === 'control' ? '🎮 流程控制' : category}
             </h4>
             {nodeTypes.map(nodeType => (
               <div

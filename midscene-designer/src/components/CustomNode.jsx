@@ -245,7 +245,7 @@ const CustomNode = ({ data, id }) => {
       )}
       
       {/* 根据节点类型显示不同的输出连接点 */}
-      {data.type === 'aiQuery' ? (
+      {data.type === 'aiBoolean' ? (
         <>
           <Handle 
             type="source" 

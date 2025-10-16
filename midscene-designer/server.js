@@ -4,8 +4,8 @@ import cors from 'cors';
 import { PlaywrightAgent } from '@midscene/web';
 import playwright from 'playwright';
 import dotenv from 'dotenv';
- 
-dotenv.config(); 
+
+dotenv.config();
 const app = express();
 const PORT = 3002;
 
@@ -13,6 +13,121 @@ app.use(cors());
 app.use(express.json());
 
 let browser, context, page, agent;
+
+// 节点执行器映射 - 将每个节点类型映射到对应的执行函数
+const nodeExecutors = {
+  navigate: async (data, { page }) => {
+    console.log(`🌐 导航到: ${data.config.url}`);
+    const startTime = Date.now();
+    await page.goto(data.config.url);
+    const executionTime = Date.now() - startTime;
+    return {
+      success: true,
+      message: `导航到 ${data.config.url}`,
+      executionTime,
+    };
+  },
+
+  aiTap: async (data, { agent }) => {
+    console.log(`👆 AI点击: "${data.config.target}"`);
+    const startTime = Date.now();
+    const aiResult = await agent.aiTap(data.config.target);
+    const executionTime = Date.now() - startTime;
+    return {
+      success: true,
+      message: `AI点击: ${data.config.target}`,
+      executionTime,
+      aiResult,
+    };
+  },
+
+  aiAction: async (data, { agent }) => {
+    console.log(`⌨️ AI Action: "${data.config.target}"`);
+    const startTime = Date.now();
+    const aiResult = await agent.aiInput(data.config.target);
+    const executionTime = Date.now() - startTime;
+    return {
+      success: true,
+      message: `AI aiAction: ${data.config.target}`,
+      executionTime,
+      aiResult,
+    };
+  },
+
+  aiInput: async (data, { agent }) => {
+    console.log(`⌨️ AI输入: "${data.config.target}" = "${data.config.value}"`);
+    const startTime = Date.now();
+    const aiResult = await agent.aiInput(data.config.value, data.config.target);
+    const executionTime = Date.now() - startTime;
+    return {
+      success: true,
+      message: `AI输入: ${data.config.value}`,
+      executionTime,
+      aiResult,
+    };
+  },
+
+  aiBoolean: async (data, { agent, page }) => {
+    console.log(`✅ AI验证: "${data.config.instruction}"`);
+    await page.waitForLoadState('networkidle');
+    const startTime = Date.now();
+    const assertResult = await agent.aiBoolean(data.config.instruction);
+    const executionTime = Date.now() - startTime;
+    console.log(`✅ 验证成功，将走成功分支`);
+    return {
+      success: true,
+      message: `AI验证成功: ${data.config.instruction}`,
+      executionTime,
+      data: assertResult,
+      branchType: assertResult ? 'success' : 'failure',
+    };
+  },
+
+  end: async (_, { browser, setBrowserState }) => {
+    console.log(`🏁 到达结束节点，关闭浏览器`);
+    if (browser) {
+      await browser.close();
+      setBrowserState(null, null, null, null);
+    }
+    return {
+      success: true,
+      message: '测试结束，浏览器已关闭',
+      executionTime: 0,
+    };
+  },
+
+  screenshot: async (_, { page }) => {
+    console.log(`📸 截取整张页面截图`);
+    const startTime = Date.now();
+    // 截图到内存中，不保存到本地文件
+    const screenshotBuffer = await page.screenshot({ type: 'png' });
+    // 转换为 base64 格式
+    const screenshotBase64 = `data:image/png;base64,${screenshotBuffer.toString(
+      'base64'
+    )}`;
+    const executionTime = Date.now() - startTime;
+    return {
+      success: true,
+      message: '截图已生成',
+      screenshotData: screenshotBase64,
+      executionTime,
+    };
+  },
+
+  waitForTimeout: async (data, { agent, page }) => {
+    console.log(`⏰ 等待: ${data.config.value}`);
+    const startTime = Date.now();
+    isNaN(Number(data.config.value))
+      ? await agent.aiWaitFor(data.config.value)
+      : await page.waitForTimeout(Number(data.config.value));
+    const executionTime = Date.now() - startTime;
+    return {
+      success: true,
+      message: `等待 ${data.config.value}ms`,
+      executionTime,
+    };
+  },
+};
 
 // 根据边连接关系构建节点执行流程
 function buildExecutionFlow(nodes, edges) {
@@ -89,148 +204,31 @@ app.post('/api/execute', async (req, res) => {
       console.log(
         `📍 [${executionCount}] 执行节点: ${currentNode.id} (${currentNode.data.type})`
       );
-
       try {
         let result;
         const { data } = currentNode;
-
-        switch (data.type) {
-          case 'navigate':
-            console.log(`🌐 导航到: ${data.config.url}`);
-            const navigationStartTime = Date.now();
-            await page.goto(data.config.url);
-            const navigationTime = Date.now() - navigationStartTime;
-            result = {
-              success: true,
-              message: `导航到 ${data.config.url}`,
-              executionTime: navigationTime,
-            };
-            break;
-
-          case 'aiTap':
-            console.log(`👆 AI点击: "${data.config.target}"`);
-            const tapStartTime = Date.now();
-            const tapResult = await agent.aiTap(data.config.target);
-            const tapTime = Date.now() - tapStartTime;
-            result = {
-              success: true,
-              message: `AI点击: ${data.config.target}`,
-              executionTime: tapTime,
-              aiResult: tapResult,
-            };
-            break;
-
-          case 'aiAction':
-            console.log(`⌨️ AI Action: "${data.config.target}" `);
-            const actionStartTime = Date.now();
-            const actionResult = await agent.aiInput(data.config.target);
-            const actionTime = Date.now() - actionStartTime;
-            result = {
-              success: true,
-              message: `AI aiAction: ${data.config.target}`,
-              executionTime: actionTime,
-              aiResult: actionResult,
-            };
-            break;
-
-          case 'aiInput':
-            console.log(
-              `⌨️ AI输入: "${data.config.target}" = "${data.config.value}"`
-            );
-            const inputStartTime = Date.now();
-            const inputResult = await agent.aiInput(
-              data.config.value,
-              data.config.target
-            );
-            const inputTime = Date.now() - inputStartTime;
-            result = {
-              success: true,
-              message: `AI输入: ${data.config.value}`,
-              executionTime: inputTime,
-              aiResult: inputResult,
-            };
-            break;
-          case 'aiQuery':
-            console.log(`✅ AI验证: "${data.config.instruction}"`);
-            await page.waitForLoadState('networkidle');
-            const assertStartTime = Date.now();
-            try {
-              const assertResult = await agent.aiQuery(data.config.instruction);
-              const assertTime = Date.now() - assertStartTime;
-              result = {
-                success: true,
-                message: `AI验证成功: ${data.config.instruction}`,
-                executionTime: assertTime,
-                data: assertResult,
-                branchType: 'success',
-              };
-              console.log(`✅ 验证成功，将走成功分支`);
-            } catch (assertError) {
-              const assertTime = Date.now() - assertStartTime;
-              result = {
-                success: false,
-                message: `AI验证失败: ${assertError.message}`,
-                executionTime: assertTime,
-                error: assertError.message,
-                branchType: 'failure',
-              };
-              console.log(`❌ 验证失败，将走失败分支`);
-            }
-            break;
-
-          case 'end':
-            console.log(`🏁 到达结束节点，关闭浏览器`);
-            if (browser) {
-              await browser.close();
-              browser = null;
-              context = null;
-              page = null;
-              agent = null;
-            }
-            result = {
-              success: true,
-              message: '测试结束，浏览器已关闭',
-              executionTime: 0,
-            };
-            break;
-
-          case 'screenshot':
-            console.log(`📸 截取整张页面截图`);
-            const screenshotStartTime = Date.now();
-            // 截图到内存中，不保存到本地文件
-            const screenshotBuffer = await page.screenshot({ type: 'png' });
-            // 转换为 base64 格式
-            const screenshotBase64 = `data:image/png;base64,${screenshotBuffer.toString(
-              'base64'
-            )}`;
-            const screenshotTime = Date.now() - screenshotStartTime;
-            result = {
-              success: true,
-              message: '截图已生成',
-              screenshotData: screenshotBase64,
-              executionTime: screenshotTime,
-            };
-            break; 
-
-          case 'waitForTimeout':
-            console.log(`⏰ 等待: ${data.config.value}`);
-            const waitStartTime = Date.now();
-            isNaN(Number(data.config.value))
-              ? await agent.aiWaitFor(data.config.value)
-              : await page.waitForTimeout(Number(data.config.value));
-            const actualWaitTime = Date.now() - waitStartTime;
-            result = {
-              success: true,
-              message: `等待 ${data.config.value}ms`,
-              executionTime: actualWaitTime,
-            };
-            break;
-
-          default:
-            result = {
-              success: false,
-              message: `不支持的节点类型: ${data.type}`,
-            };
+        // 执行对应的节点处理器
+        const executor = nodeExecutors[data.type];
+        if (executor) {
+          // 创建执行上下文，传递必要的依赖
+          const executionContext = {
+            page,
+            agent,
+            browser,
+            context,
+            setBrowserState: (newBrowser, newContext, newPage, newAgent) => {
+              browser = newBrowser;
+              context = newContext;
+              page = newPage;
+              agent = newAgent;
+            },
+          };
+          result = await executor(data, executionContext);
+        } else {
+          result = {
+            success: false,
+            message: `不支持的节点类型: ${data.type}`,
+          };
         }
 
         results.push({ nodeId: currentNode.id, ...result });
