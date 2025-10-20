@@ -374,7 +374,7 @@ export default function ButtonExample() {
 
                   组建:<Icon/>
                   使用描述：
-                  代码示例：import React from 'react';
+                  代码示例：import React, { useState } from 'react';
 import {
   LettersTIcon,
   LettersDIcon,
@@ -391,33 +391,66 @@ import {
   ComponentRadioIcon,
   ComponentStepsIcon,
 } from 'tdesign-icons-react';
-import { Space } from 'tdesign-react';
+import { Space, Slider } from 'tdesign-react';
 
 export default function IconExample() {
+  const [strokeWidth, setStrokeWidth] = useState(2);
+  const handleClick = () => {
+    console.log('icon is clicked');
+  };
   return (
     <Space direction="vertical">
+      <Slider value={strokeWidth} onChange={(v) => setStrokeWidth(Number(v))} min={0.5} max={2.5} step={0.5} />
       <Space
         breakLine
         style={{
           color: `var(--td-brand-color)`,
         }}
       >
-        <LettersTIcon />
-        <LettersDIcon />
-        <LettersEIcon />
-        <LettersSIcon />
-        <LettersIIcon />
-        <LettersGIcon />
-        <LettersNIcon />
+        <LettersTIcon strokeWidth={strokeWidth} onClick={handleClick} />
+        <LettersDIcon strokeWidth={strokeWidth} />
+        <LettersEIcon strokeWidth={strokeWidth} />
+        <LettersSIcon strokeWidth={strokeWidth} />
+        <LettersIIcon strokeWidth={strokeWidth} />
+        <LettersGIcon strokeWidth={strokeWidth} />
+        <LettersNIcon strokeWidth={strokeWidth} />
       </Space>
       <Space breakLine>
-        <ComponentCheckboxIcon />
-        <ComponentBreadcrumbIcon />
-        <ComponentInputIcon />
-        <ComponentSwitchIcon />
-        <ComponentDropdownIcon />
-        <ComponentRadioIcon />
-        <ComponentStepsIcon />
+        <ComponentCheckboxIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
+        <ComponentBreadcrumbIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
+        <ComponentInputIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
+        <ComponentSwitchIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
+        <ComponentDropdownIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
+        <ComponentRadioIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
+        <ComponentStepsIcon
+          strokeWidth={strokeWidth}
+          strokeColor={['currentColor', '#0052d9']}
+          fillColor={['#bbd3fb', '#f78d94']}
+        />
       </Space>
     </Space>
   );
@@ -3867,7 +3900,7 @@ function Multiple() {
         <SubMenu value="0" title="电器">
           <SubMenu value="0-1" title="电视">
             <MenuItem value="xiaomi">小米电视</MenuItem>
-            <MenuItem value="soni">索尼电视</MenuItem>
+            <MenuItem value="sony">索尼电视</MenuItem>
             <MenuItem value="huawei">华为电视</MenuItem>
           </SubMenu>
           <MenuItem value="0-2">
@@ -6730,6 +6763,106 @@ export default function Example() {
 }
 
                   ===SPLIT===组建:<Cascader/>
+                  使用描述：可以自定义下拉选项的内容展示
+                  代码示例：import React, { useMemo, useState } from 'react';
+import { Cascader, Space } from 'tdesign-react';
+
+const optionRender = ({ item }) => (
+  <div
+    className="tdesign-demo__user-option"
+    style={{
+      display: 'flex',
+    }}
+  >
+    <img
+      src="https://tdesign.gtimg.com/site/avatar.jpg"
+      style={{
+        maxWidth: 28,
+        maxHeight: 28,
+        borderRadius: '50%',
+      }}
+    />
+    <div
+      className="tdesign-demo__user-option-info"
+      style={{
+        marginLeft: 16,
+        lineHeight: '28px',
+      }}
+    >
+      <span>{item.label}</span>
+    </div>
+  </div>
+);
+const getDeepOptions = (options) => {
+  if (!options) return null;
+  return options.map((item) => ({
+    ...item,
+    children: getDeepOptions(item.children),
+    // content 自定义下拉选项关键代码
+    content: optionRender({
+      item,
+    }),
+  }));
+};
+export default function Example() {
+  const [value, setValue] = useState([]);
+  const [options] = useState([
+    {
+      label: '选项一',
+      value: '1',
+      children: [
+        {
+          label: '子选项一',
+          value: '1.1',
+        },
+        {
+          label: '子选项二',
+          value: '1.2',
+        },
+        {
+          label: '子选项三',
+          value: '1.3',
+        },
+      ],
+    },
+    {
+      label: '选项二',
+      value: '2',
+      children: [
+        {
+          label: '子选项一',
+          value: '2.1',
+        },
+        {
+          label: '子选项二',
+          value: '2.2',
+        },
+      ],
+    },
+  ]);
+  const onChange = (value) => {
+    setValue(value);
+  };
+  const optionsData = useMemo(() => getDeepOptions(options), [options]);
+  return (
+    <Space direction="vertical">
+      {/* 方式一：使用 options 自定义下拉选项内容 */}
+      <Cascader options={optionsData} filterable onChange={onChange} value={value} size="medium" clearable />
+      {/* 方式二：使用option传参自定义下拉选项内容 */}
+      <Cascader
+        option={optionRender}
+        options={options}
+        filterable
+        onChange={onChange}
+        value={value}
+        size="medium"
+        clearable
+      />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<Cascader/>
                   使用描述：可以自定义输入框中显示的选中项内容展示
                   代码示例：import React from 'react';
 import { Space, Cascader, Tag } from 'tdesign-react';
@@ -9413,7 +9546,7 @@ export default function BaseForm() {
 }
 
                   ===SPLIT===组建:<Form/>
-                  使用描述：可以使用 disabled 属性禁用整个表单项。对于自定义组件，可以使用 formControlledComponents 设置为允许 Form 代理禁用状态。
+                  使用描述：可以使用 disabled 属性禁用整个表单项。
                   代码示例：import React, { useState } from 'react';
 import {
   Form,
@@ -9918,11 +10051,11 @@ export default function BaseForm() {
                   ===SPLIT===组建:<Form/>
                   使用描述：可使用 Form.FormList 组件创建动态表单。
                   代码示例：import React from 'react';
-import { Form, Input, Button, Select } from 'tdesign-react';
 import { MinusCircleIcon } from 'tdesign-icons-react';
+import { Button, Form, Input, Select } from 'tdesign-react';
 
 const { FormItem, FormList } = Form;
-const provinceOptions = [
+const cityOptions = [
   {
     label: '北京',
     value: 'bj',
@@ -9947,24 +10080,40 @@ export default function BaseForm() {
     console.log('allFields', allFields);
   }
   return (
-    <Form form={form} onSubmit={onSubmit}>
+    <Form
+      form={form}
+      onSubmit={onSubmit}
+      initialData={{
+        address: [
+          {
+            city: 'bj',
+            area: '海淀区',
+          },
+          {
+            city: 'sh',
+            area: '浦东区',
+          },
+        ],
+      }}
+      resetType="initial"
+    >
       <FormList name="address">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
               <FormItem key={key}>
                 <FormItem
-                  {...restField}
-                  name={[name, 'province']}
-                  label="省份"
+                  name={[name, 'city']}
+                  label="城市"
                   rules={[
                     {
                       required: true,
                       type: 'error',
                     },
                   ]}
+                  {...restField}
                 >
-                  <Select options={provinceOptions}></Select>
+                  <Select options={cityOptions}></Select>
                 </FormItem>
                 <FormItem
                   {...restField}
@@ -10001,12 +10150,12 @@ export default function BaseForm() {
                 variant="dashed"
                 onClick={() =>
                   add({
-                    province: 'bj',
-                    area: 'tzmax',
+                    city: 'sz',
+                    area: '南山区',
                   })
                 }
               >
-                Add field
+                新增指定项
               </Button>
             </FormItem>
           </>
@@ -12825,10 +12974,11 @@ export default RemoteSearchSelect;
                   ===SPLIT===组建:<Select/>
                   使用描述：允许用户创建新条目，需配合 filterable 使用。
                   代码示例：import React, { useState } from 'react';
-import { Select } from 'tdesign-react';
+import { Select, Space } from 'tdesign-react';
 
 export default function SelectCreatable() {
   const [value, setValue] = useState('');
+  const [multipleValue, setMultipleValue] = useState([]);
   const [options, changeOptions] = useState([
     {
       label: '选项一',
@@ -12846,6 +12996,9 @@ export default function SelectCreatable() {
   const onChange = (value) => {
     setValue(value);
   };
+  const onMultipleChange = (value) => {
+    setMultipleValue(value);
+  };
   const handleOnCreate = (value) => {
     changeOptions(
       options.concat([
@@ -12857,17 +13010,36 @@ export default function SelectCreatable() {
     );
   };
   return (
-    <Select
-      value={value}
-      onChange={onChange}
+    <Space
+      breakLine
       style={{
-        width: '40%',
+        width: '100%',
       }}
-      options={options}
-      filterable
-      creatable
-      onCreate={handleOnCreate}
-    />
+    >
+      <Select
+        value={value}
+        onChange={onChange}
+        style={{
+          width: '40%',
+        }}
+        options={options}
+        filterable
+        creatable
+        onCreate={handleOnCreate}
+      />
+      <Select
+        value={multipleValue}
+        onChange={onMultipleChange}
+        style={{
+          width: '40%',
+        }}
+        options={options}
+        filterable
+        creatable
+        multiple
+        onCreate={handleOnCreate}
+      />
+    </Space>
   );
 }
 
@@ -16146,6 +16318,9 @@ export default function Example() {
     <TreeSelect
       data={options}
       clearable
+      treeProps={{
+        checkStrictly: true,
+      }}
       value={value}
       onChange={(val) => {
         setValue(val);
@@ -21128,8 +21303,8 @@ export default function AvifImage() {
                   组建:<ImageViewer/>
                   使用描述：通过图片缩略图，查看完整图片。
                   代码示例：import React from 'react';
-import { ImageViewer, Image, Space } from 'tdesign-react';
 import { BrowseIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer, Space } from 'tdesign-react';
 
 const img = 'https://tdesign.gtimg.com/demo/demo-image-1.png';
 export default function BasicImageViewer() {
@@ -21144,7 +21319,7 @@ export default function BasicImageViewer() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onClick={open}
+        onClick={() => open()}
       >
         <span>
           <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21170,10 +21345,7 @@ export default function BasicImageViewer() {
   };
   return (
     <Space breakLine size={16}>
-      <ImageViewer trigger={trigger} images={[img]} />
-
-      {/* TODO: fix visible=true can not show image previewer */}
-      {/* <ImageViewer images={[img]} visible={true} /> */}
+      <ImageViewer trigger={trigger} images={[img]} zIndex={10000} />
     </Space>
   );
 }
@@ -21197,7 +21369,7 @@ export default function BasicImageViewer() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onClick={open}
+        onClick={() => open()}
       >
         <span>
           <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21231,19 +21403,19 @@ export default function BasicImageViewer() {
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：通过点击文字按钮，查看图片。
                   代码示例：import React from 'react';
-import { ImageViewer, Button } from 'tdesign-react';
+import { Button, ImageViewer } from 'tdesign-react';
 
 const img = 'https://tdesign.gtimg.com/demo/demo-image-1.png';
 export default function BasicImageViewer() {
-  const trigger = ({ open }) => <Button onClick={open}>预览单张图片</Button>;
-  return <ImageViewer trigger={trigger} images={[img]} />;
+  const trigger = ({ open }) => <Button onClick={() => open()}>预览单张图片</Button>;
+  return <ImageViewer trigger={trigger} images={[img]} zIndex={10000} />;
 }
 
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：当有多个图片时，在查看器内可以展开预览所有图片。
                   代码示例：import React from 'react';
-import { Image, ImageViewer, Space } from 'tdesign-react';
 import { BrowseIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer, Space } from 'tdesign-react';
 
 const imgH = 'https://tdesign.gtimg.com/demo/demo-image-3.png';
 const imgV = 'https://tdesign.gtimg.com/demo/demo-image-2.png';
@@ -21272,7 +21444,7 @@ export default function BasicImageViewer() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onClick={open}
+              onClick={() => open(index)}
             >
               <span>
                 <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21296,7 +21468,7 @@ export default function BasicImageViewer() {
             />
           );
         };
-        return <ImageViewer key={index} trigger={trigger} images={images} defaultIndex={index} />;
+        return <ImageViewer key={index} trigger={trigger} images={images} zIndex={10000} />;
       })}
     </Space>
   );
@@ -21305,8 +21477,8 @@ export default function BasicImageViewer() {
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：通过相册封面图，触发预览多张图片。
                   代码示例：import React from 'react';
-import { Image, ImageViewer, Space } from 'tdesign-react';
 import { BrowseIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer, Space } from 'tdesign-react';
 
 const imgH = 'https://tdesign.gtimg.com/demo/demo-image-3.png';
 const imgV = 'https://tdesign.gtimg.com/demo/demo-image-2.png';
@@ -21323,7 +21495,7 @@ export default function BasicImageViewer() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onClick={open}
+        onClick={() => open()}
       >
         <span>
           <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21374,7 +21546,7 @@ export default function BasicImageViewer() {
   const images = [img, imgV, imgH];
   return (
     <Space breakLine size={16}>
-      <ImageViewer trigger={trigger} images={images} title="相册封面标题" />
+      <ImageViewer trigger={trigger} images={images} title="相册封面标题" zIndex={10000} />
     </Space>
   );
 }
@@ -21382,8 +21554,8 @@ export default function BasicImageViewer() {
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：在原图未成功加载之前，渐进显示加载状态。
                   代码示例：import React from 'react';
-import { Image, Space, ImageViewer } from 'tdesign-react';
 import { BrowseIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer, Space } from 'tdesign-react';
 
 const imgV = 'https://tdesign.gtimg.com/demo/demo-image-2.png';
 const img = 'https://tdesign.gtimg.com/demo/demo-image-1.png';
@@ -21399,7 +21571,7 @@ export default function BasicImageViewer() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onClick={open}
+        onClick={() => open()}
       >
         <span>
           <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21431,8 +21603,8 @@ export default function BasicImageViewer() {
   ];
   return (
     <Space breakLine size={16}>
-      <ImageViewer trigger={trigger} images={images} />
-      <ImageViewer trigger={trigger} images={[images[0].mainImage]} />
+      <ImageViewer trigger={trigger} images={images} zIndex={10000} />
+      <ImageViewer trigger={trigger} images={[images[0].mainImage]} zIndex={10000} />
     </Space>
   );
 }
@@ -21440,8 +21612,8 @@ export default function BasicImageViewer() {
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：加载失败的图片，用占位图显示，并提供相应的失败说明。可使用默认占位图，或自定义占位图。
                   代码示例：import React from 'react';
-import { Image, ImageViewer, Space } from 'tdesign-react';
 import { BrowseIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer, Space } from 'tdesign-react';
 
 const img = 'https://tdesign.gtimg.com/demo/demo-image-1.png';
 export default function BasicImageViewer() {
@@ -21465,7 +21637,7 @@ export default function BasicImageViewer() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onClick={open}
+              onClick={() => open(index)}
             >
               <span>
                 <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21489,7 +21661,7 @@ export default function BasicImageViewer() {
             />
           );
         };
-        return <ImageViewer key={imgSrc} trigger={trigger} images={images} defaultIndex={index} />;
+        return <ImageViewer key={imgSrc} trigger={trigger} images={images} zIndex={10000} />;
       })}
     </Space>
   );
@@ -21498,8 +21670,8 @@ export default function BasicImageViewer() {
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：通过操作栏相关按钮，点击查看图片。
                   代码示例：import React from 'react';
-import { Image, ImageViewer, Popup, Space } from 'tdesign-react';
 import { BrowseIcon, EllipsisIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer, Popup, Space } from 'tdesign-react';
 
 const imgH = 'https://tdesign.gtimg.com/demo/demo-image-3.png';
 const imgV = 'https://tdesign.gtimg.com/demo/demo-image-2.png';
@@ -21535,7 +21707,7 @@ export default function BasicImageViewer() {
   const trigger = ({ open }) => {
     const listCommon = (
       <ImageViewerIconList
-        onClick={open}
+        onClick={() => open()}
         list={images.map((i, index) => ({
           label: `图片${index}`,
         }))}
@@ -21551,7 +21723,7 @@ export default function BasicImageViewer() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onClick={open}
+        onClick={() => open()}
       >
         <span>
           <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21607,7 +21779,7 @@ export default function BasicImageViewer() {
               cursor: 'pointer',
             }}
           >
-            <BrowseIcon size={16} onClick={open} />
+            <BrowseIcon size={16} onClick={() => open()} />
             <Popup
               trigger="click"
               content={listCommon}
@@ -21627,7 +21799,7 @@ export default function BasicImageViewer() {
   };
   return (
     <Space breakLine size={16}>
-      <ImageViewer trigger={trigger} images={images} title="相册封面标题" />
+      <ImageViewer trigger={trigger} images={images} title="相册封面标题" zIndex={10000} />
     </Space>
   );
 }
@@ -21635,8 +21807,8 @@ export default function BasicImageViewer() {
                   ===SPLIT===组建:<ImageViewer/>
                   使用描述：开启 isSvg 配置，可将SVG插入Shadow不受外部样式干扰，可以支持到SVG内的链接等交互，有些SVG图片背景会是完全透明，使用时再展示的盒子处理即可
                   代码示例：import React from 'react';
-import { ImageViewer, Image } from 'tdesign-react';
 import { BrowseIcon } from 'tdesign-icons-react';
+import { Image, ImageViewer } from 'tdesign-react';
 
 const img = [
   {
@@ -21659,7 +21831,7 @@ const Svg = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onClick={open}
+        onClick={() => open()}
       >
         <span>
           <BrowseIcon size="16px" name={'browse'} /> 预览
@@ -21685,7 +21857,7 @@ const Svg = () => {
   };
   return (
     <div>
-      <ImageViewer trigger={trigger} images={img} />
+      <ImageViewer trigger={trigger} images={img} zIndex={10000} />
     </div>
   );
 };
@@ -22043,7 +22215,7 @@ export default function BasicList() {
 
                   ===SPLIT===组建:<List/>
                   使用描述：当列表较长时，可以配置滚动条及事件来进行滚动处理
-                  代码示例：import React, { useState, useEffect } from 'react';
+                  代码示例：import React, { useEffect, useState } from 'react';
 import { List } from 'tdesign-react';
 
 const { ListItem, ListItemMeta } = List;
@@ -22051,15 +22223,15 @@ export default function BasicList() {
   const [listData, setListData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageNum, setPageNum] = useState(1);
-  const pageSize = 5;
   const dataSource = [];
-  const total = 30;
+  const total = 3000;
+  const pageSize = 50;
   for (let i = 0; i < total; i++) {
     dataSource.push({
       id: i,
       content: '列表内容列表内容列表内容',
       icon: 'https://tdesign.gtimg.com/list-icon.png',
-      title: '列表主内容',
+      title: `列表标题 ${i + 1}`,
     });
   }
   const height = 300;
@@ -22113,7 +22285,7 @@ export default function BasicList() {
                   ===SPLIT===组建:<List/>
                   使用描述：支持开启虚拟滚动，适用于一次性加载长列表的场景
                   代码示例：import React, { useEffect, useRef, useState } from 'react';
-import { List, Space, Button } from 'tdesign-react';
+import { Button, List, Space } from 'tdesign-react';
 
 const { ListItem, ListItemMeta } = List;
 const imageUrl = 'https://tdesign.gtimg.com/site/avatar.jpg';
@@ -22169,231 +22341,6 @@ const VirtualScroll = () => {
   );
 };
 export default VirtualScroll;
-
-                  ===SPLIT===组建:<List/>
-                  使用描述：斑马纹区分列表 
-                  代码示例：import React from 'react';
-import { List } from 'tdesign-react';
-
-const { ListItem } = List;
-export default function BasicList() {
-  const listData = [
-    {
-      id: 1,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 2,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 3,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 4,
-      content: '列表内容列表内容列表内容',
-    },
-  ];
-  return (
-    <List stripe={true} split={false}>
-      {listData.map((item) => (
-        <ListItem key={item.id}>{item.content}</ListItem>
-      ))}
-    </List>
-  );
-}
-
-                  ===SPLIT===组建:<List/>
-                  使用描述：异步加载的列表 
-                  代码示例：import React, { useState } from 'react';
-import { List, Radio } from 'tdesign-react';
-
-const { ListItem } = List;
-export default function BasicList() {
-  const [asyncLoading, setAsyncLoading] = useState('');
-  const listData = [
-    {
-      id: 1,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 2,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 3,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 4,
-      content: '列表内容列表内容列表内容',
-    },
-  ];
-  const handleAsyncLoading = (val) => {
-    if (val === 'loading-custom') {
-      setAsyncLoading(
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: 12,
-          }}
-        >
-          {' '}
-          没有更多数据了{' '}
-        </div>,
-      );
-    } else {
-      setAsyncLoading(val);
-    }
-  };
-  const onLoadMore = ({ e }) => {
-    console.log(e);
-    handleAsyncLoading('loading');
-  };
-  return (
-    <>
-      <Radio.Group size="large" onChange={(value) => handleAsyncLoading(value)}>
-        <Radio.Button value="load-more">加载更多</Radio.Button>
-        <Radio.Button value="loading">加载中</Radio.Button>
-        <Radio.Button value="loading-custom">自定义加载更多</Radio.Button>
-        <Radio.Button value="">加载完成</Radio.Button>
-      </Radio.Group>
-      <div
-        style={{
-          marginBottom: '16px',
-        }}
-      ></div>
-      <List
-        asyncLoading={asyncLoading}
-        onLoadMore={({ e }) =>
-          onLoadMore({
-            e,
-          })
-        }
-      >
-        {listData.map((item) => (
-          <ListItem key={item.id}>{item.content}</ListItem>
-        ))}
-      </List>
-    </>
-  );
-}
-
-                  ===SPLIT===组建:<List/>
-                  使用描述：带头部及尾部的列表 
-                  代码示例：import React from 'react';
-import { List } from 'tdesign-react';
-
-const { ListItem } = List;
-export default function BasicList() {
-  const listData = [
-    {
-      id: 1,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 2,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 3,
-      content: '列表内容列表内容列表内容',
-    },
-    {
-      id: 4,
-      content: '列表内容列表内容列表内容',
-    },
-  ];
-  return (
-    <>
-      <List header="这里是 Header" footer="这里是 Footer">
-        {listData.map((item) => (
-          <ListItem key={item.id}>{item.content}</ListItem>
-        ))}
-      </List>
-      <div
-        style={{
-          marginBottom: '16px',
-        }}
-      ></div>
-      <List header={<p>通过 TNode 插入的 Header</p>} footer={<p>通过 TNode 插入的 Footer</p>}>
-        {listData.map((item) => (
-          <ListItem key={item.id}>{item.content}</ListItem>
-        ))}
-      </List>
-    </>
-  );
-}
-
-                  ===SPLIT===组建:<List/>
-                  使用描述：带滚动事件的列表 
-                  代码示例：import React, { useState, useEffect } from 'react';
-import { List } from 'tdesign-react';
-
-const { ListItem, ListItemMeta } = List;
-export default function BasicList() {
-  const [listData, setListData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [pageNum, setPageNum] = useState(1);
-  const pageSize = 5;
-  const dataSource = [];
-  const total = 30;
-  for (let i = 0; i < total; i++) {
-    dataSource.push({
-      id: i,
-      content: '列表内容列表内容列表内容',
-      icon: 'https://tdesign.gtimg.com/list-icon.png',
-      title: '列表主内容',
-    });
-  }
-  const height = 300;
-  const style = {
-    height: `${height}px`,
-    overflow: 'auto',
-  };
-
-  // 模拟请求
-  const fetchData = async (pageInfo) => {
-    if (isLoading) return;
-    setIsLoading(true);
-    try {
-      setTimeout(() => {
-        const { pageNum, pageSize } = pageInfo;
-        const newDataSource = dataSource.slice((pageNum - 1) * pageSize, pageNum * pageSize);
-        setListData(listData.concat(newDataSource));
-        setPageNum(pageNum);
-        setIsLoading(false);
-      }, 300);
-    } catch (err) {
-      setListData([]);
-    }
-  };
-  const handleScroll = ({ scrollBottom }) => {
-    if (!scrollBottom && listData.length < total) {
-      fetchData({
-        pageNum: pageNum + 1,
-        pageSize,
-      });
-    }
-  };
-  useEffect(() => {
-    fetchData({
-      pageNum,
-      pageSize,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return (
-    <List asyncLoading={isLoading ? 'loading' : ''} size="small" style={style} onScroll={handleScroll}>
-      {listData.map((item) => (
-        <ListItem key={item.id}>
-          <ListItemMeta image={item.icon} title={item.title} description={item.content} />
-        </ListItem>
-      ))}
-    </List>
-  );
-}
 
                   组建:<Loading/>
                   使用描述：加载过程中只有图标显示。适用于打开页面或操作完成后模块内等待刷新的加载场景。
@@ -22739,6 +22686,334 @@ export default function LineProgress() {
         </Space>
       </Space>
     </Space>
+  );
+}
+
+                  组建:<QRCode/>
+                  使用描述：基本用法 
+                  代码示例：import React from 'react';
+import { Input, QRCode, Space } from 'tdesign-react';
+
+export default function QRCodeExample() {
+  const [text, setText] = React.useState('https://tdesign.tencent.com/');
+  return (
+    <Space direction="vertical" align="center">
+      <QRCode value={text || '-'} />
+
+      <Input placeholder="-" value={text} onChange={(v) => setText(v)} />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：带 Icon 的二维码。
+                  代码示例：import React from 'react';
+import { QRCode } from 'tdesign-react';
+
+export default function QRCodeExample() {
+  return (
+    <QRCode
+      icon="https://tdesign.gtimg.com/site/tdesign-logo.png"
+      iconSize={30}
+      value={'https://tdesign.tencent.com/'}
+    />
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：可以通过 status 的值控制二维码的状态，提供了 active、expired、loading、scanned 四个值
+                  代码示例：import React from 'react';
+import { QRCode, Space } from 'tdesign-react';
+
+const value = 'https://tdesign.tencent.com/';
+export default function QRCodeExample() {
+  return (
+    <Space>
+      <QRCode value={value} status="loading" />
+      <QRCode value={value} status="expired" onRefresh={() => console.log('refresh')} />
+      <QRCode value={value} status="scanned" />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：可以通过 statusRender 的值控制二维码不同状态的渲染逻辑。
+                  代码示例：import React from 'react';
+import { RefreshIcon, CheckCircleFilledIcon, CloseCircleFilledIcon } from 'tdesign-icons-react';
+import { QRCode, Space, Loading } from 'tdesign-react';
+
+const value = 'https://tdesign.tencent.com/';
+const customStatusRender = (info) => {
+  switch (info.status) {
+    case 'expired':
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
+          <p
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              columnGap: '8px',
+            }}
+          >
+            <CloseCircleFilledIcon
+              style={{
+                color: 'red',
+              }}
+              size={16}
+            />
+            <span>二维码过期</span>
+          </p>
+          <p
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              columnGap: '8px',
+              color: '#0052d9',
+              cursor: 'pointer',
+              lineHeight: '32px',
+            }}
+          >
+            <RefreshIcon size={16} />
+            <span>点击刷新</span>
+          </p>
+        </div>
+      );
+    case 'loading':
+      return (
+        <Space direction="vertical">
+          <Loading size="32px" />
+          <p>加载中...</p>
+        </Space>
+      );
+    case 'scanned':
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            columnGap: '8px',
+          }}
+        >
+          <CheckCircleFilledIcon
+            style={{
+              color: '#2ba471',
+            }}
+            size={16}
+          />
+          <span>已扫描</span>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
+export default function QRCodeExample() {
+  return (
+    <Space>
+      <QRCode value={value} status="loading" statusRender={customStatusRender} />
+      <QRCode
+        value={value}
+        status="expired"
+        onRefresh={() => console.log('refresh')}
+        statusRender={customStatusRender}
+      />
+      <QRCode value={value} status="scanned" statusRender={customStatusRender} />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：通过设置 type 自定义渲染结果，提供 canvas 和 svg 两个选项。
+                  代码示例：import React from 'react';
+import { QRCode, Space } from 'tdesign-react';
+
+export default function QRCodeExample() {
+  return (
+    <Space>
+      <QRCode type="canvas" value={'https://tdesign.tencent.com/'} />
+      <QRCode type="svg" value={'https://tdesign.tencent.com/'} />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：通过设置 color 自定义二维码颜色，通过设置 bgColor 自定义背景颜色。
+                  代码示例：import React from 'react';
+import { QRCode, Space } from 'tdesign-react';
+
+export default function QRCodeExample() {
+  return (
+    <Space>
+      <QRCode type="canvas" value={'https://tdesign.tencent.com/'} color="#0052D9" bgColor="#fff" />
+      <QRCode type="svg" value={'https://tdesign.tencent.com/'} bgColor="#D9E1FF" color="#0052D9" />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：自定义尺寸。
+                  代码示例：import React, { useState } from 'react';
+import { MinusIcon, AddIcon } from 'tdesign-icons-react';
+import { Button, QRCode, Space } from 'tdesign-react';
+
+const MIN_SIZE = 48;
+const MAX_SIZE = 300;
+export default function QRCodeExample() {
+  const [size, setSize] = useState(160);
+  const increase = () => {
+    setSize((prevSize) => {
+      const newSize = prevSize + 10;
+      if (newSize >= MAX_SIZE) {
+        return MAX_SIZE;
+      }
+      return newSize;
+    });
+  };
+  const decline = () => {
+    setSize((prevSize) => {
+      const newSize = prevSize - 10;
+      if (newSize <= MIN_SIZE) {
+        return MIN_SIZE;
+      }
+      return newSize;
+    });
+  };
+  return (
+    <>
+      <Space
+        style={{
+          marginBottom: 16,
+          userSelect: 'none',
+        }}
+      >
+        <Button onClick={decline} disabled={size <= MIN_SIZE} icon={<MinusIcon />}>
+          Smaller
+        </Button>
+        <Button onClick={increase} disabled={size >= MAX_SIZE} icon={<AddIcon />}>
+          Larger
+        </Button>
+      </Space>
+      <p
+        style={{
+          minHeight: '160px',
+        }}
+      >
+        <QRCode
+          level="H"
+          size={size}
+          iconSize={size / 4}
+          value="https://tdesign.tencent.com/"
+          icon="https://tdesign.gtimg.com/site/tdesign-logo.png"
+        />
+      </p>
+    </>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：下载二维码的简单实现。
+                  代码示例：import React from 'react';
+import { Button, QRCode, Radio, Space } from 'tdesign-react';
+
+function doDownload(url, fileName) {
+  const a = document.createElement('a');
+  a.download = fileName;
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+const downloadCanvasQRCode = () => {
+  const canvas = document.getElementById('qrcode')?.querySelector('canvas');
+  if (canvas) {
+    const url = canvas.toDataURL();
+    doDownload(url, 'QRCode.png');
+  }
+};
+const downloadSvgQRCode = () => {
+  const svg = document.getElementById('qrcode')?.querySelector('svg');
+  const svgData = new XMLSerializer().serializeToString(svg);
+  const blob = new Blob([svgData], {
+    type: 'image/svg+xml;charset=utf-8',
+  });
+  const url = URL.createObjectURL(blob);
+  doDownload(url, 'QRCode.svg');
+};
+export default function QRCodeExample() {
+  const [renderType, setRenderType] = React.useState('canvas');
+  return (
+    <Space direction="vertical">
+      <Radio.Group value={renderType} variant="default-filled" onChange={(val) => setRenderType(val)}>
+        <Radio.Button value="canvas">canvas</Radio.Button>
+        <Radio.Button value="svg">svg</Radio.Button>
+      </Radio.Group>
+
+      <div id="qrcode">
+        <QRCode
+          type={renderType}
+          value="https://tdesign.tencent.com/"
+          style={{
+            marginBottom: 16,
+          }}
+          icon="https://tdesign.gtimg.com/site/tdesign-logo.png"
+        />
+        <Button onClick={renderType === 'canvas' ? downloadCanvasQRCode : downloadSvgQRCode}>Download</Button>
+      </div>
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：通过设置 level 调整不同的容错等级。
+                  代码示例：import React, { useState } from 'react';
+import { QRCode, Radio, Space } from 'tdesign-react';
+
+export default function QRCodeExample() {
+  const [level, setLevel] = useState('L');
+  const onChange = (value) => {
+    setLevel(value);
+  };
+  return (
+    <Space direction="vertical">
+      <Radio.Group value={level} variant="default-filled" onChange={onChange}>
+        <Radio.Button value="L">L</Radio.Button>
+        <Radio.Button value="M">M</Radio.Button>
+        <Radio.Button value="Q">Q</Radio.Button>
+        <Radio.Button value="H">H</Radio.Button>
+      </Radio.Group>
+
+      <QRCode
+        style={{
+          marginBottom: 16,
+        }}
+        level={level}
+        value={'https://tdesign.gtimg.com/site/tdesign-logo.png'}
+      />
+    </Space>
+  );
+}
+
+                  ===SPLIT===组建:<QRCode/>
+                  使用描述：带气泡卡片的例子。
+                  代码示例：import React from 'react';
+import { Popup, QRCode, Button } from 'tdesign-react';
+
+export default function QRCodeExample() {
+  return (
+    <Popup
+      overlayInnerStyle={{
+        padding: '12px',
+      }}
+      content={<QRCode value={'https://tdesign.tencent.com/'} size={136} borderless={true} />}
+    >
+      <Button>Hover me</Button>
+    </Popup>
   );
 }
 
@@ -26603,8 +26878,8 @@ const columns = [
 // eslint-disable-next-line
 // function IconText(props = {}) {
 //   // 根据不同的 Props，允许定义不同的筛选图标（col, colIndex 在 Table 组件内部已经注入）
-//   const { col, colIndx } = props;
-//   console.log(col, colIndx);
+//   const { col, colIndex } = props;
+//   console.log(col, colIndex);
 //   if (col.colKey === 'email') return <div>EmailIcon</div>;
 //   return <i>Icon</i>;
 // }
@@ -27970,7 +28245,6 @@ export default function EditableCellTable() {
           // props, 透传全部属性到 Input 组件
           props: {
             clearable: true,
-            autofocus: true,
           },
           // 触发校验的时机（when to validate)
           validateTrigger: 'change',
@@ -28287,7 +28561,6 @@ export default function EditableRowTable() {
           // props, 透传全部属性到 Input 组件
           props: {
             clearable: true,
-            autofocus: true,
             autoWidth: true,
           },
           // 校验规则，此处同 Form 表单
@@ -29185,12 +29458,13 @@ export default function ThemeTagExample() {
 
                   ===SPLIT===组建:<Tag/>
                   使用描述：可删除或添加的标签。添加标签可组合输入框组件使用。
-                  代码示例：import React, { useState } from 'react';
+                  代码示例：import React, { useState, useEffect, useRef } from 'react';
 import { Tag, Input, Space } from 'tdesign-react';
 import { DiscountIcon, AddIcon } from 'tdesign-icons-react';
 
 export default function ClosableTagExample() {
   const [inputVisible, toggleInputVisible] = useState(false);
+  const inputRef = useRef(null);
   const [tagList, setTagList] = useState([
     {
       name: '可删除标签',
@@ -29207,6 +29481,11 @@ export default function ClosableTagExample() {
       disabled: true,
     },
   ]);
+  useEffect(() => {
+    if (inputVisible) {
+      inputRef.current?.focus();
+    }
+  }, [inputVisible]);
 
   /**
    * @param {number} i
@@ -29260,6 +29539,8 @@ export default function ClosableTagExample() {
       >
         {inputVisible ? (
           <Input
+            ref={inputRef}
+            size="small"
             onBlur={handleInputEnter}
             onEnter={handleInputEnter}
             style={{
@@ -30100,20 +30381,20 @@ export default function BasicUsage() {
     <Space direction="vertical">
       <Space>
         <TooltipLite
-          content="文字提示仅展示文本内容"
+          content="下方文字提示"
           placement="bottom"
           triggerElement={<Button variant="outline">下方文字提示</Button>}
         ></TooltipLite>
-        <TooltipLite content="提示" placement="top">
+        <TooltipLite content="上方文字提示" placement="top">
           <Button variant="outline">上方文字提示</Button>
         </TooltipLite>
-        <TooltipLite content="提示" placement="mouse">
+        <TooltipLite content="鼠标位置显示提示" placement="mouse">
           <Button variant="outline">鼠标位置显示提示</Button>
         </TooltipLite>
-        <TooltipLite content="提示" showArrow={false}>
+        <TooltipLite content="无箭头文字提示" showArrow={false}>
           <Button variant="outline">无箭头文字提示</Button>
         </TooltipLite>
-        <TooltipLite content="提示" showShadow={false}>
+        <TooltipLite content="无投影文字提示" showShadow={false}>
           <Button variant="outline">无投影文字提示</Button>
         </TooltipLite>
       </Space>
@@ -30121,7 +30402,7 @@ export default function BasicUsage() {
         <TooltipLite content="浅色提示" theme="light">
           <Button variant="outline">浅色模式</Button>
         </TooltipLite>
-        <TooltipLite content="浅色提示" theme="light" showArrow={false} showShadow={true}>
+        <TooltipLite content="无箭头浅色提示" theme="light" showArrow={false} showShadow={true}>
           <Button variant="outline">无箭头浅色模式</Button>
         </TooltipLite>
         <TooltipLite content="不可用提示">
@@ -30480,7 +30761,7 @@ export default () => {
                   ===SPLIT===组建:<Tree/>
                   使用描述：树中的节点可自由的拖拽
                   代码示例：import React from 'react';
-import { Tree, Space } from 'tdesign-react';
+import { Space, Tree } from 'tdesign-react';
 
 const items = [
   {
@@ -30516,6 +30797,7 @@ const items = [
               {
                 value: '1.1.2.2',
                 label: '1.1.2.2',
+                disabled: true,
               },
             ],
           },
@@ -30533,7 +30815,7 @@ const items = [
       },
       {
         value: '2.2',
-        label: '2.2 不允许拖放为 2.2 的子节点',
+        label: '2.2 （不允许其它节点拖放为其子节点）',
       },
     ],
   },
@@ -30551,14 +30833,14 @@ export default () => {
   const handleDragLeave = () => {
     console.log('dragLeave');
   };
-  const handleDrop = ({ dragNode, dropPosition, e }) => {
-    console.log(dragNode, dropPosition, e);
-  };
   const handleAllowDrop = (ctx) => {
     const { dropNode, dropPosition } = ctx;
     if (dropNode.value === '2.2' && dropPosition === 0) {
       return false;
     }
+  };
+  const handleDrop = (ctx) => {
+    console.log(ctx);
   };
   return (
     <Space direction="vertical">
@@ -30569,12 +30851,13 @@ export default () => {
         transition
         expandAll
         draggable
+        checkStrictly
+        allowDrop={handleAllowDrop}
         onDrop={handleDrop}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
-        allowDrop={handleAllowDrop}
       />
     </Space>
   );
@@ -32110,6 +32393,52 @@ export default function GrayscaleWatermark() {
   );
 }
 
+                  ===SPLIT===组建:<Watermark/>
+                  使用描述：通过设置 layout 使用不同的布局。
+                  代码示例：import React from 'react';
+import { Watermark } from 'tdesign-react';
+
+export default function LayoutWatermark() {
+  return (
+    <>
+      <h3>横平竖直的水印</h3>
+      <Watermark
+        watermarkContent={{
+          text: '文字水印',
+        }}
+        width={120}
+        height={60}
+        y={120}
+        x={80}
+      >
+        <div
+          style={{
+            height: 300,
+          }}
+        ></div>
+      </Watermark>
+
+      <h3>错位的水印</h3>
+      <Watermark
+        watermarkContent={{
+          text: '文字水印',
+        }}
+        width={120}
+        height={60}
+        y={120}
+        x={80}
+        layout="hexagonal"
+      >
+        <div
+          style={{
+            height: 300,
+          }}
+        ></div>
+      </Watermark>
+    </>
+  );
+}
+
                   组建:<Rate/>
                   使用描述：实心评分 
                   代码示例：import React from 'react';
@@ -32234,14 +32563,14 @@ export default function AlertOperation() {
         theme="success"
         message="这是一条成功的消息提示"
         operation={operation}
-        close
+        closeBtn
         onClosed={() => {
           console.log('onClosed');
         }}
       />
-      <Alert theme="info" message="这是一条普通的消息提示" operation={operation} close />
-      <Alert theme="warning" message="这是一条警示消息" operation={operation} close />
-      <Alert theme="error" message="高危操作/出错信息提示" operation={operation} close />
+      <Alert theme="info" message="这是一条普通的消息提示" operation={operation} closeBtn />
+      <Alert theme="warning" message="这是一条警示消息" operation={operation} closeBtn />
+      <Alert theme="error" message="高危操作/出错信息提示" operation={operation} closeBtn />
     </Space>
   );
 }
@@ -32258,7 +32587,7 @@ export default function AlertDescription() {
       message="这是一条普通的消息提示描述，这是一条普通的消息提示描述"
       title="这是一条普通的消息提示"
       operation={operation}
-      close
+      closeBtn
     />
   );
 }
@@ -32276,7 +32605,43 @@ export default function AlertCollapsed() {
     '4.这是一条普通的消息提示描述，',
     '5.这是一条普通的消息提示描述，',
   ];
-  return <Alert message={message} maxLine={2} close />;
+  return <Alert message={message} maxLine={2} closeBtn />;
+}
+
+                  ===SPLIT===组建:<Alert/>
+                  使用描述：当需要可被用户交互关闭的警告时，可以配置 closeBtn 来显示关闭按键或自定义关闭触发器。
+                  代码示例：import React from 'react';
+import { Alert, Space, Tag } from 'tdesign-react';
+
+export default function AlertClose() {
+  // eslint-disable-next-line no-alert
+  const beforeClose = () => window.confirm('确认关闭吗？');
+  const handleClosed = () => {
+    console.log('关闭');
+  };
+  const warningClose = () => 'FunctionPropClose';
+  return (
+    <Space direction="vertical">
+      <Alert theme="success" message="这是一条成功的消息提示" closeBtn />
+      <Alert theme="info" message="这是一条普通的消息提示" closeBtn="知道了" onClose={beforeClose} />
+      <Alert
+        theme="warning"
+        message="这是一条警示消息"
+        closeBtn={warningClose()}
+        onClose={beforeClose}
+        onClosed={handleClosed}
+      />
+      <Alert
+        theme="error"
+        message="高危操作/出错信息提示"
+        closeBtn={
+          <Tag variant="outline" theme="danger">
+            关闭
+          </Tag>
+        }
+      />
+    </Space>
+  );
 }
 
                   组建:<Dialog/>
@@ -33467,32 +33832,32 @@ export default function () {
                   ===SPLIT===组建:<Drawer/>
                   使用描述：销毁抽屉：DrawerInstance.destroy()隐藏抽屉：DrawerInstance.hide()显示抽屉：DrawerInstance.show()更新抽屉：DrawerInstance.update()
                   代码示例：import React from 'react';
-import { DrawerPlugin, Button, Space } from 'tdesign-react';
+import { DrawerPlugin, drawer, Button, Space } from 'tdesign-react';
 
 const buttonStyle = {
   marginRight: 16,
 };
 export default function PluginModalExample() {
-  const showDrawer = () => {
-    const myDrawer = DrawerPlugin({
+  const showDrawerPlugin = () => {
+    const drawerNode = DrawerPlugin({
       header: 'Drawer-Plugin',
       body: 'Hi, darling! Do you want to be my lover?',
       onConfirm: ({ e }) => {
         console.log('confirm clicked', e);
-        myDrawer.hide();
+        drawerNode.hide();
       },
       onClose: ({ e, trigger }) => {
         console.log('e: ', e);
         console.log('trigger: ', trigger);
-        myDrawer.hide();
+        drawerNode.hide();
       },
       onCloseBtnClick: ({ e }) => {
         console.log('close btn: ', e);
       },
     });
   };
-  const onDrawerPlugin = () => {
-    const Drawer = DrawerPlugin({
+  const showDrawer = () => {
+    const drawerInstance = drawer({
       header: 'Drawer-Confirm-Plugin',
       body: 'I am a drawer!',
       confirmBtn: 'hello',
@@ -33502,12 +33867,12 @@ export default function PluginModalExample() {
       onConfirm: ({ e }) => {
         console.log('confirm button has been clicked!');
         console.log('e: ', e);
-        Drawer.hide();
+        drawerInstance.hide();
       },
       onClose: ({ e, trigger }) => {
         console.log('e: ', e);
         console.log('trigger: ', trigger);
-        Drawer.hide();
+        drawerInstance.hide();
       },
     });
   };
@@ -33516,10 +33881,10 @@ export default function PluginModalExample() {
       <p>函数调用方式一：DrawerPlugin(options)</p>
       <p>函数调用方式二：drawer(options)</p>
       <div>
-        <Button theme="primary" onClick={showDrawer} style={buttonStyle}>
+        <Button theme="primary" onClick={showDrawerPlugin} style={buttonStyle}>
           DrawerPlugin
         </Button>
-        <Button theme="primary" onClick={onDrawerPlugin} style={buttonStyle}>
+        <Button theme="primary" onClick={showDrawer} style={buttonStyle}>
           drawer
         </Button>
       </div>
@@ -34438,10 +34803,10 @@ export default function () {
         用户表示普通操作信息提示
       </Message>
       <Message duration={0} theme="success">
-        用户表示操作引起一定后果
+        用于表示操作顺利达成
       </Message>
       <Message duration={0} theme="warning">
-        用于表示操作顺利达成
+        用户表示操作引起一定后果
       </Message>
       <Message duration={0} theme="error">
         用于表示操作引起严重的后果
@@ -35541,13 +35906,18 @@ import { Button, Popup, Space } from 'tdesign-react';
 
 export default function Attach() {
   return (
-    <Space>
-      <Popup trigger="click" content="触发元素的父元素是组件跟元素，通过 CSSSelector 定义" attach=".t-space">
-        <Button>点击查看我的父元素(CSSSelector)</Button>
+    <Space
+      className="attach-container"
+      style={{
+        position: 'relative',
+      }}
+    >
+      <Popup trigger="click" content="触发元素的父元素是组件根元素，通过 CSS Selector 定义" attach=".attach-container">
+        <Button>点击查看我的父元素(CSS Selector)</Button>
       </Popup>
       <Popup
         trigger="click"
-        content="触发元素的父元素是组件跟元素，通过 Function 定义"
+        content="触发元素的父元素是组件根元素，通过 Function 定义"
         attach={(triggerElement) => triggerElement.parentElement}
       >
         <Button>点击查看我的父元素(Function)</Button>
