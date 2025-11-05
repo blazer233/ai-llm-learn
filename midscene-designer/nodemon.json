@@ -6,7 +6,7 @@
   "ext": "js,json",
   "ignore": [
     "node_modules/",
-    "screenshots/",
+
     "dist/"
   ],
   "delay": 1000,

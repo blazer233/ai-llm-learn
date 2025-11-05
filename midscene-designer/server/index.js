@@ -7,6 +7,10 @@ import dotenv from 'dotenv';
 import { nodeExecutors, buildExecutionFlow, getNextNode } from './node.js';
 
 dotenv.config();
+
+// 设置环境变量禁用网络发现
+process.env.PLAYWRIGHT_BROWSERS_PATH = '0';
+process.env.PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = '1';
 const app = express();
 const PORT = 3002;
 
@@ -21,10 +25,60 @@ app.post('/api/execute', async (req, res) => {
     const { nodes, edges } = req.body;
     // 初始化浏览器
     if (!browser) {
-      browser = await playwright.chromium.launch({ headless: false });
-      context = await browser.newContext();
+      browser = await playwright.chromium.launch({
+        headless: false,
+        // 禁用网络发现功能，避免 macOS 弹出权限请求
+        args: [
+          '--disable-features=VizDisplayCompositor',
+          '--disable-web-security',
+          '--disable-features=TranslateUI',
+          '--disable-ipc-flooding-protection',
+          '--disable-renderer-backgrounding',
+          '--disable-backgrounding-occluded-windows',
+          '--disable-client-side-phishing-detection',
+          '--disable-sync',
+          '--metrics-recording-only',
+          '--no-first-run',
+          '--safebrowsing-disable-auto-update',
+          '--disable-component-update',
+          '--disable-default-apps',
+          '--disable-extensions',
+          '--disable-plugins',
+          '--disable-background-timer-throttling',
+          '--disable-renderer-backgrounding',
+          '--disable-field-trial-config',
+          '--disable-back-forward-cache',
+          '--disable-backgrounding-occluded-windows',
+          '--disable-features=TranslateUI,BlinkGenPropertyTrees',
+          '--disable-component-extensions-with-background-pages',
+          '--disable-default-apps',
+          '--mute-audio',
+          '--no-default-browser-check',
+          '--no-first-run',
+          '--disable-dev-shm-usage',
+          '--disable-gpu',
+          '--no-sandbox',
+        ],
+      });
+      context = await browser.newContext({
+        // 禁用地理位置权限
+        permissions: [],
+        // 禁用通知权限
+        ignoreHTTPSErrors: true,
+      });
       page = await context.newPage();
-      agent = new PlaywrightAgent(page);
+
+      // 设置默认超时时间为60秒，避免页面加载超时
+      page.setDefaultTimeout(60000);
+      page.setDefaultNavigationTimeout(60000);
+
+      // 禁用页面的自动等待加载状态
+      page.context().setExtraHTTPHeaders({});
+
+      agent = new PlaywrightAgent(page, {
+        // 配置 Midscene 的超时时间
+        timeout: 60000,
+      });
       console.log('✅ 浏览器和AI代理已初始化');
     }
 
@@ -32,7 +86,7 @@ app.post('/api/execute', async (req, res) => {
     const totalStartTime = Date.now();
     const { nodeMap, edgeMap } = buildExecutionFlow(nodes, edges);
 
-    console.log(`🚀 开始执行流程，共 ${nodes.length} 个节点`);
+    console.log(`🚀 开始执行流程`);
 
     // 找到起始节点（没有入边的节点）
     const incomingEdges = new Set(edges.map(e => e.target));
@@ -48,9 +102,7 @@ app.post('/api/execute', async (req, res) => {
     // 按流程执行节点
     while (currentNode && executionCount < maxExecutions) {
       executionCount += 1;
-      console.log(
-        `📍 [${executionCount}] 执行节点: ${currentNode.id} (${currentNode.data.type})`
-      );
+
       try {
         let result;
         const { data } = currentNode;
@@ -86,22 +138,11 @@ app.post('/api/execute', async (req, res) => {
           break;
         }
 
-        console.log(`✅ 节点 ${currentNode.id} 执行成功`);
-
         // 获取下一个节点
         const nextNode = getNextNode(currentNode.id, result, edgeMap, nodeMap);
-        if (nextNode) {
-          console.log(
-            `➡️ 下一个节点: ${nextNode.id} (条件: ${
-              result.branchType || '无条件'
-            })`
-          );
-        } else {
-          console.log(`🏁 没有更多节点，流程结束`);
-        }
         currentNode = nextNode;
       } catch (error) {
-        console.log(`❌ 节点 ${currentNode.id} 执行失败: ${error.message}`);
+        console.error(`❌ 执行失败: ${error.message}`);
         const errorResult = {
           nodeId: currentNode.id,
           success: false,
@@ -117,18 +158,13 @@ app.post('/api/execute', async (req, res) => {
           edgeMap,
           nodeMap
         );
-        if (nextNode) {
-          console.log(`➡️ 执行失败，走失败分支到: ${nextNode.id}`);
-          currentNode = nextNode;
-        } else {
-          console.log(`🏁 没有失败分支，流程结束`);
-          break;
-        }
+        currentNode = nextNode;
+        if (!nextNode) break;
       }
     }
 
     if (executionCount >= maxExecutions) {
-      console.log(`⚠️ 达到最大执行次数限制，强制结束流程`);
+      console.log(`⚠️ 达到最大执行次数限制`);
     }
 
     const totalTime = Date.now() - totalStartTime;
@@ -151,7 +187,7 @@ app.post('/api/execute', async (req, res) => {
     res.json({
       success: true,
       results,
-      nodeResults, // 添加节点结果映射，前端用于更新节点状态和截图
+      nodeResults, // 前端用于更新节点状态和截图
       statistics: {
         totalNodes: nodes.length,
         successCount,

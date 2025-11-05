@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
-import { MIDSCENE_NODE_TYPES } from '../nodeTypes';
+import ScreenshotPreview from './ScreenshotPreview';
 
 const CustomNode = ({ data, id }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -66,7 +66,8 @@ const CustomNode = ({ data, id }) => {
               border: 'none',
               cursor: 'pointer',
               fontSize: '16px',
-              padding: '2px'
+              padding: '2px',
+              marginLeft: '8px'
             }}
             title="查看截图"
           >
@@ -90,133 +91,10 @@ const CustomNode = ({ data, id }) => {
 
       {/* 截图预览 */}
       {data.type === 'screenshot' && showScreenshot && data.screenshotData && (
-        <div style={{
-          position: 'absolute',
-          top: '100%',
-          left: 0,
-          zIndex: 1000,
-          background: 'white',
-          border: '1px solid #ddd',
-          borderRadius: 8,
-          padding: 10,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-          maxWidth: '300px'
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 8
-          }}>
-            <span style={{ fontSize: '12px', fontWeight: 'bold' }}>截图预览</span>
-            <button
-              onClick={() => setShowScreenshot(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
-            >
-              ✕
-            </button>
-          </div>
-          <img
-            src={data.screenshotData}
-            alt="截图"
-            style={{
-              width: '100%',
-              height: 'auto',
-              maxHeight: '200px',
-              objectFit: 'contain',
-              border: '1px solid #eee',
-              borderRadius: 4
-            }}
-          />
-          <div style={{
-            marginTop: 8,
-            display: 'flex',
-            gap: 8
-          }}>
-            <button
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = data.screenshotData;
-                link.download = `screenshot-${Date.now()}.png`;
-                link.click();
-              }}
-              style={{
-                padding: '4px 8px',
-                background: '#3b82f6',
-                color: 'white',
-                border: 'none',
-                borderRadius: 4,
-                cursor: 'pointer',
-                fontSize: '10px'
-              }}
-            >
-              下载
-            </button>
-            <button
-              onClick={() => {
-                const newWindow = window.open('', '_blank');
-                if (newWindow) {
-                  newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                      <head>
-                        <title>截图预览</title>
-                        <style>
-                          body { 
-                            margin: 0; 
-                            padding: 20px;
-                            display: flex; 
-                            justify-content: center; 
-                            align-items: center; 
-                            min-height: 100vh; 
-                            background: #f0f0f0;
-                            font-family: Arial, sans-serif;
-                          }
-                          img { 
-                            max-width: 100%; 
-                            max-height: 100vh; 
-                            object-fit: contain;
-                            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                            border-radius: 4px;
-                          }
-                          .error {
-                            text-align: center;
-                            color: #666;
-                          }
-                        </style>
-                      </head>
-                      <body>
-                        ${data.screenshotData ? 
-                          `<img src="${data.screenshotData}" alt="截图预览" />` : 
-                          '<div class="error">截图数据不可用</div>'
-                        }
-                      </body>
-                    </html>
-                  `);
-                  newWindow.document.close();
-                } else {
-                  alert('无法打开新窗口，请检查浏览器弹窗设置');
-                }
-              }}
-              style={{
-                padding: '4px 8px',
-                background: '#10b981',
-                color: 'white',
-                border: 'none',
-                borderRadius: 4,
-                cursor: 'pointer',
-                fontSize: '10px'
-              }}
-            >
-              查看大图
-            </button>
-          </div>
-        </div>
+        <ScreenshotPreview 
+          screenshotData={data.screenshotData}
+          onClose={() => setShowScreenshot(false)}
+        />
       )}
 
       {/* 执行状态指示器 */}

@@ -286,7 +286,7 @@ async function runTest() {
           code += `    await agent.aiBoolean('${config.instruction}');\n`;
           break;
         case 'screenshot':
-          code += `    await page.screenshot({ path: 'screenshot.png' });\n`;
+          code += `    await page.screenshot({ type: 'png' });\n`;
           break;
         case 'waitForTimeout':
           code += `    await page.waitForTimeout(${config.value});\n`;

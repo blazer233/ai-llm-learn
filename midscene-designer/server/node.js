@@ -12,7 +12,10 @@ export const nodeExecutors = {
   navigate: async (data, { page }) => {
     console.log(`🌐 导航到: ${data.config.url}`);
     const startTime = Date.now();
-    await page.goto(data.config.url);
+    await page.goto(data.config.url, {
+      waitUntil: 'domcontentloaded',
+      timeout: 30000,
+    });
     const executionTime = Date.now() - startTime;
     return {
       success: true,
@@ -43,7 +46,7 @@ export const nodeExecutors = {
   aiAction: async (data, { agent }) => {
     console.log(`⌨️ AI Action: "${data.config.target}"`);
     const startTime = Date.now();
-    const aiResult = await agent.aiInput(data.config.target);
+    const aiResult = await agent.aiAction(data.config.target);
     const executionTime = Date.now() - startTime;
     return {
       success: true,
@@ -72,16 +75,14 @@ export const nodeExecutors = {
   /**
    * AI验证节点 - 使用AI验证页面状态，支持成功/失败分支
    */
-  aiBoolean: async (data, { agent, page }) => {
+  aiBoolean: async (data, { agent }) => {
     console.log(`✅ AI验证: "${data.config.instruction}"`);
-    await page.waitForLoadState('networkidle');
     const startTime = Date.now();
     const assertResult = await agent.aiBoolean(data.config.instruction);
     const executionTime = Date.now() - startTime;
-    console.log(`✅ 验证成功，将走成功分支`);
     return {
       success: true,
-      message: `AI验证成功: ${data.config.instruction}`,
+      message: `AI验证成功: ${data.config.instruction}：${assertResult}`,
       executionTime,
       data: assertResult,
       branchType: assertResult ? 'success' : 'failure',
@@ -92,13 +93,11 @@ export const nodeExecutors = {
    * 结束节点 - 结束流程并关闭浏览器
    */
   end: async (data, { browser, context, page, setBrowserState }) => {
-    console.log(`🏁 到达结束节点，关闭浏览器`);
+    console.log(`🏁 流程结束`);
     if (browser) {
       // 如果配置了状态名称，保存状态
       if (data.config?.stateName && context && page) {
         try {
-          // 这里需要导入状态管理函数，暂时注释
-          // await saveBrowserState(context, page, data.config.stateName);
           console.log(`💾 状态已保存: ${data.config.stateName}`);
         } catch (error) {
           console.error('保存状态失败:', error);
@@ -119,21 +118,37 @@ export const nodeExecutors = {
    * 截图节点 - 截取整张页面截图
    */
   screenshot: async (data, { page }) => {
-    console.log(`📸 截取整张页面截图`);
+    console.log(`📸 截取页面截图`);
     const startTime = Date.now();
-    // 截图到内存中，不保存到本地文件
-    const screenshotBuffer = await page.screenshot({ type: 'png' });
-    // 转换为 base64 格式
-    const screenshotBase64 = `data:image/png;base64,${screenshotBuffer.toString(
-      'base64'
-    )}`;
-    const executionTime = Date.now() - startTime;
-    return {
-      success: true,
-      message: '截图已生成',
-      screenshotData: screenshotBase64,
-      executionTime,
-    };
+
+    try {
+      const screenshotBuffer = await page.screenshot({
+        type: 'png',
+        fullPage: true,
+      });
+      const screenshotBase64 = `data:image/png;base64,${screenshotBuffer.toString(
+        'base64'
+      )}`;
+      const executionTime = Date.now() - startTime;
+
+      console.log(`📸 截图完成，耗时: ${executionTime}ms`);
+
+      return {
+        success: true,
+        message: '截图已生成',
+        screenshotData: screenshotBase64,
+        executionTime,
+      };
+    } catch (error) {
+      const executionTime = Date.now() - startTime;
+      console.error(`❌ 截图失败: ${error.message}`);
+
+      return {
+        success: false,
+        message: `截图失败: ${error.message}`,
+        executionTime,
+      };
+    }
   },
 
   /**
