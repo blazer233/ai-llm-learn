@@ -1,0 +1,6326 @@
+[
+  {
+    "className": "at-center",
+    "description": "【集合属性】at-center单行文本省略属性详情如下:.at-center: {  display: flex;  justify-content: center;  align-items: center;}"
+  },
+  {
+    "className": "at-ellipsis-lines",
+    "description": "【集合属性】at-ellipsis-lines居中属性详情如下:.at-ellipsis-lines: {  overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;  word-break: break-all;  word-wrap: normal;}"
+  },
+  {
+    "className": "at-ellipsis-multi-lines",
+    "description": "【集合属性】at-ellipsis-multi-lines多行文本省略,还需要额外添加属性webkit-line-clamp-*用来控制超出多少行省略属性详情如下:.at-ellipsis-multi-lines: {  overflow: hidden;  text-overflow: ellipsis;  display: -webkit-box;  -webkit-box-orient: vertical;}"
+  },
+  {
+    "className": "at-line-full-after",
+    "description": "【集合属性】at-line-full-after设置包裹的边框线条在 after 上(包裹的边框颜色需自己额外设置)属性详情如下:.at-line-full-after::after {  content: \"\";  position: absolute;  left: 0;  top: 0;  box-sizing: border-box;  width: 200%;  height: 200%;  transform-origin: left top;  transform: scale(0.5);}"
+  },
+  {
+    "className": "at-line-full-before",
+    "description": "【集合属性】at-line-full-before设置包裹的边框线条在 before 上(包裹的边框颜色需自己额外设置)属性详情如下:.at-line-full-before::before {  content: \"\";  position: absolute;  left: 0;  top: 0;  box-sizing: border-box;  width: 200%;  height: 200%;  transform-origin: left top;  transform: scale(0.5);}"
+  },
+  {
+    "className": "at-line-top-after",
+    "description": "【集合属性】at-line-top-after设置上边框线条在 after 上(上边框颜色需自己额外设置)属性详情如下:.at-line-top-after::after {  content: \"\";  position: absolute;  left: 0;  top: 0;  right: 0;  height: 1px  transform-origin: 0 0;  transform: scaleY(0.5);}"
+  },
+  {
+    "className": "at-line-top-before",
+    "description": "【集合属性】at-line-top-before设置上边框线条在 before 上(上边框颜色需自己额外设置)属性详情如下:.at-line-top-before::before {  content: \"\";  position: absolute;  left: 0;  top: 0;  right: 0;  height: 1px  transform-origin: 0 0;  transform: scaleY(0.5);}"
+  },
+  {
+    "className": "at-line-bottom-after",
+    "description": "【集合属性】at-line-bottom-after设置下边框线条在 after 上(下边框颜色需自己额外设置)属性详情如下:.at-line-bottom-after::after {  content: \"\";  position: absolute;  left: 0;  bottom: 0;  right: 0;  height: 1px;  transform-origin: 0 100%;  transform: scaleY(0.5);}"
+  },
+  {
+    "className": "at-line-bottom-before",
+    "description": "【集合属性】at-line-bottom-before设置下边框线条在 before 上(下边框颜色需自己额外设置)属性详情如下:.at-line-bottom-before::before {  content: \"\";  position: absolute;  left: 0;  bottom: 0;  right: 0;  height: 1px;  transform-origin: 0 100%;  transform: scaleY(0.5);}"
+  },
+  {
+    "className": "at-line-left-after",
+    "description": "【集合属性】at-line-left-after设置左边框线条在 after 上(左边框颜色需自己额外设置)属性详情如下:.at-line-left-after::after {  content: \"\";  position: absolute;  left: 0;  top: 0;  bottom: 0;  width: 1px;  transform-origin: 0 0;  transform: scaleX(0.5);}"
+  },
+  {
+    "className": "at-line-left-before",
+    "description": "【集合属性】at-line-left-before设置左边框线条在 before 上(左边框颜色需自己额外设置)属性详情如下:.at-line-left-before::before {  content: \"\";  position: absolute;  left: 0;  top: 0;  bottom: 0;  width: 1px;  transform-origin: 0 0;  transform: scaleX(0.5);}"
+  },
+  {
+    "className": "at-line-right-after",
+    "description": "【集合属性】at-line-right-after设置右边框线条在 after 上(右边框颜色需自己额外设置)属性详情如下:.at-line-right-after::after {  content: \"\";  position: absolute;  right: 0;  top: 0;  bottom: 0;  width: 1px;  transform-origin: 100% 0;  transform: scaleX(0.5);}"
+  },
+  {
+    "className": "at-line-right-before",
+    "description": "【集合属性】at-line-right-before设置右边框线条在 before 上(右边框颜色需自己额外设置)属性详情如下:.at-line-right-before::before {  content: \"\";  position: absolute;  right: 0;  top: 0;  bottom: 0;  width: 1px;  transform-origin: 100% 0;  transform: scaleX(0.5);}"
+  },
+  {
+    "className": "at-line-full-color-before",
+    "description": "【集合属性】at-line-full-color-before给伪元素 before 设置包裹的边框线条颜色为 #e5e5e6(包裹的边框颜色需自己额外设置)属性详情如下:.at-line-full-color-before::before {  border: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-top-color-before",
+    "description": "【集合属性】at-line-top-color-before给伪元素 before 设置上边框线条颜色为 #e5e5e6属性详情如下:.at-line-top-color-before::before {  border-top: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-bottom-color-before",
+    "description": "【集合属性】at-line-bottom-color-before给伪元素 before 设置下边框线条颜色为 #e5e5e6属性详情如下:.at-line-bottom-color-before::before {  border-bottom: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-left-color-before",
+    "description": "【集合属性】at-line-left-color-before给伪元素 before 设置左边框线条颜色为 #e5e5e6属性详情如下:.at-line-left-color-before::before {  border-left: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-right-color-before",
+    "description": "【集合属性】at-line-right-color-before给伪元素 before 设置右边框线条颜色为 #e5e5e6属性详情如下:.at-line-right-color-before::before {  border-right: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-full-color-after",
+    "description": "【集合属性】at-line-full-color-after给伪元素 after 设置包裹的边框线条颜色为 #e5e5e6(包裹的边框颜色需自己额外设置)属性详情如下:.at-line-full-color-after::after {  border: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-top-color-after",
+    "description": "【集合属性】at-line-top-color-after给伪元素 after 设置上边框线条颜色为 #e5e5e6属性详情如下:.at-line-top-color-after::after {  border-top: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-bottom-color-after",
+    "description": "【集合属性】at-line-bottom-color-after给伪元素 after 设置下边框线条颜色为 #e5e5e6属性详情如下:.at-line-bottom-color-after::after {  border-bottom: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-left-color-after",
+    "description": "【集合属性】at-line-left-color-after给伪元素 after 设置左边框线条颜色为 #e5e5e6属性详情如下:.at-line-left-color-after::after {  border-left: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-line-right-color-after",
+    "description": "【集合属性】at-line-right-color-after给伪元素 after 设置右边框线条颜色为 #e5e5e6属性详情如下:.at-line-right-color-after::after {  border-right: 1px solid #e5e5e6;}"
+  },
+  {
+    "className": "at-word-break",
+    "description": "【集合属性】at-word-break设置文本强制换行属性详情如下:.at-word-break {  word-break: break-all;  word-wrap: break-word;  white-space: normal;}"
+  },
+  {
+    "className": "at-pb-safe",
+    "description": "【集合属性】at-pb-safe设置底部安全区域constant前缀写法兼容IOS<11.2env前缀写法兼容IOS>11.2属性详情如下:.at-pb-safe {  padding-bottom:constant(safe-area-inset-bottom);  padding-bottom: env(safe-area-inset-bottom);}"
+  },
+  {
+    "className": "border-none-after",
+    "description": "【伪元素设置属性】border-none-after给伪元素 after 取消边框线条的样式，可用于重置按钮之类元素默认的边框属性详情如下:.border-none-after::after {  border: none;}"
+  },
+  {
+    "className": "border-none-before",
+    "description": "【伪元素设置属性】border-none-before给伪元素 before 取消边框线条的样式，可用于重置按钮之类元素默认的边框属性详情如下:.border-none-before::before {  border: none;}"
+  },
+  {
+    "className": "pointer-events-none-after",
+    "description": "【伪元素设置属性】pointer-events-none-after给伪元素 after 取消指针事件响应(比如 :hover 和 click)属性详情如下:.pointer-events-none-after::after {  pointer-events: none;}"
+  },
+  {
+    "className": "pointer-events-none-before",
+    "description": "【伪元素设置属性】pointer-events-none-before给伪元素 before 取消指针事件响应(比如 :hover 和 click)属性详情如下:.pointer-events-none-before::before {  pointer-events: none;}"
+  },
+  {
+    "className": "radius-0-after",
+    "description": "【伪元素设置属性】radius-0-after给伪元素 after 设置圆角属性属性详情如下:.radius-0-after::after {  border-radius: 0;}"
+  },
+  {
+    "className": "radius-0-before",
+    "description": "【伪元素设置属性】radius-0-before给伪元素 before 设置圆角属性属性详情如下:.radius-0-before::before {  border-radius: 0;}"
+  },
+  {
+    "className": "radius-50p-after",
+    "description": "【伪元素设置属性】radius-50p-after给伪元素 after 设置圆角属性属性详情如下:.radius-50p-after::after {  border-radius: 50%;}"
+  },
+  {
+    "className": "radius-50p-before",
+    "description": "【伪元素设置属性】radius-50p-before给伪元素 before 设置圆角属性属性详情如下:.radius-50p-before::before {  border-radius: 50%;}"
+  },
+  {
+    "className": "radius-100p-after",
+    "description": "【伪元素设置属性】radius-100p-after给伪元素 after 设置圆角属性属性详情如下:.radius-100p-after::after {  border-radius: 100%;}"
+  },
+  {
+    "className": "radius-100p-before",
+    "description": "【伪元素设置属性】radius-100p-before给伪元素 before 设置圆角属性属性详情如下:.radius-100p-before::before {  border-radius: 100%;}"
+  },
+  {
+    "className": "bg-c-initial",
+    "description": "设置背景色为初始值,即没有颜色的状态"
+  },
+  {
+    "className": "bg-c-transparent",
+    "description": "设置背景色为透明色"
+  },
+  {
+    "className": "bg-c-faf6fa",
+    "description": "设置背景颜色为灰色,主题页面背景色"
+  },
+  {
+    "className": "bg-c-white",
+    "description": "设置背景颜色为纯白色"
+  },
+  {
+    "className": "bg-c-ffffff",
+    "description": "设置背景颜色为白色1"
+  },
+  {
+    "className": "bg-c-f5f6fa",
+    "description": "设置背景颜色为白色2"
+  },
+  {
+    "className": "bg-c-f8f8f8",
+    "description": "设置背景颜色为白色3"
+  },
+  {
+    "className": "bg-c-f1f3f7",
+    "description": "设置背景颜色为白色4"
+  },
+  {
+    "className": "bg-c-f7f9ff",
+    "description": "设置背景颜色为白色5"
+  },
+  {
+    "className": "bg-c-f4f4f4",
+    "description": "设置背景颜色为白色6"
+  },
+  {
+    "className": "bg-c-f6f8fe",
+    "description": "设置背景颜色为白色7"
+  },
+  {
+    "className": "bg-c-333333",
+    "description": "设置背景颜色为黑色"
+  },
+  {
+    "className": "bg-c-cccccc",
+    "description": "设置背景颜色为极浅灰色"
+  },
+  {
+    "className": "bg-c-999999",
+    "description": "设置背景颜色为深灰色"
+  },
+  {
+    "className": "bg-c-ececec",
+    "description": "设置背景颜色为淡灰色1"
+  },
+  {
+    "className": "bg-c-e5e5e5",
+    "description": "设置背景颜色为淡灰色2"
+  },
+  {
+    "className": "bg-c-blue",
+    "description": "设置背景颜色为主题蓝色"
+  },
+  {
+    "className": "bg-c-3cc947",
+    "description": "设置背景颜色为主题绿色"
+  },
+  {
+    "className": "bg-c-green",
+    "description": "设置背景颜色为纯绿色"
+  },
+  {
+    "className": "bg-c-b6caff",
+    "description": "设置背景颜色为淡蓝灰色1"
+  },
+  {
+    "className": "bg-c-8a97b8",
+    "description": "设置背景颜色为淡蓝灰色2"
+  },
+  {
+    "className": "bg-c-011f70",
+    "description": "设置背景颜色为深蓝色"
+  },
+  {
+    "className": "bg-unset",
+    "description": "取消给该元素设置的背景"
+  },
+  {
+    "className": "bg-none",
+    "description": "使该元素的背景失效"
+  },
+  {
+    "className": "bg-inherit",
+    "description": "该元素继承父级背景色"
+  },
+  {
+    "className": "bg-initial",
+    "description": "设置背景为默认值"
+  },
+  {
+    "className": "bg-currentColor",
+    "description": "currentColor是CSS3新定义的一个属性,其意思是取当前元素或者父级元素定义的颜色值"
+  },
+  {
+    "className": "bg-f5f6fa",
+    "description": "设置背景为灰色,主题页面背景色"
+  },
+  {
+    "className": "bg-transparent",
+    "description": "设置背景为透明色"
+  },
+  {
+    "className": "bg-white",
+    "description": "设置背景为纯白色"
+  },
+  {
+    "className": "bg-ffffff",
+    "description": "设置背景为白色"
+  },
+  {
+    "className": "bg-crmblue",
+    "description": "设置背景为crm主题色"
+  },
+  {
+    "className": "bg-f2f3ff",
+    "description": "设置背景为淡蓝色"
+  },
+  {
+    "className": "bg-black",
+    "description": "设置背景为主题黑色"
+  },
+  {
+    "className": "bg-blue",
+    "description": "设置背景为主题蓝色"
+  },
+  {
+    "className": "bg-ed4343",
+    "description": "设置背景为主题红色"
+  },
+  {
+    "className": "bg-red",
+    "description": "设置背景为纯红色"
+  },
+  {
+    "className": "bg-f7f9ff",
+    "description": "设置背景为极浅白灰色1"
+  },
+  {
+    "className": "bg-e5ebfd",
+    "description": "设置背景为极浅白灰色2"
+  },
+  {
+    "className": "bg-f2f2f2",
+    "description": "设置背景为极浅白灰色3"
+  },
+  {
+    "className": "bg-blue-0d04",
+    "description": "设置背景为蓝色+透明度为0.04"
+  },
+  {
+    "className": "bg-blue-0d08",
+    "description": "设置背景为蓝色+透明度为0.08"
+  },
+  {
+    "className": "bg-blue-0d1",
+    "description": "设置背景为蓝色+透明度为0.1"
+  },
+  {
+    "className": "bg-f5f6fa-0d08",
+    "description": "设置背景为灰色+透明度为0.6"
+  },
+  {
+    "className": "bg-black-0d04",
+    "description": "设置背景为黑色+透明度为0.04的背景色,常用于遮罩层"
+  },
+  {
+    "className": "bg-green-0d08",
+    "description": "设置背景为草绿色+透明度为0.08的背景色"
+  },
+  {
+    "className": "bg-green-0d1",
+    "description": "设置背景为草绿色+透明度为0.1的背景色"
+  },
+  {
+    "className": "bg-orange-0d08",
+    "description": "设置背景为橘黄色+透明度为0.08的背景色"
+  },
+  {
+    "className": "bg-d4defc",
+    "description": "设置样式background: #d4defc;"
+  },
+  {
+    "className": "bg-eeeeee",
+    "description": "设置样式background: #eeeeee;"
+  },
+  {
+    "className": "bg-eff2f7",
+    "description": "设置样式background: #eff2f7;"
+  },
+  {
+    "className": "bg-eef2fe",
+    "description": "设置样式background: #eef2fe;"
+  },
+  {
+    "className": "bg-e5e5e6",
+    "description": "设置样式background: #e5e5e6;"
+  },
+  {
+    "className": "bg-cccccc",
+    "description": "设置样式background: #cccccc;"
+  },
+  {
+    "className": "bg-f0f2f8",
+    "description": "设置样式background: #f0f2f8;"
+  },
+  {
+    "className": "bg-fef1e5",
+    "description": "设置样式background: #fef1e5;"
+  },
+  {
+    "className": "bg-f6f6f6",
+    "description": "设置样式background: #f6f6f6;"
+  },
+  {
+    "className": "bg-fa9128",
+    "description": "设置样式background: #fa9128;"
+  },
+  {
+    "className": "bg-fce8e8",
+    "description": "设置样式background: #fce8e8;"
+  },
+  {
+    "className": "bg-f0ba26",
+    "description": "设置样式background: #f0ba26;"
+  },
+  {
+    "className": "bg-f5f5f5",
+    "description": "设置样式background: #f5f5f5;"
+  },
+  {
+    "className": "bg-e5e5e5",
+    "description": "设置样式background: #e5e5e5;"
+  },
+  {
+    "className": "bg-f2f6fe",
+    "description": "设置样式background: #f2f6fe;"
+  },
+  {
+    "className": "bg-f5f5f7",
+    "description": "设置样式background: #f5f5f7;"
+  },
+  {
+    "className": "bg-678cf4",
+    "description": "设置样式background: #678cf4;"
+  },
+  {
+    "className": "bg-666666",
+    "description": "设置样式background: #666666;"
+  },
+  {
+    "className": "bg-265bed",
+    "description": "设置样式background: #265bed;"
+  },
+  {
+    "className": "bg-ebedf3",
+    "description": "设置样式background: #ebedf3;"
+  },
+  {
+    "className": "bg-e7edff",
+    "description": "设置样式background: #e7edff;"
+  },
+  {
+    "className": "bg-ed7626",
+    "description": "设置样式background: #ed7626;"
+  },
+  {
+    "className": "bg-ccdaff",
+    "description": "设置样式background: #ccdaff;"
+  },
+  {
+    "className": "bg-e9eefd",
+    "description": "设置样式background: #e9eefd;"
+  },
+  {
+    "className": "bg-f5f8ff",
+    "description": "设置样式background: #f5f8ff;"
+  },
+  {
+    "className": "bg-8a97b8",
+    "description": "设置样式background: #8a97b8;"
+  },
+  {
+    "className": "bg-fafafa",
+    "description": "设置样式background: #fafafa;"
+  },
+  {
+    "className": "bg-dadada",
+    "description": "设置样式background: #dadada;"
+  },
+  {
+    "className": "bg-bdcefa",
+    "description": "设置样式background: #bdcefa;"
+  },
+  {
+    "className": "bg-f7f7f7",
+    "description": "设置样式background: #f7f7f7;"
+  },
+  {
+    "className": "bg-b1c3f4",
+    "description": "设置样式background: #b1c3f4;"
+  },
+  {
+    "className": "bg-2bb2ff",
+    "description": "设置样式background: #2bb2ff;"
+  },
+  {
+    "className": "bg-7e9ef6",
+    "description": "设置样式background: #7e9ef6;"
+  },
+  {
+    "className": "bg-fafafb",
+    "description": "设置样式background: #fafafb;"
+  },
+  {
+    "className": "bg-6de5c5",
+    "description": "设置样式background: #6de5c5;"
+  },
+  {
+    "className": "bg-28a9ff",
+    "description": "设置样式background: #28a9ff;"
+  },
+  {
+    "className": "bg-e8efff",
+    "description": "设置样式background: #e8efff;"
+  },
+  {
+    "className": "bg-ffad00",
+    "description": "设置样式background: #ffad00;"
+  },
+  {
+    "className": "bg-a8bef9",
+    "description": "设置样式background: #a8bef9;"
+  },
+  {
+    "className": "bg-a8ed41",
+    "description": "设置样式background: #a8ed41;"
+  },
+  {
+    "className": "bg-999999",
+    "description": "深灰色1,常用于弱提示文字"
+  },
+  {
+    "className": "bg-e6ecff",
+    "description": "设置样式background: #e6ecff;"
+  },
+  {
+    "className": "bg-becdfb",
+    "description": "设置样式background: #becdfb;"
+  },
+  {
+    "className": "bg-5178f3",
+    "description": "设置样式background: #5178f3;"
+  },
+  {
+    "className": "bg-f0f0f0",
+    "description": "设置样式background: #f0f0f0;"
+  },
+  {
+    "className": "bg-f7f8fa",
+    "description": "设置样式background: #f7f8fa;"
+  },
+  {
+    "className": "bg-edf0f5",
+    "description": "设置样式background: #edf0f5;"
+  },
+  {
+    "className": "bg-be3636",
+    "description": "设置样式background: #be3636;"
+  },
+  {
+    "className": "bg-ff6742",
+    "description": "设置样式background: #ff6742;"
+  },
+  {
+    "className": "bg-f3f3f3",
+    "description": "设置样式background: #f3f3f3;"
+  },
+  {
+    "className": "bg-255815508",
+    "description": "设置样式background: #255815508;"
+  },
+  {
+    "className": "bg-0ed78f",
+    "description": "设置样式background: #0ed78f;"
+  },
+  {
+    "className": "bg-d8d8d8",
+    "description": "设置样式background: #d8d8d8;"
+  },
+  {
+    "className": "bg-f1b6b6",
+    "description": "设置样式background: #f1b6b6;"
+  },
+  {
+    "className": "bg-007934",
+    "description": "设置样式background: #007934;"
+  },
+  {
+    "className": "bg-6381e1",
+    "description": "设置样式background: #6381e1;"
+  },
+  {
+    "className": "bg-403d52",
+    "description": "设置样式background: #403d52;"
+  },
+  {
+    "className": "bg-ffefed",
+    "description": "设置样式background: #ffefed;"
+  },
+  {
+    "className": "bg-ededed",
+    "description": "设置样式background: #deecdc;"
+  },
+  {
+    "className": "bg-c-f2f2f2",
+    "description": "设置样式background-color: #f2f2f2;"
+  },
+  {
+    "className": "bg-c-265bed",
+    "description": "设置样式background-color: #265bed;"
+  },
+  {
+    "className": "bg-c-fceed2",
+    "description": "设置样式background-color: #fceed2;"
+  },
+  {
+    "className": "bg-c-fef1e5",
+    "description": "设置样式background-color: #fef1e5;"
+  },
+  {
+    "className": "bg-white-0d2",
+    "description": "设置背景为白色+透明度为0.2"
+  },
+  {
+    "className": "bg-rgba-29-176-22-0d7",
+    "description": "设置样式background: rgba(29, 176, 22, 0.7);"
+  },
+  {
+    "className": "bg-rgba-203-203-203-0d2",
+    "description": "设置样式background: rgba(203, 203, 203, 0.2);"
+  },
+  {
+    "className": "bg-rgba-119-119-119-0d7",
+    "description": "设置样式background: rgba(119, 119, 119, 0.7);"
+  },
+  {
+    "className": "border-none",
+    "description": "消除边框样式"
+  },
+  {
+    "className": "border-0",
+    "description": "设置样式border: 0;"
+  },
+  {
+    "className": "border-unset",
+    "description": "设置样式border: unset;"
+  },
+  {
+    "className": "border-style-none",
+    "description": "设置边框线条为 none"
+  },
+  {
+    "className": "border-style-dashed",
+    "description": "设置边框线条为虚线"
+  },
+  {
+    "className": "border-style-solid",
+    "description": "设置边框线条为实线"
+  },
+  {
+    "className": "border-color-transparent",
+    "description": "设置样式border-color: transparent;"
+  },
+  {
+    "className": "border-2",
+    "description": "常用于设置四个方向的包裹边框线条"
+  },
+  {
+    "className": "border-left-2",
+    "description": "常用于设置左边方向的边框线条"
+  },
+  {
+    "className": "border-right-2",
+    "description": "常用于设置右边方向的边框线条"
+  },
+  {
+    "className": "border-top-2",
+    "description": "常用于设置上边方向的边框线条"
+  },
+  {
+    "className": "border-bottom-2",
+    "description": "常用于设置下边方向的边框线条"
+  },
+  {
+    "className": "border-bottom-2-dfe2eb",
+    "description": "设置下边框线条,颜色为dfe2eb"
+  },
+  {
+    "className": "radius-unset",
+    "description": "设置样式border-radius: unset;"
+  },
+  {
+    "className": "radius-inherit",
+    "description": "设置样式border-radius: inherit;"
+  },
+  {
+    "className": "radius-50p",
+    "description": "设置样式border-radius: 50%;"
+  },
+  {
+    "className": "radius-100p",
+    "description": "设置样式border-radius: 100%;"
+  },
+  {
+    "className": "radius-0",
+    "description": "设置样式border-radius: 0;"
+  },
+  {
+    "className": "radius-0-4-4-0",
+    "description": "设置样式border-radius: 0 4px 4px 0;"
+  },
+  {
+    "className": "radius-0-0-8-8",
+    "description": "设置样式border-radius: 0 0 8px 8px;"
+  },
+  {
+    "className": "radius-0-0-16-16",
+    "description": "设置样式border-radius: 0 0 16px 16px;"
+  },
+  {
+    "className": "radius-0-8-0-8",
+    "description": "设置样式border-radius: 0 8px 0 8px;"
+  },
+  {
+    "className": "radius-0-8-8-0",
+    "description": "设置样式border-radius: 0 8px 8px 0;"
+  },
+  {
+    "className": "radius-0-20-20-20",
+    "description": "设置样式border-radius: 0 20px 20px 20px;"
+  },
+  {
+    "className": "radius-0-4-3-4",
+    "description": "设置样式border-radius: 0 4px 3px 4px;"
+  },
+  {
+    "className": "radius-2",
+    "description": "设置样式border-radius: 2px;"
+  },
+  {
+    "className": "radius-3",
+    "description": "设置样式border-radius: 3px;"
+  },
+  {
+    "className": "radius-4",
+    "description": "设置样式border-radius: 4px;"
+  },
+  {
+    "className": "radius-6",
+    "description": "设置样式border-radius: 6px;"
+  },
+  {
+    "className": "radius-8",
+    "description": "设置样式border-radius: 8px;"
+  },
+  {
+    "className": "radius-8-0-0-8",
+    "description": "设置样式border-radius: 8px 0 0 8px;"
+  },
+  {
+    "className": "radius-8-0-8-0",
+    "description": "设置样式border-radius: 8px 0 8px 0;"
+  },
+  {
+    "className": "radius-8-8-0-0",
+    "description": "设置样式border-radius: 8px 8px 0 0;"
+  },
+  {
+    "className": "radius-10",
+    "description": "设置样式border-radius: 10px;"
+  },
+  {
+    "className": "radius-10-10-0-0",
+    "description": "设置样式border-radius: 10px 10px 0 0;"
+  },
+  {
+    "className": "radius-12",
+    "description": "设置样式border-radius: 12px;"
+  },
+  {
+    "className": "radius-12-12-0-0",
+    "description": "设置样式border-radius: 12px 12px 0 0;"
+  },
+  {
+    "className": "radius-13",
+    "description": "设置样式border-radius: 13px;"
+  },
+  {
+    "className": "radius-15",
+    "description": "设置样式border-radius: 15px;"
+  },
+  {
+    "className": "radius-16",
+    "description": "设置样式border-radius: 16px;"
+  },
+  {
+    "className": "radius-16-16-0-0",
+    "description": "设置样式border-radius: 16px 16px 0 0;"
+  },
+  {
+    "className": "radius-16-0-20-20",
+    "description": "设置样式border-radius: 16px 0 20px 20px;"
+  },
+  {
+    "className": "border-radius-20px",
+    "description": "设置样式border-radius: 20px;"
+  },
+  {
+    "className": "radius-20-20-0-0",
+    "description": "设置样式border-radius: 20px 20px 0 0;"
+  },
+  {
+    "className": "radius-24",
+    "description": "设置样式border-radius: 24px;"
+  },
+  {
+    "className": "radius-24-24-0-0",
+    "description": "设置样式border-radius: 24px 24px 0 0;"
+  },
+  {
+    "className": "radius-25",
+    "description": "设置样式border-radius: 25px;"
+  },
+  {
+    "className": "radius-26",
+    "description": "设置样式border-radius: 26px;"
+  },
+  {
+    "className": "radius-28",
+    "description": "设置样式border-radius: 28px;"
+  },
+  {
+    "className": "radius-30",
+    "description": "设置样式border-radius: 30px;"
+  },
+  {
+    "className": "radius-32",
+    "description": "设置样式border-radius: 32px;"
+  },
+  {
+    "className": "radius-32-32-0-0",
+    "description": "设置样式border-radius: 32px 32px 0 0;"
+  },
+  {
+    "className": "radius-35",
+    "description": "设置样式border-radius: 35px;"
+  },
+  {
+    "className": "radius-36",
+    "description": "设置样式border-radius: 36px;"
+  },
+  {
+    "className": "radius-40",
+    "description": "设置样式border-radius: 40px;"
+  },
+  {
+    "className": "radius-44",
+    "description": "设置样式border-radius: 44px;"
+  },
+  {
+    "className": "radius-45",
+    "description": "设置样式border-radius: 45px;"
+  },
+  {
+    "className": "radius-48",
+    "description": "设置样式border-radius: 48px;"
+  },
+  {
+    "className": "radius-50",
+    "description": "设置样式border-radius: 50px;"
+  },
+  {
+    "className": "radius-56",
+    "description": "设置样式border-radius: 56px;"
+  },
+  {
+    "className": "radius-70",
+    "description": "设置样式border-radius: 70px;"
+  },
+  {
+    "className": "radius-72",
+    "description": "设置样式border-radius: 72px;"
+  },
+  {
+    "className": "radius-90",
+    "description": "设置样式border-radius: 90px;"
+  },
+  {
+    "className": "radius-118",
+    "description": "设置样式border-radius: 118px;"
+  },
+  {
+    "className": "border-box",
+    "description": "设置样式box-sizing: border-box;"
+  },
+  {
+    "className": "content-box",
+    "description": "设置样式box-sizing: content-box;"
+  },
+  {
+    "className": "w-webkit-fit-content",
+    "description": "设置样式width: -webkit-fit-content;"
+  },
+  {
+    "className": "w-moz-fit-content",
+    "description": "设置样式width: -moz-fit-content;"
+  },
+  {
+    "className": "w-fit-content",
+    "description": "设置样式width: fit-content;"
+  },
+  {
+    "className": "w-webkit-max-content",
+    "description": "设置样式width: -webkit-max-content;"
+  },
+  {
+    "className": "w-moz-max-content",
+    "description": "设置样式width: -moz-max-content;"
+  },
+  {
+    "className": "w-max-content",
+    "description": "设置样式width: max-content;"
+  },
+  {
+    "className": "c-transparent",
+    "description": "透明颜色"
+  },
+  {
+    "className": "c-000000",
+    "description": "主题黑色"
+  },
+  {
+    "className": "c-black",
+    "description": "纯黑色"
+  },
+  {
+    "className": "c-333333",
+    "description": "淡黑色,常用于页面内容文字"
+  },
+  {
+    "className": "c-222222",
+    "description": "较深黑色"
+  },
+  {
+    "className": "c-2b2b2b",
+    "description": "较深黑色2"
+  },
+  {
+    "className": "c-white",
+    "description": "主题白色"
+  },
+  {
+    "className": "c-blue",
+    "description": "主题蓝色,常用于链接文字的颜色"
+  },
+  {
+    "className": "c-82848A",
+    "description": "灰色"
+  },
+  {
+    "className": "c-FF6146",
+    "description": "橙色"
+  },
+  {
+    "className": "c-2355de",
+    "description": "蓝色2"
+  },
+  {
+    "className": "c-1f56ff",
+    "description": "蓝色3"
+  },
+  {
+    "className": "c-335ee8",
+    "description": "蓝色4"
+  },
+  {
+    "className": "c-4187ff",
+    "description": "淡蓝色"
+  },
+  {
+    "className": "c-8db7ff",
+    "description": "极浅蓝色"
+  },
+  {
+    "className": "c-ed4343",
+    "description": "主题红色，常用于突出显示一些重要信息"
+  },
+  {
+    "className": "c-red",
+    "description": "纯红色"
+  },
+  {
+    "className": "c-FF5137",
+    "description": "视频号红"
+  },
+  {
+    "className": "bg-FF6146",
+    "description": "视频号红2"
+  },
+  {
+    "className": "c-fa9128",
+    "description": "主题橙色"
+  },
+  {
+    "className": "c-fc9c00",
+    "description": "橙色"
+  },
+  {
+    "className": "c-c66302",
+    "description": "深橙色"
+  },
+  {
+    "className": "c-ffd8a0",
+    "description": "淡橙色"
+  },
+  {
+    "className": "c-green",
+    "description": "主题绿色，常用于绿色的指标数字绿色"
+  },
+  {
+    "className": "c-28ca2a",
+    "description": "绿色"
+  },
+  {
+    "className": "c-e5e5e6",
+    "description": "灰色,常用于边框线颜色"
+  },
+  {
+    "className": "c-666666",
+    "description": "正常灰色,常用于icon和提示文字"
+  },
+  {
+    "className": "c-999999",
+    "description": "深灰色1,常用于弱提示文字"
+  },
+  {
+    "className": "c-888888",
+    "description": "深灰色2,常用于弱提示文字"
+  },
+  {
+    "className": "c-979797",
+    "description": "深灰色3,常用于弱提示文字"
+  },
+  {
+    "className": "c-939393",
+    "description": "深灰色4"
+  },
+  {
+    "className": "c-8d8d8d",
+    "description": "深灰色5"
+  },
+  {
+    "className": "c-787c88",
+    "description": "深灰色6"
+  },
+  {
+    "className": "c-9d9d9d",
+    "description": "深灰色7"
+  },
+  {
+    "className": "c-ccc",
+    "description": "极浅灰色,常用于不重要的信息"
+  },
+  {
+    "className": "c-a1a5b3",
+    "description": "较淡灰色"
+  },
+  {
+    "className": "c-8a97b8",
+    "description": "棕灰色"
+  },
+  {
+    "className": "c-dfe2eb",
+    "description": "淡灰色"
+  },
+  {
+    "className": "c-e5e5e5",
+    "description": "淡灰色2"
+  },
+  {
+    "className": "c-bfc0c2",
+    "description": "淡灰色3"
+  },
+  {
+    "className": "c-c2c4cc",
+    "description": "淡灰色4"
+  },
+  {
+    "className": "c-f2f5f3",
+    "description": "淡白色1"
+  },
+  {
+    "className": "c-e8edfb",
+    "description": "淡白色2"
+  },
+  {
+    "className": "c-8e9aba",
+    "description": "淡蓝灰色"
+  },
+  {
+    "className": "c-d4defc",
+    "description": "极淡蓝灰色"
+  },
+  {
+    "className": "c-576b95",
+    "description": "蓝灰色1"
+  },
+  {
+    "className": "c-4767bd",
+    "description": "蓝灰色2"
+  },
+  {
+    "className": "c-357ae0",
+    "description": "蓝灰色3"
+  },
+  {
+    "className": "c-6287ff",
+    "description": "设置样式color: #6287ff;"
+  },
+  {
+    "className": "c-f2f5fe",
+    "description": "设置样式color: #f2f5fe;"
+  },
+  {
+    "className": "c-2bb3ff",
+    "description": "设置样式color: #2bb3ff;"
+  },
+  {
+    "className": "c-f0f0f0",
+    "description": "设置样式color: #f0f0f0;"
+  },
+  {
+    "className": "c-ff9936",
+    "description": "设置样式color: #ff9936;"
+  },
+  {
+    "className": "c-ff9933",
+    "description": "设置样式color: #ff9933;"
+  },
+  {
+    "className": "c-0000ff",
+    "description": "设置样式color: #0000ff;"
+  },
+  {
+    "className": "c-3bbf13",
+    "description": "设置样式color: #3bbf13;"
+  },
+  {
+    "className": "c-0ed78f",
+    "description": "设置样式color: #0ed78f;"
+  },
+  {
+    "className": "c-007934",
+    "description": "设置样式color: #007934;"
+  },
+  {
+    "className": "c-6381e1",
+    "description": "设置样式color: #6381e1;"
+  },
+  {
+    "className": "c-919dc5",
+    "description": "设置样式color: #919dc5;"
+  },
+  {
+    "className": "c-3a3a3a",
+    "description": "深黑色，较#333333浅一点"
+  },
+  {
+    "className": "c-484848",
+    "description": "深黑色，较#333333更浅一点"
+  },
+  {
+    "className": "hidden",
+    "description": "此元素自身及后代元素都会隐藏,同时脱离文档流,不占空间"
+  },
+  {
+    "className": "block",
+    "description": "此元素将显示为块级元素,此元素前后会带有换行符"
+  },
+  {
+    "className": "inline-block",
+    "description": "此元素会被显示为行内块元素"
+  },
+  {
+    "className": "inline",
+    "description": "此元素会被显示为内联元素,元素前后没有换行符"
+  },
+  {
+    "className": "flex",
+    "description": "此元素会被显示为弹性盒模型元素,适用弹性布局"
+  },
+  {
+    "className": "inline-flex",
+    "description": "此元素会被显示为内联块级弹性盒模型元素"
+  },
+  {
+    "className": "webkit-box",
+    "description": "设置样式display: -webkit-box;"
+  },
+  {
+    "className": "display-contents",
+    "description": "设置样式display: contents;"
+  },
+  {
+    "className": "display-inherit",
+    "description": "设置样式display: inherit;"
+  },
+  {
+    "className": "display-table",
+    "description": "设置样式display: table;"
+  },
+  {
+    "className": "flex-unset",
+    "description": "设置样式flex: unset;"
+  },
+  {
+    "className": "flex-none",
+    "description": "设置样式flex: none;"
+  },
+  {
+    "className": "flex-column",
+    "description": "设置样式flex-direction: column;"
+  },
+  {
+    "className": "flex-row",
+    "description": "设置样式flex-direction: row;"
+  },
+  {
+    "className": "flex-wrap",
+    "description": "设置样式flex-wrap: wrap;"
+  },
+  {
+    "className": "flex-nowrap",
+    "description": "设置样式flex-wrap: nowrap;"
+  },
+  {
+    "className": "align-items-center",
+    "description": "设置样式align-items: center;"
+  },
+  {
+    "className": "align-items-baseline",
+    "description": "设置样式align-items: baseline;"
+  },
+  {
+    "className": "align-items-flex-start",
+    "description": "设置样式align-items: flex-start;"
+  },
+  {
+    "className": "align-items-flex-end",
+    "description": "设置样式align-items: flex-end;"
+  },
+  {
+    "className": "align-items-stretch",
+    "description": "设置样式align-items: stretch;"
+  },
+  {
+    "className": "align-self-center",
+    "description": "设置样式align-self: center;"
+  },
+  {
+    "className": "align-self-start",
+    "description": "设置样式align-self: flex-start;"
+  },
+  {
+    "className": "align-self-end",
+    "description": "设置样式align-self: flex-end;"
+  },
+  {
+    "className": "align-content-start",
+    "description": "设置样式align-content: flex-start;"
+  },
+  {
+    "className": "align-content-between",
+    "description": "设置样式align-content: space-between;"
+  },
+  {
+    "className": "justify-content-unset",
+    "description": "设置样式justify-content: unset;"
+  },
+  {
+    "className": "justify-content-center",
+    "description": "设置样式justify-content: center;"
+  },
+  {
+    "className": "justify-content-between",
+    "description": "设置样式justify-content: space-between;"
+  },
+  {
+    "className": "justify-content-around",
+    "description": "设置样式justify-content: space-around;"
+  },
+  {
+    "className": "justify-content-start",
+    "description": "设置样式justify-content: flex-start;"
+  },
+  {
+    "className": "justify-content-end",
+    "description": "设置样式justify-content: flex-end;"
+  },
+  {
+    "className": "justify-content-left",
+    "description": "设置样式justify-content: left;"
+  },
+  {
+    "className": "justify-self-baseline",
+    "description": "设置样式justify-self: baseline;"
+  },
+  {
+    "className": "flex-grow-0",
+    "description": "设置样式flex-grow: 0;"
+  },
+  {
+    "className": "flex-grow-1",
+    "description": "设置样式flex-grow: 1;"
+  },
+  {
+    "className": "flex-shrink-0",
+    "description": "设置样式flex-shrink: 0;"
+  },
+  {
+    "className": "flex-shrink-1",
+    "description": "设置样式flex-shrink: 1;"
+  },
+  {
+    "className": "flex-basis-0",
+    "description": "设置样式flex-basis: 0;"
+  },
+  {
+    "className": "flex-flow-row-wrap",
+    "description": "设置样式flex-flow: row wrap;"
+  },
+  {
+    "className": "flex-flow-wrap",
+    "description": "设置样式flex-flow: wrap;"
+  },
+  {
+    "className": "flex-0",
+    "description": "设置样式flex: 0;"
+  },
+  {
+    "className": "flex-1",
+    "description": "设置样式flex: 1;"
+  },
+  {
+    "className": "flex-2",
+    "description": "设置样式flex: 2;"
+  },
+  {
+    "className": "flex-0-0-auto",
+    "description": "设置样式flex: 0 0 auto;"
+  },
+  {
+    "className": "flex-0-0-12d5p",
+    "description": "设置样式flex: 0 0 12.5%;"
+  },
+  {
+    "className": "flex-0-0-25p",
+    "description": "设置样式flex: 0 0 25%;"
+  },
+  {
+    "className": "flex-0-0-34px",
+    "description": "设置样式flex: 0 0 34px;"
+  },
+  {
+    "className": "flex-0-0-40px",
+    "description": "设置样式flex: 0 0 40px;"
+  },
+  {
+    "className": "flex-0-0-48px",
+    "description": "设置样式flex: 0 0 48px;"
+  },
+  {
+    "className": "flex-0-0-56px",
+    "description": "设置样式flex: 0 0 56px;"
+  },
+  {
+    "className": "flex-0-0-60px",
+    "description": "设置样式flex: 0 0 60px;"
+  },
+  {
+    "className": "flex-0-0-70px",
+    "description": "设置样式flex: 0 0 70px;"
+  },
+  {
+    "className": "flex-0-0-80px",
+    "description": "设置样式flex: 0 0 80px;"
+  },
+  {
+    "className": "flex-0-0-94px",
+    "description": "设置样式flex: 0 0 94px;"
+  },
+  {
+    "className": "flex-0-0-98px",
+    "description": "设置样式flex: 0 0 98px;"
+  },
+  {
+    "className": "flex-0-0-104px",
+    "description": "设置样式flex: 0 0 104px;"
+  },
+  {
+    "className": "flex-0-0-106px",
+    "description": "设置样式flex: 0 0 106px;"
+  },
+  {
+    "className": "flex-0-0-114px",
+    "description": "设置样式flex: 0 0 114px;"
+  },
+  {
+    "className": "flex-0-0-120px",
+    "description": "设置样式flex: 0 0 120px;"
+  },
+  {
+    "className": "flex-0-0-128px",
+    "description": "设置样式flex: 0 0 128px;"
+  },
+  {
+    "className": "flex-0-0-140px",
+    "description": "设置样式flex: 0 0 140px;"
+  },
+  {
+    "className": "flex-0-0-144px",
+    "description": "设置样式flex: 0 0 144px;"
+  },
+  {
+    "className": "flex-0-0-146px",
+    "description": "设置样式flex: 0 0 146px;"
+  },
+  {
+    "className": "flex-0-0-160px",
+    "description": "设置样式flex: 0 0 160px;"
+  },
+  {
+    "className": "flex-0-0-168px",
+    "description": "设置样式flex: 0 0 168px;"
+  },
+  {
+    "className": "flex-0-0-180px",
+    "description": "设置样式flex: 0 0 180px;"
+  },
+  {
+    "className": "flex-0-0-190px",
+    "description": "设置样式flex: 0 0 190px;"
+  },
+  {
+    "className": "flex-0-0-192px",
+    "description": "设置样式flex: 0 0 192px;"
+  },
+  {
+    "className": "flex-0-0-200px",
+    "description": "设置样式flex: 0 0 200px;"
+  },
+  {
+    "className": "flex-0-0-204px",
+    "description": "设置样式flex: 0 0 204px;"
+  },
+  {
+    "className": "flex-0-0-224px",
+    "description": "设置样式flex: 0 0 224px;"
+  },
+  {
+    "className": "flex-0-0-240px",
+    "description": "设置样式flex: 0 0 240px;"
+  },
+  {
+    "className": "flex-0-0-245px",
+    "description": "设置样式flex: 0 0 245px;"
+  },
+  {
+    "className": "flex-0-0-256px",
+    "description": "设置样式flex: 0 0 256px;"
+  },
+  {
+    "className": "flex-0-0-280px",
+    "description": "设置样式flex: 0 0 280px;"
+  },
+  {
+    "className": "flex-0-0-300px",
+    "description": "设置样式flex: 0 0 300px;"
+  },
+  {
+    "className": "flex-0-0-323px",
+    "description": "设置样式flex: 0 0 323px;"
+  },
+  {
+    "className": "flex-0-0-370px",
+    "description": "设置样式flex: 0 0 370px;"
+  },
+  {
+    "className": "flex-0-0-500px",
+    "description": "设置样式flex: 0 0 500px;"
+  },
+  {
+    "className": "flex-1-0-0",
+    "description": "设置样式flex: 1 0 0;"
+  },
+  {
+    "className": "flex-1-0-14d285p",
+    "description": "设置样式flex: 1 0 14.285%;"
+  },
+  {
+    "className": "flex-column-reverse",
+    "description": "设置样式flex-direction: column-reverse;"
+  },
+  {
+    "className": "flex-row-reverse",
+    "description": "设置样式flex-direction: row-reverse;"
+  },
+  {
+    "className": "font-normal",
+    "description": "设置文本的粗细程度为默认值"
+  },
+  {
+    "className": "font-bold",
+    "description": "设置文本为粗体字符,字体加粗请使用此属性值"
+  },
+  {
+    "className": "font-weight-bolder",
+    "description": "设置文本为更粗的字符,尽量不使用此属性,改用bold"
+  },
+  {
+    "className": "font-w-400",
+    "description": "设置文本的粗细程度为400"
+  },
+  {
+    "className": "font-w-500",
+    "description": "设置文本的粗细程度为500"
+  },
+  {
+    "className": "font-w-600",
+    "description": "设置文本的粗细程度为600"
+  },
+  {
+    "className": "font-w-700",
+    "description": "设置文本的粗细程度为700"
+  },
+  {
+    "className": "font-w-900",
+    "description": "设置样式font-weight: 900;"
+  },
+  {
+    "className": "font-0",
+    "description": "设置样式font-size: 0;"
+  },
+  {
+    "className": "font-12",
+    "description": "设置样式font-size: 10px;"
+  },
+  {
+    "className": "font-14",
+    "description": "设置样式font-size: 14px;"
+  },
+  {
+    "className": "font-16",
+    "description": "设置样式font-size: 16px;"
+  },
+  {
+    "className": "font-17",
+    "description": "设置样式font-size: 17px;"
+  },
+  {
+    "className": "font-18",
+    "description": "设置样式font-size: 18px;"
+  },
+  {
+    "className": "font-20",
+    "description": "设置样式font-size: 20px;"
+  },
+  {
+    "className": "font-22",
+    "description": "设置样式font-size: 22px;"
+  },
+  {
+    "className": "font-24",
+    "description": "设置样式font-size: 24px;"
+  },
+  {
+    "className": "font-25",
+    "description": "设置样式font-size: 25px;"
+  },
+  {
+    "className": "font-26",
+    "description": "设置样式font-size: 26px;"
+  },
+  {
+    "className": "font-28",
+    "description": "设置样式font-size: 28px;"
+  },
+  {
+    "className": "font-30",
+    "description": "设置样式font-size: 30px;"
+  },
+  {
+    "className": "font-32",
+    "description": "设置样式font-size: 32px;"
+  },
+  {
+    "className": "font-34",
+    "description": "设置样式font-size: 34px;"
+  },
+  {
+    "className": "font-36",
+    "description": "设置样式font-size: 36px;"
+  },
+  {
+    "className": "font-37",
+    "description": "设置样式font-size: 37px;"
+  },
+  {
+    "className": "font-38",
+    "description": "设置样式font-size: 38px;"
+  },
+  {
+    "className": "font-40",
+    "description": "设置样式font-size: 40px;"
+  },
+  {
+    "className": "font-42",
+    "description": "设置样式font-size: 42px;"
+  },
+  {
+    "className": "font-44",
+    "description": "设置样式font-size: 44px;"
+  },
+  {
+    "className": "font-46",
+    "description": "设置样式font-size: 46px;"
+  },
+  {
+    "className": "font-48",
+    "description": "设置样式font-size: 48px;"
+  },
+  {
+    "className": "font-50",
+    "description": "设置样式font-size: 50px;"
+  },
+  {
+    "className": "font-52",
+    "description": "设置样式font-size: 52px;"
+  },
+  {
+    "className": "font-56",
+    "description": "设置样式font-size: 56px;"
+  },
+  {
+    "className": "font-60",
+    "description": "设置样式font-size: 60px;"
+  },
+  {
+    "className": "font-66",
+    "description": "设置样式font-size: 66px;"
+  },
+  {
+    "className": "font-72",
+    "description": "设置样式font-size: 72px;"
+  },
+  {
+    "className": "min-width-180",
+    "description": "设置样式min-height: unset;"
+  },
+  {
+    "className": "min-height-unset",
+    "description": "设置样式min-width: 180px;"
+  },
+  {
+    "className": "min-height-inherit",
+    "description": "设置样式min-height: inherit;"
+  },
+  {
+    "className": "min-height-100vh",
+    "description": "设置样式min-height: 100vh;"
+  },
+  {
+    "className": "min-height-100p",
+    "description": "设置样式min-height: 100%;"
+  },
+  {
+    "className": "min-h-40",
+    "description": "设置样式min-height: 40px;"
+  },
+  {
+    "className": "min-h-45",
+    "description": "设置样式min-height: 45px;"
+  },
+  {
+    "className": "min-height-48px",
+    "description": "设置样式min-height: 48px;"
+  },
+  {
+    "className": "min-height-90",
+    "description": "设置样式min-height: 90px;"
+  },
+  {
+    "className": "min-h-104",
+    "description": "设置样式min-height: 104px;"
+  },
+  {
+    "className": "min-height-216",
+    "description": "设置样式min-height: 216px;"
+  },
+  {
+    "className": "min-height-400",
+    "description": "设置样式min-height: 400px;"
+  },
+  {
+    "className": "min-height-414",
+    "description": "设置样式min-height: 414px;"
+  },
+  {
+    "className": "min-height-520",
+    "description": "设置样式min-height: 520px;"
+  },
+  {
+    "className": "max-h-none",
+    "description": "设置样式max-height: none;"
+  },
+  {
+    "className": "max-h-100vh",
+    "description": "设置样式max-height: 100vh;"
+  },
+  {
+    "className": "max-h-100p",
+    "description": "设置样式max-height: 100%;"
+  },
+  {
+    "className": "max-h-40",
+    "description": "设置样式max-height: 40px;"
+  },
+  {
+    "className": "max-h-100",
+    "description": "设置样式max-height: 100px;"
+  },
+  {
+    "className": "max-h-138",
+    "description": "设置样式max-height: 138px;"
+  },
+  {
+    "className": "max-h-140",
+    "description": "设置样式max-height: 140px;"
+  },
+  {
+    "className": "max-h-168",
+    "description": "设置样式max-height: 168px;"
+  },
+  {
+    "className": "max-h-252",
+    "description": "设置样式max-height: 252px;"
+  },
+  {
+    "className": "max-h-400",
+    "description": "设置样式max-height: 400px;"
+  },
+  {
+    "className": "max-h-800",
+    "description": "设置样式max-height: 800px;"
+  },
+  {
+    "className": "max-h-850",
+    "description": "设置样式max-height: 850px;"
+  },
+  {
+    "className": "h-auto",
+    "description": "设置样式height: auto;"
+  },
+  {
+    "className": "h-100vh",
+    "description": "设置样式height: 100vh;"
+  },
+  {
+    "className": "h-43p",
+    "description": "设置样式height: 43%;"
+  },
+  {
+    "className": "h-48p",
+    "description": "设置样式height: 48%;"
+  },
+  {
+    "className": "h-50p",
+    "description": "设置样式height: 50%;"
+  },
+  {
+    "className": "h-70p",
+    "description": "设置样式height: 70%;"
+  },
+  {
+    "className": "h-85p",
+    "description": "设置样式height: 85%;"
+  },
+  {
+    "className": "h-100p",
+    "description": "设置样式height: 100%;"
+  },
+  {
+    "className": "h-200p",
+    "description": "设置样式height: 200%;"
+  },
+  {
+    "className": "h-0",
+    "description": "设置样式height: 0;"
+  },
+  {
+    "className": "h-1",
+    "description": "设置样式height: 1px;"
+  },
+  {
+    "className": "h-2",
+    "description": "设置样式height: 2px;"
+  },
+  {
+    "className": "h-4",
+    "description": "设置样式height: 4px;"
+  },
+  {
+    "className": "h-6",
+    "description": "设置样式height: 6px;"
+  },
+  {
+    "className": "h-8",
+    "description": "设置样式height: 8px;"
+  },
+  {
+    "className": "h-10",
+    "description": "设置样式height: 10px;"
+  },
+  {
+    "className": "h-12",
+    "description": "设置样式height: 12px;"
+  },
+  {
+    "className": "h-15",
+    "description": "设置样式height: 15px;"
+  },
+  {
+    "className": "h-16",
+    "description": "设置样式height: 16px;"
+  },
+  {
+    "className": "h-18",
+    "description": "设置样式height: 18px;"
+  },
+  {
+    "className": "h-19",
+    "description": "设置样式height: 19px;"
+  },
+  {
+    "className": "h-20",
+    "description": "设置样式height: 20px;"
+  },
+  {
+    "className": "h-22",
+    "description": "设置样式height: 22px;"
+  },
+  {
+    "className": "h-24",
+    "description": "设置样式height: 24px;"
+  },
+  {
+    "className": "h-26",
+    "description": "设置样式height: 26px;"
+  },
+  {
+    "className": "h-28",
+    "description": "设置样式height: 28px;"
+  },
+  {
+    "className": "h-30",
+    "description": "设置样式height: 30px;"
+  },
+  {
+    "className": "h-32",
+    "description": "设置样式height: 32px;"
+  },
+  {
+    "className": "h-33",
+    "description": "设置样式height: 33px;"
+  },
+  {
+    "className": "h-34",
+    "description": "设置样式height: 34px;"
+  },
+  {
+    "className": "h-35",
+    "description": "设置样式height: 35px;"
+  },
+  {
+    "className": "h-36",
+    "description": "设置样式height: 36px;"
+  },
+  {
+    "className": "h-38",
+    "description": "设置样式height: 38px;"
+  },
+  {
+    "className": "h-40",
+    "description": "设置样式height: 40px;"
+  },
+  {
+    "className": "h-41",
+    "description": "设置样式height: 41px;"
+  },
+  {
+    "className": "h-42",
+    "description": "设置样式height: 42px;"
+  },
+  {
+    "className": "h-43",
+    "description": "设置样式height: 43px;"
+  },
+  {
+    "className": "h-44",
+    "description": "设置样式height: 44px;"
+  },
+  {
+    "className": "h-45",
+    "description": "设置样式height: 45px;"
+  },
+  {
+    "className": "h-46",
+    "description": "设置样式height: 46px;"
+  },
+  {
+    "className": "h-47",
+    "description": "设置样式height: 47px;"
+  },
+  {
+    "className": "h-48",
+    "description": "设置样式height: 48px;"
+  },
+  {
+    "className": "h-50",
+    "description": "设置样式height: 50px;"
+  },
+  {
+    "className": "h-51",
+    "description": "设置样式height: 51px;"
+  },
+  {
+    "className": "h-52",
+    "description": "设置样式height: 52px;"
+  },
+  {
+    "className": "h-53",
+    "description": "设置样式height: 53px;"
+  },
+  {
+    "className": "h-54",
+    "description": "设置样式height: 54px;"
+  },
+  {
+    "className": "h-56",
+    "description": "设置样式height: 56px;"
+  },
+  {
+    "className": "h-58",
+    "description": "设置样式height: 58px;"
+  },
+  {
+    "className": "h-59",
+    "description": "设置样式height: 59px;"
+  },
+  {
+    "className": "h-60",
+    "description": "设置样式height: 60px;"
+  },
+  {
+    "className": "h-64",
+    "description": "设置样式height: 64px;"
+  },
+  {
+    "className": "h-65",
+    "description": "设置样式height: 65px;"
+  },
+  {
+    "className": "h-66",
+    "description": "设置样式height: 66px;"
+  },
+  {
+    "className": "h-67",
+    "description": "设置样式height: 67px;"
+  },
+  {
+    "className": "h-68",
+    "description": "设置样式height: 68px;"
+  },
+  {
+    "className": "h-69d1",
+    "description": "设置样式height: 69.1px;"
+  },
+  {
+    "className": "h-70",
+    "description": "设置样式height: 70px;"
+  },
+  {
+    "className": "h-72",
+    "description": "设置样式height: 72px;"
+  },
+  {
+    "className": "h-73",
+    "description": "设置样式height: 73px;"
+  },
+  {
+    "className": "h-74",
+    "description": "设置样式height: 74px;"
+  },
+  {
+    "className": "h-76",
+    "description": "设置样式height: 76px;"
+  },
+  {
+    "className": "h-78",
+    "description": "设置样式height: 78px;"
+  },
+  {
+    "className": "h-80",
+    "description": "设置样式height: 80px;"
+  },
+  {
+    "className": "h-84",
+    "description": "设置样式height: 84px;"
+  },
+  {
+    "className": "h-88",
+    "description": "设置样式height: 88px;"
+  },
+  {
+    "className": "h-90",
+    "description": "设置样式height: 90px;"
+  },
+  {
+    "className": "h-92",
+    "description": "设置样式height: 92px;"
+  },
+  {
+    "className": "h-94",
+    "description": "设置样式height: 94px;"
+  },
+  {
+    "className": "h-96",
+    "description": "设置样式height: 96px;"
+  },
+  {
+    "className": "h-98",
+    "description": "设置样式height: 98px;"
+  },
+  {
+    "className": "h-100",
+    "description": "设置样式height: 100px;"
+  },
+  {
+    "className": "h-104",
+    "description": "设置样式height: 104px;"
+  },
+  {
+    "className": "h-107",
+    "description": "设置样式height: 107px;"
+  },
+  {
+    "className": "h-108",
+    "description": "设置样式height: 108px;"
+  },
+  {
+    "className": "h-109",
+    "description": "设置样式height: 109px;"
+  },
+  {
+    "className": "h-110",
+    "description": "设置样式height: 110px;"
+  },
+  {
+    "className": "h-112",
+    "description": "设置样式height: 112px;"
+  },
+  {
+    "className": "h-114",
+    "description": "设置样式height: 114px;"
+  },
+  {
+    "className": "h-116",
+    "description": "设置样式height: 116px;"
+  },
+  {
+    "className": "h-120",
+    "description": "设置样式height: 120px;"
+  },
+  {
+    "className": "h-121",
+    "description": "设置样式height: 121px;"
+  },
+  {
+    "className": "h-123",
+    "description": "设置样式height: 123px;"
+  },
+  {
+    "className": "h-124",
+    "description": "设置样式height: 124px;"
+  },
+  {
+    "className": "h-126",
+    "description": "设置样式height: 126px;"
+  },
+  {
+    "className": "h-127",
+    "description": "设置样式height: 127px;"
+  },
+  {
+    "className": "h-128",
+    "description": "设置样式height: 128px;"
+  },
+  {
+    "className": "h-129",
+    "description": "设置样式height: 129px;"
+  },
+  {
+    "className": "h-130",
+    "description": "设置样式height: 130px;"
+  },
+  {
+    "className": "h-131",
+    "description": "设置样式height: 131px;"
+  },
+  {
+    "className": "h-132",
+    "description": "设置样式height: 132px;"
+  },
+  {
+    "className": "h-135",
+    "description": "设置样式height: 135px;"
+  },
+  {
+    "className": "h-138",
+    "description": "设置样式height: 138px;"
+  },
+  {
+    "className": "h-140",
+    "description": "设置样式height: 140px;"
+  },
+  {
+    "className": "h-142",
+    "description": "设置样式height: 142px;"
+  },
+  {
+    "className": "h-144",
+    "description": "设置样式height: 144px;"
+  },
+  {
+    "className": "h-146",
+    "description": "设置样式height: 146px;"
+  },
+  {
+    "className": "h-148",
+    "description": "设置样式height: 148px;"
+  },
+  {
+    "className": "h-149",
+    "description": "设置样式height: 149px;"
+  },
+  {
+    "className": "h-150",
+    "description": "设置样式height: 150px;"
+  },
+  {
+    "className": "h-157d2",
+    "description": "设置样式height: 157.2px;"
+  },
+  {
+    "className": "h-158",
+    "description": "设置样式height: 158px;"
+  },
+  {
+    "className": "h-160",
+    "description": "设置样式height: 160px;"
+  },
+  {
+    "className": "h-164",
+    "description": "设置样式height: 164px;"
+  },
+  {
+    "className": "h-168",
+    "description": "设置样式height: 168px;"
+  },
+  {
+    "className": "h-170",
+    "description": "设置样式height: 170px;"
+  },
+  {
+    "className": "h-174",
+    "description": "设置样式height: 174px;"
+  },
+  {
+    "className": "h-176",
+    "description": "设置样式height: 176px;"
+  },
+  {
+    "className": "h-180",
+    "description": "设置样式height: 180px;"
+  },
+  {
+    "className": "h-181",
+    "description": "设置样式height: 181px;"
+  },
+  {
+    "className": "h-185",
+    "description": "设置样式height: 185px;"
+  },
+  {
+    "className": "h-186",
+    "description": "设置样式height: 186px;"
+  },
+  {
+    "className": "h-190",
+    "description": "设置样式height: 190px;"
+  },
+  {
+    "className": "h-191",
+    "description": "设置样式height: 191px;"
+  },
+  {
+    "className": "h-193",
+    "description": "设置样式height: 193px;"
+  },
+  {
+    "className": "h-198",
+    "description": "设置样式height: 198px;"
+  },
+  {
+    "className": "h-200",
+    "description": "设置样式height: 200px;"
+  },
+  {
+    "className": "h-203",
+    "description": "设置样式height: 203px;"
+  },
+  {
+    "className": "h-204",
+    "description": "设置样式height: 204px;"
+  },
+  {
+    "className": "h-206",
+    "description": "设置样式height: 206px;"
+  },
+  {
+    "className": "h-208",
+    "description": "设置样式height: 208px;"
+  },
+  {
+    "className": "h-210",
+    "description": "设置样式height: 210px;"
+  },
+  {
+    "className": "h-213",
+    "description": "设置样式height: 213px;"
+  },
+  {
+    "className": "h-215",
+    "description": "设置样式height: 215px;"
+  },
+  {
+    "className": "h-216",
+    "description": "设置样式height: 216px;"
+  },
+  {
+    "className": "h-218",
+    "description": "设置样式height: 218px;"
+  },
+  {
+    "className": "h-220",
+    "description": "设置样式height: 220px;"
+  },
+  {
+    "className": "h-222",
+    "description": "设置样式height: 222px;"
+  },
+  {
+    "className": "h-224",
+    "description": "设置样式height: 224px;"
+  },
+  {
+    "className": "h-226",
+    "description": "设置样式height: 226px;"
+  },
+  {
+    "className": "h-227",
+    "description": "设置样式height: 227px;"
+  },
+  {
+    "className": "h-228",
+    "description": "设置样式height: 228px;"
+  },
+  {
+    "className": "h-238",
+    "description": "设置样式height: 238px;"
+  },
+  {
+    "className": "h-240",
+    "description": "设置样式height: 240px;"
+  },
+  {
+    "className": "h-246",
+    "description": "设置样式height: 246px;"
+  },
+  {
+    "className": "h-250",
+    "description": "设置样式height: 250px;"
+  },
+  {
+    "className": "h-258",
+    "description": "设置样式height: 258px;"
+  },
+  {
+    "className": "h-260",
+    "description": "设置样式height: 260px;"
+  },
+  {
+    "className": "h-266",
+    "description": "设置样式height: 266px;"
+  },
+  {
+    "className": "h-280",
+    "description": "设置样式height: 280px;"
+  },
+  {
+    "className": "h-288",
+    "description": "设置样式height: 288px;"
+  },
+  {
+    "className": "h-290",
+    "description": "设置样式height: 290px;"
+  },
+  {
+    "className": "h-292",
+    "description": "设置样式height: 292px;"
+  },
+  {
+    "className": "h-294",
+    "description": "设置样式height: 294px;"
+  },
+  {
+    "className": "h-300",
+    "description": "设置样式height: 300px;"
+  },
+  {
+    "className": "h-306",
+    "description": "设置样式height: 306px;"
+  },
+  {
+    "className": "h-308",
+    "description": "设置样式height: 308px;"
+  },
+  {
+    "className": "h-310",
+    "description": "设置样式height: 310px;"
+  },
+  {
+    "className": "h-317",
+    "description": "设置样式height: 317px;"
+  },
+  {
+    "className": "h-318",
+    "description": "设置样式height: 318px;"
+  },
+  {
+    "className": "h-324",
+    "description": "设置样式height: 324px;"
+  },
+  {
+    "className": "h-328",
+    "description": "设置样式height: 328px;"
+  },
+  {
+    "className": "h-330",
+    "description": "设置样式height: 330px;"
+  },
+  {
+    "className": "h-332",
+    "description": "设置样式height: 332px;"
+  },
+  {
+    "className": "h-344",
+    "description": "设置样式height: 344px;"
+  },
+  {
+    "className": "h-350",
+    "description": "设置样式height: 350px;"
+  },
+  {
+    "className": "h-354",
+    "description": "设置样式height: 354px;"
+  },
+  {
+    "className": "h-360",
+    "description": "设置样式height: 360px;"
+  },
+  {
+    "className": "h-364",
+    "description": "设置样式height: 364px;"
+  },
+  {
+    "className": "h-368",
+    "description": "设置样式height: 368px;"
+  },
+  {
+    "className": "h-384",
+    "description": "设置样式height: 384px;"
+  },
+  {
+    "className": "h-388",
+    "description": "设置样式height: 388px;"
+  },
+  {
+    "className": "h-398",
+    "description": "设置样式height: 398px;"
+  },
+  {
+    "className": "h-400",
+    "description": "设置样式height: 400px;"
+  },
+  {
+    "className": "h-410",
+    "description": "设置样式height: 410px;"
+  },
+  {
+    "className": "h-420",
+    "description": "设置样式height: 420px;"
+  },
+  {
+    "className": "h-426",
+    "description": "设置样式height: 426px;"
+  },
+  {
+    "className": "h-430",
+    "description": "设置样式height: 430px;"
+  },
+  {
+    "className": "h-440",
+    "description": "设置样式height: 440px;"
+  },
+  {
+    "className": "h-446",
+    "description": "设置样式height: 446px;"
+  },
+  {
+    "className": "h-458",
+    "description": "设置样式height: 458px;"
+  },
+  {
+    "className": "h-460",
+    "description": "设置样式height: 460px;"
+  },
+  {
+    "className": "h-469",
+    "description": "设置样式height: 469px;"
+  },
+  {
+    "className": "h-492",
+    "description": "设置样式height: 492px;"
+  },
+  {
+    "className": "h-504",
+    "description": "设置样式height: 504px;"
+  },
+  {
+    "className": "h-513",
+    "description": "设置样式height: 513px;"
+  },
+  {
+    "className": "h-532",
+    "description": "设置样式height: 532px;"
+  },
+  {
+    "className": "h-565",
+    "description": "设置样式height: 565px;"
+  },
+  {
+    "className": "h-600",
+    "description": "设置样式height: 600px;"
+  },
+  {
+    "className": "h-624",
+    "description": "设置样式height: 624px;"
+  },
+  {
+    "className": "h-630",
+    "description": "设置样式height: 630px;"
+  },
+  {
+    "className": "h-640",
+    "description": "设置样式height: 640px;"
+  },
+  {
+    "className": "h-644",
+    "description": "设置样式height: 644px;"
+  },
+  {
+    "className": "h-668",
+    "description": "设置样式height: 668px;"
+  },
+  {
+    "className": "h-670",
+    "description": "设置样式height: 670px;"
+  },
+  {
+    "className": "h-680",
+    "description": "设置样式height: 680px;"
+  },
+  {
+    "className": "h-712",
+    "description": "设置样式height: 712px;"
+  },
+  {
+    "className": "h-760",
+    "description": "设置样式height: 760px;"
+  },
+  {
+    "className": "h-800",
+    "description": "设置样式height: 800px;"
+  },
+  {
+    "className": "h-812",
+    "description": "设置样式height: 812px;"
+  },
+  {
+    "className": "h-820",
+    "description": "设置样式height: 820px;"
+  },
+  {
+    "className": "h-850",
+    "description": "设置样式height: 850px;"
+  },
+  {
+    "className": "h-914",
+    "description": "设置样式height: 914px;"
+  },
+  {
+    "className": "h-990",
+    "description": "设置样式height: 990px;"
+  },
+  {
+    "className": "h-1000",
+    "description": "设置样式height: 1000px;"
+  },
+  {
+    "className": "h-1029",
+    "description": "设置样式height: 1029px;"
+  },
+  {
+    "className": "h-1074",
+    "description": "设置样式height: 1074px;"
+  },
+  {
+    "className": "h-1100",
+    "description": "设置样式height: 1100px;"
+  },
+  {
+    "className": "h-1230",
+    "description": "设置样式height: 1230px;"
+  },
+  {
+    "className": "line-height-inherit",
+    "description": "元素行高属性继承自父辈元素"
+  },
+  {
+    "className": "line-height-1",
+    "description": "元素行高跟文字大小保持一致"
+  },
+  {
+    "className": "line-height-1d41176471x",
+    "description": "设置样式line-height: 1.41176471;"
+  },
+  {
+    "className": "line-height-1d5",
+    "description": "设置样式line-height: 1.5;"
+  },
+  {
+    "className": "line-height-1d6",
+    "description": "设置样式line-height: 1.6;"
+  },
+  {
+    "className": "line-height-1d7",
+    "description": "设置样式line-height: 1.7;"
+  },
+  {
+    "className": "line-height-1d8x",
+    "description": "设置样式line-height: 1.8;"
+  },
+  {
+    "className": "line-height-2",
+    "description": "设置样式line-height: 2;"
+  },
+  {
+    "className": "line-height-20",
+    "description": "设置样式line-height: 20px;"
+  },
+  {
+    "className": "line-height-22",
+    "description": "设置样式line-height: 22px;"
+  },
+  {
+    "className": "line-height-23",
+    "description": "设置样式line-height: 23px;"
+  },
+  {
+    "className": "line-height-24",
+    "description": "设置样式line-height: 24px;"
+  },
+  {
+    "className": "line-height-26",
+    "description": "设置样式line-height: 26px;"
+  },
+  {
+    "className": "line-height-28",
+    "description": "设置样式line-height: 28px;"
+  },
+  {
+    "className": "line-height-30",
+    "description": "设置样式line-height: 30px;"
+  },
+  {
+    "className": "line-height-32",
+    "description": "设置样式line-height: 32px;"
+  },
+  {
+    "className": "line-height-33",
+    "description": "设置样式line-height: 33px;"
+  },
+  {
+    "className": "line-height-34",
+    "description": "设置样式line-height: 34px;"
+  },
+  {
+    "className": "line-height-36",
+    "description": "设置样式line-height: 36px;"
+  },
+  {
+    "className": "line-height-37",
+    "description": "设置样式line-height: 37px;"
+  },
+  {
+    "className": "line-height-38",
+    "description": "设置样式line-height: 38px;"
+  },
+  {
+    "className": "line-height-39",
+    "description": "设置样式line-height: 39px;"
+  },
+  {
+    "className": "line-height-40",
+    "description": "设置样式line-height: 40px;"
+  },
+  {
+    "className": "line-height-42",
+    "description": "设置样式line-height: 42px;"
+  },
+  {
+    "className": "line-height-43",
+    "description": "设置样式line-height: 43px;"
+  },
+  {
+    "className": "line-height-44",
+    "description": "设置样式line-height: 44px;"
+  },
+  {
+    "className": "line-height-45",
+    "description": "设置样式line-height: 45px;"
+  },
+  {
+    "className": "line-height-46",
+    "description": "设置样式line-height: 46px;"
+  },
+  {
+    "className": "line-height-47",
+    "description": "设置样式line-height: 47px;"
+  },
+  {
+    "className": "line-height-48",
+    "description": "设置样式line-height: 48px;"
+  },
+  {
+    "className": "line-height-50",
+    "description": "设置样式line-height: 50px;"
+  },
+  {
+    "className": "line-height-54",
+    "description": "设置样式line-height: 54px;"
+  },
+  {
+    "className": "line-height-56",
+    "description": "设置样式line-height: 56px;"
+  },
+  {
+    "className": "line-height-58",
+    "description": "设置样式line-height: 58px;"
+  },
+  {
+    "className": "line-height-60",
+    "description": "设置样式line-height: 60px;"
+  },
+  {
+    "className": "line-height-64",
+    "description": "设置样式line-height: 64px;"
+  },
+  {
+    "className": "line-height-70",
+    "description": "设置样式line-height: 70px;"
+  },
+  {
+    "className": "line-height-72",
+    "description": "设置样式line-height: 72px;"
+  },
+  {
+    "className": "line-height-74",
+    "description": "设置样式line-height: 74px;"
+  },
+  {
+    "className": "line-height-78",
+    "description": "设置样式line-height: 78px;"
+  },
+  {
+    "className": "line-height-84",
+    "description": "设置样式line-height: 84px;"
+  },
+  {
+    "className": "line-height-88",
+    "description": "设置样式line-height: 88px;"
+  },
+  {
+    "className": "line-height-90",
+    "description": "设置样式line-height: 90px;"
+  },
+  {
+    "className": "line-height-94",
+    "description": "设置样式line-height: 94px;"
+  },
+  {
+    "className": "line-height-100",
+    "description": "设置样式line-height: 100px;"
+  },
+  {
+    "className": "line-height-400",
+    "description": "设置样式line-height: 400px;"
+  },
+  {
+    "className": "line-height-410",
+    "description": "设置样式line-height: 410px;"
+  },
+  {
+    "className": "line-height-469",
+    "description": "设置样式line-height: 469px;"
+  },
+  {
+    "className": "line-height-600",
+    "description": "设置样式line-height: 600px;"
+  },
+  {
+    "className": "m-unset",
+    "description": "设置样式margin: unset;"
+  },
+  {
+    "className": "m-auto",
+    "description": "设置样式margin: auto;"
+  },
+  {
+    "className": "m-0-auto",
+    "description": "设置样式margin: 0 auto;"
+  },
+  {
+    "className": "m-0",
+    "description": "设置样式margin: 0;"
+  },
+  {
+    "className": "mt-unset",
+    "description": "设置样式margin-top: unset;"
+  },
+  {
+    "className": "mt-auto",
+    "description": "设置样式margin-top: auto;"
+  },
+  {
+    "className": "mt-n60",
+    "description": "设置样式margin-top: -60px;"
+  },
+  {
+    "className": "mt-n24",
+    "description": "设置样式margin-top: -24px;"
+  },
+  {
+    "className": "mt-n14",
+    "description": "设置样式margin-top: -14px;"
+  },
+  {
+    "className": "mt-n12",
+    "description": "设置样式margin-top: -12px;"
+  },
+  {
+    "className": "mt-n10",
+    "description": "设置样式margin-top: -10px;"
+  },
+  {
+    "className": "mt-n6",
+    "description": "设置样式margin-top: -6px;"
+  },
+  {
+    "className": "mt-n4",
+    "description": "设置样式margin-top: -4px;"
+  },
+  {
+    "className": "mt-n2",
+    "description": "设置样式margin-top: -2px;"
+  },
+  {
+    "className": "mt-n1",
+    "description": "设置样式margin-top: -1px;"
+  },
+  {
+    "className": "mt-0",
+    "description": "设置样式margin-top: 0;"
+  },
+  {
+    "className": "mt-2",
+    "description": "设置样式margin-top: 2px;"
+  },
+  {
+    "className": "mt-3",
+    "description": "设置样式margin-top: 3px;"
+  },
+  {
+    "className": "mt-4",
+    "description": "设置样式margin-top: 4px;"
+  },
+  {
+    "className": "mt-6",
+    "description": "设置样式margin-top: 6px;"
+  },
+  {
+    "className": "mt-8",
+    "description": "设置样式margin-top: 8px;"
+  },
+  {
+    "className": "mt-9",
+    "description": "设置样式margin-top: 9px;"
+  },
+  {
+    "className": "mt-10",
+    "description": "设置样式margin-top: 10px;"
+  },
+  {
+    "className": "mt-11",
+    "description": "设置样式margin-top: 11px;"
+  },
+  {
+    "className": "mt-12",
+    "description": "设置样式margin-top: 12px;"
+  },
+  {
+    "className": "mt-14",
+    "description": "设置样式margin-top: 14px;"
+  },
+  {
+    "className": "mt-15",
+    "description": "设置样式margin-top: 15px;"
+  },
+  {
+    "className": "mt-16",
+    "description": "设置样式margin-top: 16px;"
+  },
+  {
+    "className": "mt-18",
+    "description": "设置样式margin-top: 18px;"
+  },
+  {
+    "className": "mt-20",
+    "description": "设置样式margin-top: 20px;"
+  },
+  {
+    "className": "mt-22",
+    "description": "设置样式margin-top: 22px;"
+  },
+  {
+    "className": "mt-24",
+    "description": "设置样式margin-top: 24px;"
+  },
+  {
+    "className": "mt-25",
+    "description": "设置样式margin-top: 25px;"
+  },
+  {
+    "className": "mt-26",
+    "description": "设置样式margin-top: 26px;"
+  },
+  {
+    "className": "mt-30",
+    "description": "设置样式margin-top: 30px;"
+  },
+  {
+    "className": "mt-31",
+    "description": "设置样式margin-top: 31px;"
+  },
+  {
+    "className": "mt-32",
+    "description": "设置样式margin-top: 32px;"
+  },
+  {
+    "className": "mt-33",
+    "description": "设置样式margin-top: 33px;"
+  },
+  {
+    "className": "mt-40",
+    "description": "设置样式margin-top: 40px;"
+  },
+  {
+    "className": "mt-42",
+    "description": "设置样式margin-top: 42px;"
+  },
+  {
+    "className": "mt-48",
+    "description": "设置样式margin-top: 48px;"
+  },
+  {
+    "className": "mt-56",
+    "description": "设置样式margin-top: 56px;"
+  },
+  {
+    "className": "mt-60",
+    "description": "设置样式margin-top: 60px;"
+  },
+  {
+    "className": "mt-64",
+    "description": "设置样式margin-top: 64px;"
+  },
+  {
+    "className": "mt-74",
+    "description": "设置样式margin-top: 74px;"
+  },
+  {
+    "className": "mt-80",
+    "description": "设置样式margin-top: 80px;"
+  },
+  {
+    "className": "mt-84",
+    "description": "设置样式margin-top: 84px;"
+  },
+  {
+    "className": "mt-90",
+    "description": "设置样式margin-top: 90px;"
+  },
+  {
+    "className": "mb-unset",
+    "description": "设置样式margin-bottom: unset;"
+  },
+  {
+    "className": "mb-auto",
+    "description": "设置样式margin-bottom: auto;"
+  },
+  {
+    "className": "mb-n1",
+    "description": "设置样式margin-bottom: -1px;"
+  },
+  {
+    "className": "mb-0",
+    "description": "设置样式margin-bottom: 0;"
+  },
+  {
+    "className": "mb-2",
+    "description": "设置样式margin-bottom: 2px;"
+  },
+  {
+    "className": "mb-4",
+    "description": "设置样式margin-bottom: 4px;"
+  },
+  {
+    "className": "mb-5",
+    "description": "设置样式margin-bottom: 5px;"
+  },
+  {
+    "className": "mb-6",
+    "description": "设置样式margin-bottom: 6px;"
+  },
+  {
+    "className": "mb-8",
+    "description": "设置样式margin-bottom: 8px;"
+  },
+  {
+    "className": "mb-9",
+    "description": "设置样式margin-bottom: 9px;"
+  },
+  {
+    "className": "mb-10",
+    "description": "设置样式margin-bottom: 10px;"
+  },
+  {
+    "className": "mb-12",
+    "description": "设置样式margin-bottom: 12px;"
+  },
+  {
+    "className": "mb-13",
+    "description": "设置样式margin-bottom: 13px;"
+  },
+  {
+    "className": "mb-15",
+    "description": "设置样式margin-bottom: 15px;"
+  },
+  {
+    "className": "mb-16",
+    "description": "设置样式margin-bottom: 16px;"
+  },
+  {
+    "className": "mb-18",
+    "description": "设置样式margin-bottom: 18px;"
+  },
+  {
+    "className": "mb-20",
+    "description": "设置样式margin-bottom: 20px;"
+  },
+  {
+    "className": "mb-24",
+    "description": "设置样式margin-bottom: 24px;"
+  },
+  {
+    "className": "mb-30",
+    "description": "设置样式margin-bottom: 30px;"
+  },
+  {
+    "className": "mb-32",
+    "description": "设置样式margin-bottom: 32px;"
+  },
+  {
+    "className": "mb-36",
+    "description": "设置样式margin-bottom: 36px;"
+  },
+  {
+    "className": "mb-40",
+    "description": "设置样式margin-bottom: 40px;"
+  },
+  {
+    "className": "mb-48",
+    "description": "设置样式margin-bottom: 48px;"
+  },
+  {
+    "className": "mb-60",
+    "description": "设置样式margin-bottom: 60px;"
+  },
+  {
+    "className": "ml-auto",
+    "description": "设置样式margin-left: auto;"
+  },
+  {
+    "className": "ml-n30",
+    "description": "设置样式margin-left: -30px;"
+  },
+  {
+    "className": "ml-n16",
+    "description": "设置样式margin-left: -16px;"
+  },
+  {
+    "className": "ml-n15",
+    "description": "设置样式margin-left: -15px;"
+  },
+  {
+    "className": "ml-n12",
+    "description": "设置样式margin-left: -12px;"
+  },
+  {
+    "className": "ml-n10",
+    "description": "设置样式margin-left: -10px;"
+  },
+  {
+    "className": "ml-n6",
+    "description": "设置样式margin-left: -6px;"
+  },
+  {
+    "className": "ml-n4",
+    "description": "设置样式margin-left: -4px;"
+  },
+  {
+    "className": "ml-0",
+    "description": "设置样式margin-left: 0;"
+  },
+  {
+    "className": "ml-4",
+    "description": "设置样式margin-left: 4px;"
+  },
+  {
+    "className": "ml-5",
+    "description": "设置样式margin-left: 5px;"
+  },
+  {
+    "className": "ml-6",
+    "description": "设置样式margin-left: 6px;"
+  },
+  {
+    "className": "ml-7",
+    "description": "设置样式margin-left: 7px;"
+  },
+  {
+    "className": "ml-8",
+    "description": "设置样式margin-left: 8px;"
+  },
+  {
+    "className": "ml-9",
+    "description": "设置样式margin-left: 9px;"
+  },
+  {
+    "className": "ml-10",
+    "description": "设置样式margin-left: 10px;"
+  },
+  {
+    "className": "ml-12",
+    "description": "设置样式margin-left: 12px;"
+  },
+  {
+    "className": "ml-15",
+    "description": "设置样式margin-left: 15px;"
+  },
+  {
+    "className": "ml-16",
+    "description": "设置样式margin-left: 16px;"
+  },
+  {
+    "className": "ml-18",
+    "description": "设置样式margin-left: 18px;"
+  },
+  {
+    "className": "ml-20",
+    "description": "设置样式margin-left: 20px;"
+  },
+  {
+    "className": "ml-22",
+    "description": "设置样式margin-left: 22px;"
+  },
+  {
+    "className": "ml-24",
+    "description": "设置样式margin-left: 24px;"
+  },
+  {
+    "className": "ml-26",
+    "description": "设置样式margin-left: 26px;"
+  },
+  {
+    "className": "ml-28",
+    "description": "设置样式margin-left: 28px;"
+  },
+  {
+    "className": "ml-29",
+    "description": "设置样式margin-left: 29px;"
+  },
+  {
+    "className": "ml-30",
+    "description": "设置样式margin-left: 30px;"
+  },
+  {
+    "className": "ml-32",
+    "description": "设置样式margin-left: 32px;"
+  },
+  {
+    "className": "ml-35",
+    "description": "设置样式margin-left: 35px;"
+  },
+  {
+    "className": "ml-37",
+    "description": "设置样式margin-left: 37px;"
+  },
+  {
+    "className": "ml-40",
+    "description": "设置样式margin-left: 40px;"
+  },
+  {
+    "className": "ml-48",
+    "description": "设置样式margin-left: 48px;"
+  },
+  {
+    "className": "ml-50",
+    "description": "设置样式margin-left: 50px;"
+  },
+  {
+    "className": "ml-53",
+    "description": "设置样式margin-left: 53px;"
+  },
+  {
+    "className": "ml-60",
+    "description": "设置样式margin-left: 60px;"
+  },
+  {
+    "className": "mr-unset",
+    "description": "设置样式margin-right: unset;"
+  },
+  {
+    "className": "mr-auto",
+    "description": "设置样式margin-right: auto;"
+  },
+  {
+    "className": "mr-n30",
+    "description": "设置样式margin-right: -30px;"
+  },
+  {
+    "className": "mr-n18",
+    "description": "设置样式margin-right: -18px;"
+  },
+  {
+    "className": "mr-n15",
+    "description": "设置样式margin-right: -15px;"
+  },
+  {
+    "className": "mr-n12",
+    "description": "设置样式margin-right: -12px;"
+  },
+  {
+    "className": "mr-n10",
+    "description": "设置样式margin-right: -10px;"
+  },
+  {
+    "className": "mr-n8",
+    "description": "设置样式margin-right: -8px;"
+  },
+  {
+    "className": "mr-n6",
+    "description": "设置样式margin-right: -6px;"
+  },
+  {
+    "className": "mr-5",
+    "description": "设置样式margin-right: 5px;"
+  },
+  {
+    "className": "mr-0",
+    "description": "设置样式margin-right: 0;"
+  },
+  {
+    "className": "mr-2",
+    "description": "设置样式margin-right: 2px;"
+  },
+  {
+    "className": "mr-4",
+    "description": "设置样式margin-right: 4px;"
+  },
+  {
+    "className": "mr-6",
+    "description": "设置样式margin-right: 6px;"
+  },
+  {
+    "className": "mr-8",
+    "description": "设置样式margin-right: 8px;"
+  },
+  {
+    "className": "mr-10",
+    "description": "设置样式margin-right: 10px;"
+  },
+  {
+    "className": "mr-11",
+    "description": "设置样式margin-right: 11px;"
+  },
+  {
+    "className": "mr-12",
+    "description": "设置样式margin-right: 12px;"
+  },
+  {
+    "className": "mr-14",
+    "description": "设置样式margin-right: 14px;"
+  },
+  {
+    "className": "mr-15",
+    "description": "设置样式margin-right: 15px;"
+  },
+  {
+    "className": "mr-16",
+    "description": "设置样式margin-right: 16px;"
+  },
+  {
+    "className": "mr-18",
+    "description": "设置样式margin-right: 18px;"
+  },
+  {
+    "className": "mr-20",
+    "description": "设置样式margin-right: 20px;"
+  },
+  {
+    "className": "mr-23",
+    "description": "设置样式margin-right: 23px;"
+  },
+  {
+    "className": "mr-24",
+    "description": "设置样式margin-right: 24px;"
+  },
+  {
+    "className": "mr-26",
+    "description": "设置样式margin-right: 26px;"
+  },
+  {
+    "className": "mr-28",
+    "description": "设置样式margin-right: 28px;"
+  },
+  {
+    "className": "mr-30",
+    "description": "设置样式margin-right: 30px;"
+  },
+  {
+    "className": "mr-32",
+    "description": "设置样式margin-right: 32px;"
+  },
+  {
+    "className": "mr-36",
+    "description": "设置样式margin-right: 36px;"
+  },
+  {
+    "className": "mr-37",
+    "description": "设置样式margin-right: 37px;"
+  },
+  {
+    "className": "mr-48",
+    "description": "设置样式margin-right: 48px;"
+  },
+  {
+    "className": "mr-50",
+    "description": "设置样式margin-right: 50px;"
+  },
+  {
+    "className": "mr-60",
+    "description": "设置样式margin-right: 60px;"
+  },
+  {
+    "className": "mr-84",
+    "description": "设置样式margin-right: 84px;"
+  },
+  {
+    "className": "mr-140",
+    "description": "设置样式margin-right: 140px;"
+  },
+  {
+    "className": "pointer-events-none",
+    "description": "使元素不对任何指针事件做出反应，比如 :hover 和 click"
+  },
+  {
+    "className": "pointer-events-auto",
+    "description": "元素对指针事件做出反应，比如 :hover 和 click"
+  },
+  {
+    "className": "bg-size-cover",
+    "description": "设置样式background-size: cover;"
+  },
+  {
+    "className": "bg-size-100p",
+    "description": "设置样式background-size: 100%;"
+  },
+  {
+    "className": "bg-size-100p-100p",
+    "description": "设置样式background-size: 100% 100%;"
+  },
+  {
+    "className": "bg-size-200p-100p",
+    "description": "设置样式background-size: 200% 100%;"
+  },
+  {
+    "className": "bg-size-100p-60",
+    "description": "设置样式background-size: 100% 60px;"
+  },
+  {
+    "className": "bg-size-64-64",
+    "description": "设置样式background-size: 64px 64px;"
+  },
+  {
+    "className": "box-shadow-none",
+    "description": "设置样式box-shadow: none;"
+  },
+  {
+    "className": "crm-shadow",
+    "description": "CRM系统专用阴影"
+  },
+  {
+    "className": "outline-none",
+    "description": "取消诸如button元素之类的外边线样式"
+  },
+  {
+    "className": "filter-blur-10",
+    "description": "设置元素滤镜,模糊半径为10"
+  },
+  {
+    "className": "filter-grayscale",
+    "description": "置灰"
+  },
+  {
+    "className": "float-left",
+    "description": "设置样式float: left;"
+  },
+  {
+    "className": "cursor-pointer",
+    "description": "设置样式cursor: pointer;"
+  },
+  {
+    "className": "cursor-not-allowed",
+    "description": "设置样式cursor: not-allowed;"
+  },
+  {
+    "className": "user-select-none",
+    "description": "设置样式user-select: none;"
+  },
+  {
+    "className": "object-fit-cover",
+    "description": "控制img图片显示模式: 图片会裁剪，不会拉伸，短边充满控件元素"
+  },
+  {
+    "className": "object-fit-contain",
+    "description": "控制img图片显示模式: 不会裁剪，不会拉伸，长边充满控件元素"
+  },
+  {
+    "className": "object-fit-fill",
+    "description": "控制img图片显示模式: 不会裁剪，会拉伸，充满控件元素"
+  },
+  {
+    "className": "overflow-unset",
+    "description": "设置样式overflow: unset;"
+  },
+  {
+    "className": "overflow-hidden",
+    "description": "元素内容超出时隐藏"
+  },
+  {
+    "className": "overflow-auto",
+    "description": "设置样式overflow: auto;"
+  },
+  {
+    "className": "overflow-x-hidden",
+    "description": "设置样式overflow-x: hidden;"
+  },
+  {
+    "className": "overflow-x-auto",
+    "description": "设置样式overflow-x: auto;"
+  },
+  {
+    "className": "overflow-x-overlay",
+    "description": "设置样式overflow-x: overlay;"
+  },
+  {
+    "className": "overflow-y-auto",
+    "description": "设置样式overflow-y: auto;"
+  },
+  {
+    "className": "overflow-y-hidden",
+    "description": "设置样式overflow-y: hidden;"
+  },
+  {
+    "className": "overflow-y-overlay",
+    "description": "设置样式overflow-y: overlay;"
+  },
+  {
+    "className": "overflow-y-scroll",
+    "description": "设置样式overflow-y: scroll;"
+  },
+  {
+    "className": "overflow-wrap-break-word",
+    "description": "设置样式overflow-wrap: break-word;"
+  },
+  {
+    "className": "overflow-moz-scrollbars-none",
+    "description": "设置样式overflow: -moz-scrollbars-none;"
+  },
+  {
+    "className": "p-unset",
+    "description": "设置样式padding: unset;"
+  },
+  {
+    "className": "p-0",
+    "description": "设置样式padding: 0;"
+  },
+  {
+    "className": "pt-0",
+    "description": "设置样式padding-top: 0;"
+  },
+  {
+    "className": "pt-2",
+    "description": "设置样式padding-top: 2px;"
+  },
+  {
+    "className": "pt-3",
+    "description": "设置样式padding-top: 3px;"
+  },
+  {
+    "className": "pt-4",
+    "description": "设置样式padding-top: 4px;"
+  },
+  {
+    "className": "pt-5",
+    "description": "设置样式padding-top: 5px;"
+  },
+  {
+    "className": "pt-6",
+    "description": "设置样式padding-top: 6px;"
+  },
+  {
+    "className": "pt-7",
+    "description": "设置样式padding-top: 7px;"
+  },
+  {
+    "className": "pt-8",
+    "description": "设置样式padding-top: 8px;"
+  },
+  {
+    "className": "pt-9",
+    "description": "设置样式padding-top: 9px;"
+  },
+  {
+    "className": "pt-10",
+    "description": "设置样式padding-top: 10px;"
+  },
+  {
+    "className": "pt-11",
+    "description": "设置样式padding-top: 11px;"
+  },
+  {
+    "className": "pt-12",
+    "description": "设置样式padding-top: 12px;"
+  },
+  {
+    "className": "pt-13",
+    "description": "设置样式padding-top: 13px;"
+  },
+  {
+    "className": "pt-14",
+    "description": "设置样式padding-top: 14px;"
+  },
+  {
+    "className": "pt-15",
+    "description": "设置样式padding-top: 15px;"
+  },
+  {
+    "className": "pt-16",
+    "description": "设置样式padding-top: 16px;"
+  },
+  {
+    "className": "pt-17",
+    "description": "设置样式padding-top: 17px;"
+  },
+  {
+    "className": "pt-18",
+    "description": "设置样式padding-top: 18px;"
+  },
+  {
+    "className": "pt-19",
+    "description": "设置样式padding-top: 19px;"
+  },
+  {
+    "className": "pt-20",
+    "description": "设置样式padding-top: 20px;"
+  },
+  {
+    "className": "pt-21",
+    "description": "设置样式padding-top: 21px;"
+  },
+  {
+    "className": "pt-22",
+    "description": "设置样式padding-top: 22px;"
+  },
+  {
+    "className": "pt-23",
+    "description": "设置样式padding-top: 23px;"
+  },
+  {
+    "className": "pt-24",
+    "description": "设置样式padding-top: 24px;"
+  },
+  {
+    "className": "pt-25",
+    "description": "设置样式padding-top: 25px;"
+  },
+  {
+    "className": "pt-26",
+    "description": "设置样式padding-top: 26px;"
+  },
+  {
+    "className": "pt-27",
+    "description": "设置样式padding-top: 27px;"
+  },
+  {
+    "className": "pt-28",
+    "description": "设置样式padding-top: 28px;"
+  },
+  {
+    "className": "pt-30",
+    "description": "设置样式padding-top: 30px;"
+  },
+  {
+    "className": "pt-32",
+    "description": "设置样式padding-top: 32px;"
+  },
+  {
+    "className": "pt-34",
+    "description": "设置样式padding-top: 34px;"
+  },
+  {
+    "className": "pt-36",
+    "description": "设置样式padding-top: 36px;"
+  },
+  {
+    "className": "pt-38",
+    "description": "设置样式padding-top: 38px;"
+  },
+  {
+    "className": "pt-40",
+    "description": "设置样式padding-top: 40px;"
+  },
+  {
+    "className": "pt-42",
+    "description": "设置样式padding-top: 42px;"
+  },
+  {
+    "className": "pt-48",
+    "description": "设置样式padding-top: 48px;"
+  },
+  {
+    "className": "pt-56",
+    "description": "设置样式padding-top: 56px;"
+  },
+  {
+    "className": "pt-60",
+    "description": "设置样式padding-top: 60px;"
+  },
+  {
+    "className": "pt-64",
+    "description": "设置样式padding-top: 64px;"
+  },
+  {
+    "className": "pt-72",
+    "description": "设置样式padding-top: 72px;"
+  },
+  {
+    "className": "pt-80",
+    "description": "设置样式padding-top: 80px;"
+  },
+  {
+    "className": "pt-94",
+    "description": "设置样式padding-top: 94px;"
+  },
+  {
+    "className": "pt-96",
+    "description": "设置样式padding-top: 96px;"
+  },
+  {
+    "className": "pt-100",
+    "description": "设置样式padding-top: 100px;"
+  },
+  {
+    "className": "pt-231",
+    "description": "设置样式padding-top: 231px;"
+  },
+  {
+    "className": "pt-232",
+    "description": "设置样式padding-top: 232px;"
+  },
+  {
+    "className": "pt-311",
+    "description": "设置样式padding-top: 311px;"
+  },
+  {
+    "className": "pt-415",
+    "description": "设置样式padding-top: 415px;"
+  },
+  {
+    "className": "pb-unset",
+    "description": "设置样式padding-bottom: unset;"
+  },
+  {
+    "className": "pb-0",
+    "description": "设置样式padding-bottom: 0;"
+  },
+  {
+    "className": "pb-0d5",
+    "description": "设置样式padding-bottom: 0.5px;"
+  },
+  {
+    "className": "pb-2",
+    "description": "设置样式padding-bottom: 2px;"
+  },
+  {
+    "className": "pb-3",
+    "description": "设置样式padding-bottom: 3px;"
+  },
+  {
+    "className": "pb-4",
+    "description": "设置样式padding-bottom: 4px;"
+  },
+  {
+    "className": "pb-5",
+    "description": "设置样式padding-bottom: 5px;"
+  },
+  {
+    "className": "pb-6",
+    "description": "设置样式padding-bottom: 6px;"
+  },
+  {
+    "className": "pb-7",
+    "description": "设置样式padding-bottom: 7px;"
+  },
+  {
+    "className": "pb-8",
+    "description": "设置样式padding-bottom: 8px;"
+  },
+  {
+    "className": "pb-10",
+    "description": "设置样式padding-bottom: 10px;"
+  },
+  {
+    "className": "pb-11",
+    "description": "设置样式padding-bottom: 11px;"
+  },
+  {
+    "className": "pb-12",
+    "description": "设置样式padding-bottom: 12px;"
+  },
+  {
+    "className": "pb-13",
+    "description": "设置样式padding-bottom: 13px;"
+  },
+  {
+    "className": "pb-14",
+    "description": "设置样式padding-bottom: 14px;"
+  },
+  {
+    "className": "pb-15",
+    "description": "设置样式padding-bottom: 15px;"
+  },
+  {
+    "className": "pb-16",
+    "description": "设置样式padding-bottom: 16px;"
+  },
+  {
+    "className": "pb-17",
+    "description": "设置样式padding-bottom: 17px;"
+  },
+  {
+    "className": "pb-18",
+    "description": "设置样式padding-bottom: 18px;"
+  },
+  {
+    "className": "pb-19",
+    "description": "设置样式padding-bottom: 19px;"
+  },
+  {
+    "className": "pb-20",
+    "description": "设置样式padding-bottom: 20px;"
+  },
+  {
+    "className": "pb-21",
+    "description": "设置样式padding-bottom: 21px;"
+  },
+  {
+    "className": "pb-22",
+    "description": "设置样式padding-bottom: 22px;"
+  },
+  {
+    "className": "pb-23",
+    "description": "设置样式padding-bottom: 23px;"
+  },
+  {
+    "className": "pb-24",
+    "description": "设置样式padding-bottom: 24px;"
+  },
+  {
+    "className": "pb-25",
+    "description": "设置样式padding-bottom: 25px;"
+  },
+  {
+    "className": "pb-26",
+    "description": "设置样式padding-bottom: 26px;"
+  },
+  {
+    "className": "pb-27",
+    "description": "设置样式padding-bottom: 27px;"
+  },
+  {
+    "className": "pb-28",
+    "description": "设置样式padding-bottom: 28px;"
+  },
+  {
+    "className": "pb-29",
+    "description": "设置样式padding-bottom: 29px;"
+  },
+  {
+    "className": "pb-30",
+    "description": "设置样式padding-bottom: 30px;"
+  },
+  {
+    "className": "pb-32",
+    "description": "设置样式padding-bottom: 32px;"
+  },
+  {
+    "className": "pb-34",
+    "description": "设置样式padding-bottom: 34px;"
+  },
+  {
+    "className": "pb-36",
+    "description": "设置样式padding-bottom: 36px;"
+  },
+  {
+    "className": "pb-40",
+    "description": "设置样式padding-bottom: 40px;"
+  },
+  {
+    "className": "pb-48",
+    "description": "设置样式padding-bottom: 48px;"
+  },
+  {
+    "className": "pb-50",
+    "description": "设置样式padding-bottom: 50px;"
+  },
+  {
+    "className": "pb-56",
+    "description": "设置样式padding-bottom: 56px;"
+  },
+  {
+    "className": "pb-60",
+    "description": "设置样式padding-bottom: 60px;"
+  },
+  {
+    "className": "pb-80",
+    "description": "设置样式padding-bottom: 80px;"
+  },
+  {
+    "className": "pb-120",
+    "description": "设置样式padding-bottom: 120px;"
+  },
+  {
+    "className": "pb-150",
+    "description": "设置样式padding-bottom: 150px;"
+  },
+  {
+    "className": "pb-154",
+    "description": "设置样式padding-bottom: 154px;"
+  },
+  {
+    "className": "pb-267",
+    "description": "设置样式padding-bottom: 267px;"
+  },
+  {
+    "className": "pl-0",
+    "description": "设置样式padding-left: 0;"
+  },
+  {
+    "className": "pl-2",
+    "description": "设置样式padding-left: 2px;"
+  },
+  {
+    "className": "pl-3",
+    "description": "设置样式padding-left: 3px;"
+  },
+  {
+    "className": "pl-4",
+    "description": "设置样式padding-left: 4px;"
+  },
+  {
+    "className": "pl-5",
+    "description": "设置样式padding-left: 5px;"
+  },
+  {
+    "className": "pl-6",
+    "description": "设置样式padding-left: 6px;"
+  },
+  {
+    "className": "pl-7",
+    "description": "设置样式padding-left: 7px;"
+  },
+  {
+    "className": "pl-8",
+    "description": "设置样式padding-left: 8px;"
+  },
+  {
+    "className": "pl-9",
+    "description": "设置样式padding-left: 9px;"
+  },
+  {
+    "className": "pl-10",
+    "description": "设置样式padding-left: 10px;"
+  },
+  {
+    "className": "pl-12",
+    "description": "设置样式padding-left: 12px;"
+  },
+  {
+    "className": "pl-14",
+    "description": "设置样式padding-left: 14px;"
+  },
+  {
+    "className": "pl-15",
+    "description": "设置样式padding-left: 15px;"
+  },
+  {
+    "className": "pl-16",
+    "description": "设置样式padding-left: 16px;"
+  },
+  {
+    "className": "pl-18",
+    "description": "设置样式padding-left: 18px;"
+  },
+  {
+    "className": "pl-20",
+    "description": "设置样式padding-left: 20px;"
+  },
+  {
+    "className": "pl-22",
+    "description": "设置样式padding-left: 22px;"
+  },
+  {
+    "className": "pl-23",
+    "description": "设置样式padding-left: 23px;"
+  },
+  {
+    "className": "pl-24",
+    "description": "设置样式padding-left: 24px;"
+  },
+  {
+    "className": "pl-25",
+    "description": "设置样式padding-left: 25px;"
+  },
+  {
+    "className": "pl-26",
+    "description": "设置样式padding-left: 26px;"
+  },
+  {
+    "className": "pl-27",
+    "description": "设置样式padding-left: 27px;"
+  },
+  {
+    "className": "pl-28",
+    "description": "设置样式padding-left: 28px;"
+  },
+  {
+    "className": "pl-30",
+    "description": "设置样式padding-left: 30px;"
+  },
+  {
+    "className": "pl-32",
+    "description": "设置样式padding-left: 32px;"
+  },
+  {
+    "className": "pl-34",
+    "description": "设置样式padding-left: 34px;"
+  },
+  {
+    "className": "pl-36",
+    "description": "设置样式padding-left: 36px;"
+  },
+  {
+    "className": "pl-40",
+    "description": "设置样式padding-left: 40px;"
+  },
+  {
+    "className": "pl-44",
+    "description": "设置样式padding-left: 44px;"
+  },
+  {
+    "className": "pl-46",
+    "description": "设置样式padding-left: 46px;"
+  },
+  {
+    "className": "pl-48",
+    "description": "设置样式padding-left: 48px;"
+  },
+  {
+    "className": "pl-50",
+    "description": "设置样式padding-left: 50px;"
+  },
+  {
+    "className": "pl-52",
+    "description": "设置样式padding-left: 52px;"
+  },
+  {
+    "className": "pl-54",
+    "description": "设置样式padding-left: 54px;"
+  },
+  {
+    "className": "pl-56",
+    "description": "设置样式padding-left: 56px;"
+  },
+  {
+    "className": "pl-60",
+    "description": "设置样式padding-left: 60px;"
+  },
+  {
+    "className": "pl-64",
+    "description": "设置样式padding-left: 64px;"
+  },
+  {
+    "className": "pl-68",
+    "description": "设置样式padding-left: 68px;"
+  },
+  {
+    "className": "pl-76",
+    "description": "设置样式padding-left: 76px;"
+  },
+  {
+    "className": "pl-80",
+    "description": "设置样式padding-left: 80px;"
+  },
+  {
+    "className": "pl-83",
+    "description": "设置样式padding-left: 83px;"
+  },
+  {
+    "className": "pl-95",
+    "description": "设置样式padding-left: 95px;"
+  },
+  {
+    "className": "pl-96",
+    "description": "设置样式padding-left: 96px;"
+  },
+  {
+    "className": "pl-120",
+    "description": "设置样式padding-left: 120px;"
+  },
+  {
+    "className": "pl-133",
+    "description": "设置样式padding-left: 133px;"
+  },
+  {
+    "className": "pl-196",
+    "description": "设置样式padding-left: 196px;"
+  },
+  {
+    "className": "pr-0",
+    "description": "设置样式padding-right: 0;"
+  },
+  {
+    "className": "pr-3",
+    "description": "设置样式padding-right: 3px;"
+  },
+  {
+    "className": "pr-4",
+    "description": "设置样式padding-right: 4px;"
+  },
+  {
+    "className": "pr-5",
+    "description": "设置样式padding-right: 5px;"
+  },
+  {
+    "className": "pr-6",
+    "description": "设置样式padding-right: 6px;"
+  },
+  {
+    "className": "pr-7",
+    "description": "设置样式padding-right: 7px;"
+  },
+  {
+    "className": "pr-8",
+    "description": "设置样式padding-right: 8px;"
+  },
+  {
+    "className": "pr-9",
+    "description": "设置样式padding-right: 9px;"
+  },
+  {
+    "className": "pr-10",
+    "description": "设置样式padding-right: 10px;"
+  },
+  {
+    "className": "pr-11",
+    "description": "设置样式padding-right: 11px;"
+  },
+  {
+    "className": "pr-12",
+    "description": "设置样式padding-right: 12px;"
+  },
+  {
+    "className": "pr-14",
+    "description": "设置样式padding-right: 14px;"
+  },
+  {
+    "className": "pr-15",
+    "description": "设置样式padding-right: 15px;"
+  },
+  {
+    "className": "pr-16",
+    "description": "设置样式padding-right: 16px;"
+  },
+  {
+    "className": "pr-18",
+    "description": "设置样式padding-right: 18px;"
+  },
+  {
+    "className": "pr-19",
+    "description": "设置样式padding-right: 19px;"
+  },
+  {
+    "className": "pr-20",
+    "description": "设置样式padding-right: 20px;"
+  },
+  {
+    "className": "pr-22",
+    "description": "设置样式padding-right: 22px;"
+  },
+  {
+    "className": "pr-23",
+    "description": "设置样式padding-right: 23px;"
+  },
+  {
+    "className": "pr-24",
+    "description": "设置样式padding-right: 24px;"
+  },
+  {
+    "className": "pr-26",
+    "description": "设置样式padding-right: 26px;"
+  },
+  {
+    "className": "pr-27",
+    "description": "设置样式padding-right: 27px;"
+  },
+  {
+    "className": "pr-28",
+    "description": "设置样式padding-right: 28px;"
+  },
+  {
+    "className": "pr-30",
+    "description": "设置样式padding-right: 30px;"
+  },
+  {
+    "className": "pr-32",
+    "description": "设置样式padding-right: 32px;"
+  },
+  {
+    "className": "pr-34",
+    "description": "设置样式padding-right: 34px;"
+  },
+  {
+    "className": "pr-36",
+    "description": "设置样式padding-right: 36px;"
+  },
+  {
+    "className": "pr-40",
+    "description": "设置样式padding-right: 40px;"
+  },
+  {
+    "className": "pr-46",
+    "description": "设置样式padding-right: 46px;"
+  },
+  {
+    "className": "pr-48",
+    "description": "设置样式padding-right: 48px;"
+  },
+  {
+    "className": "pr-50",
+    "description": "设置样式padding-right: 50px;"
+  },
+  {
+    "className": "pr-52",
+    "description": "设置样式padding-right: 52px;"
+  },
+  {
+    "className": "pr-54",
+    "description": "设置样式padding-right: 54px;"
+  },
+  {
+    "className": "pr-56",
+    "description": "设置样式padding-right: 56px;"
+  },
+  {
+    "className": "pr-60",
+    "description": "设置样式padding-right: 60px;"
+  },
+  {
+    "className": "pr-66",
+    "description": "设置样式padding-right: 66px;"
+  },
+  {
+    "className": "pr-68",
+    "description": "设置样式padding-right: 68px;"
+  },
+  {
+    "className": "pr-72",
+    "description": "设置样式padding-right: 72px;"
+  },
+  {
+    "className": "pr-76",
+    "description": "设置样式padding-right: 76px;"
+  },
+  {
+    "className": "pr-80",
+    "description": "设置样式padding-right: 80px;"
+  },
+  {
+    "className": "pr-83",
+    "description": "设置样式padding-right: 83px;"
+  },
+  {
+    "className": "pr-95",
+    "description": "设置样式padding-right: 95px;"
+  },
+  {
+    "className": "pr-96",
+    "description": "设置样式padding-right: 96px;"
+  },
+  {
+    "className": "pr-100",
+    "description": "设置样式padding-right: 100px;"
+  },
+  {
+    "className": "pr-116",
+    "description": "设置样式padding-right: 116px;"
+  },
+  {
+    "className": "pr-120",
+    "description": "设置样式padding-right: 120px;"
+  },
+  {
+    "className": "pr-124",
+    "description": "设置样式padding-right: 124px;"
+  },
+  {
+    "className": "pr-133",
+    "description": "设置样式padding-right: 133px;"
+  },
+  {
+    "className": "pr-196",
+    "description": "设置样式padding-right: 196px;"
+  },
+  {
+    "className": "relative",
+    "description": "相对定位"
+  },
+  {
+    "className": "absolute",
+    "description": "绝对定位"
+  },
+  {
+    "className": "fixed",
+    "description": "固定定位"
+  },
+  {
+    "className": "sticky",
+    "description": "粘性定位"
+  },
+  {
+    "className": "t-unset",
+    "description": "设置样式top: unset;"
+  },
+  {
+    "className": "t-auto",
+    "description": "设置样式top: auto;"
+  },
+  {
+    "className": "t-47p",
+    "description": "设置样式top: 47%;"
+  },
+  {
+    "className": "t-50p",
+    "description": "设置样式top: 50%;"
+  },
+  {
+    "className": "t-n86",
+    "description": "设置样式top: -86px;"
+  },
+  {
+    "className": "t-n20",
+    "description": "设置样式top: -20px;"
+  },
+  {
+    "className": "t-n10",
+    "description": "设置样式top: -10px;"
+  },
+  {
+    "className": "t-n9",
+    "description": "设置样式top: -9px;"
+  },
+  {
+    "className": "t-n8",
+    "description": "设置样式top: -8px;"
+  },
+  {
+    "className": "t-n6",
+    "description": "设置样式top: -6px;"
+  },
+  {
+    "className": "t-n4",
+    "description": "设置样式top: -4px;"
+  },
+  {
+    "className": "t-n2",
+    "description": "设置样式top: -2px;"
+  },
+  {
+    "className": "t-0",
+    "description": "设置样式top: 0;"
+  },
+  {
+    "className": "t-2",
+    "description": "设置样式top: 2px;"
+  },
+  {
+    "className": "t-4",
+    "description": "设置样式top: 4px;"
+  },
+  {
+    "className": "t-5",
+    "description": "设置样式top: 5px;"
+  },
+  {
+    "className": "t-6",
+    "description": "设置样式top: 6px;"
+  },
+  {
+    "className": "t-8",
+    "description": "设置样式top: 8px;"
+  },
+  {
+    "className": "t-10",
+    "description": "设置样式top: 10px;"
+  },
+  {
+    "className": "t-12",
+    "description": "设置样式top: 12px;"
+  },
+  {
+    "className": "t-15",
+    "description": "设置样式top: 15px;"
+  },
+  {
+    "className": "t-16",
+    "description": "设置样式top: 16px;"
+  },
+  {
+    "className": "t-20",
+    "description": "设置样式top: 20px;"
+  },
+  {
+    "className": "t-21",
+    "description": "设置样式top: 21px;"
+  },
+  {
+    "className": "t-22",
+    "description": "设置样式top: 22px;"
+  },
+  {
+    "className": "t-24",
+    "description": "设置样式top: 24px;"
+  },
+  {
+    "className": "t-26",
+    "description": "设置样式top: 26px;"
+  },
+  {
+    "className": "t-29",
+    "description": "设置样式top: 29px;"
+  },
+  {
+    "className": "t-30",
+    "description": "设置样式top: 30px;"
+  },
+  {
+    "className": "t-32",
+    "description": "设置样式top: 32px;"
+  },
+  {
+    "className": "t-33",
+    "description": "设置样式top: 33px;"
+  },
+  {
+    "className": "t-34",
+    "description": "设置样式top: 34px;"
+  },
+  {
+    "className": "t-36",
+    "description": "设置样式top: 36px;"
+  },
+  {
+    "className": "t-40",
+    "description": "设置样式top: 40px;"
+  },
+  {
+    "className": "t-42",
+    "description": "设置样式top: 42px;"
+  },
+  {
+    "className": "t-46",
+    "description": "设置样式top: 46px;"
+  },
+  {
+    "className": "t-50",
+    "description": "设置样式top: 50px;"
+  },
+  {
+    "className": "t-58",
+    "description": "设置样式top: 58px;"
+  },
+  {
+    "className": "t-72",
+    "description": "设置样式top: 72px;"
+  },
+  {
+    "className": "t-80",
+    "description": "设置样式top: 80px;"
+  },
+  {
+    "className": "t-88",
+    "description": "设置样式top: 88px;"
+  },
+  {
+    "className": "t-96",
+    "description": "设置样式top: 96px;"
+  },
+  {
+    "className": "t-100",
+    "description": "设置样式top: 100px;"
+  },
+  {
+    "className": "t-107",
+    "description": "设置样式top: 107px;"
+  },
+  {
+    "className": "t-120",
+    "description": "设置样式top: 120px;"
+  },
+  {
+    "className": "t-128",
+    "description": "设置样式top: 128px;"
+  },
+  {
+    "className": "t-160",
+    "description": "设置样式top: 160px;"
+  },
+  {
+    "className": "t-175",
+    "description": "设置样式top: 175px;"
+  },
+  {
+    "className": "t-186",
+    "description": "设置样式top: 186px;"
+  },
+  {
+    "className": "t-205",
+    "description": "设置样式top: 205px;"
+  },
+  {
+    "className": "t-206",
+    "description": "设置样式top: 206px;"
+  },
+  {
+    "className": "t-240",
+    "description": "设置样式top: 240px;"
+  },
+  {
+    "className": "t-300",
+    "description": "设置样式top: 300px;"
+  },
+  {
+    "className": "t-420",
+    "description": "设置样式top: 420px;"
+  },
+  {
+    "className": "b-unset",
+    "description": "设置样式bottom: unset;"
+  },
+  {
+    "className": "b-auto",
+    "description": "设置样式bottom: auto;"
+  },
+  {
+    "className": "b-100p",
+    "description": "设置样式bottom: 100%;"
+  },
+  {
+    "className": "b-n42",
+    "description": "设置样式bottom: -42px;"
+  },
+  {
+    "className": "b-n24",
+    "description": "设置样式bottom: -24px;"
+  },
+  {
+    "className": "b-n8",
+    "description": "设置样式bottom: -8px;"
+  },
+  {
+    "className": "b-n6",
+    "description": "设置样式bottom: -6px;"
+  },
+  {
+    "className": "b-0",
+    "description": "设置样式bottom: 0;"
+  },
+  {
+    "className": "b-2",
+    "description": "设置样式bottom: 2px;"
+  },
+  {
+    "className": "b-5",
+    "description": "设置样式bottom: 5px;"
+  },
+  {
+    "className": "b-6",
+    "description": "设置样式bottom: 6px;"
+  },
+  {
+    "className": "b-8",
+    "description": "设置样式bottom: 8px;"
+  },
+  {
+    "className": "b-10",
+    "description": "设置样式bottom: 10px;"
+  },
+  {
+    "className": "b-12",
+    "description": "设置样式bottom: 12px;"
+  },
+  {
+    "className": "b-16",
+    "description": "设置样式bottom: 16px;"
+  },
+  {
+    "className": "b-17",
+    "description": "设置样式bottom: 17px;"
+  },
+  {
+    "className": "b-20",
+    "description": "设置样式bottom: 20px;"
+  },
+  {
+    "className": "b-24",
+    "description": "设置样式bottom: 24px;"
+  },
+  {
+    "className": "b-30",
+    "description": "设置样式bottom: 30px;"
+  },
+  {
+    "className": "b-32",
+    "description": "设置样式bottom: 32px;"
+  },
+  {
+    "className": "b-40",
+    "description": "设置样式bottom: 40px;"
+  },
+  {
+    "className": "b-46",
+    "description": "设置样式bottom: 46px;"
+  },
+  {
+    "className": "b-60",
+    "description": "设置样式bottom: 60px;"
+  },
+  {
+    "className": "b-100",
+    "description": "设置样式bottom: 100px;"
+  },
+  {
+    "className": "l-unset",
+    "description": "设置样式left: unset;"
+  },
+  {
+    "className": "l-auto",
+    "description": "设置样式left: auto;"
+  },
+  {
+    "className": "l-50p",
+    "description": "设置样式left: 50%;"
+  },
+  {
+    "className": "l-100p",
+    "description": "设置样式left: 100%;"
+  },
+  {
+    "className": "l-n9999",
+    "description": "设置样式left: -9999px;"
+  },
+  {
+    "className": "l-n81",
+    "description": "设置样式left: -81px;"
+  },
+  {
+    "className": "l-n56",
+    "description": "设置样式left: -56px;"
+  },
+  {
+    "className": "l-n48",
+    "description": "设置样式left: -48px;"
+  },
+  {
+    "className": "l-n37",
+    "description": "设置样式left: -37px;"
+  },
+  {
+    "className": "l-n30",
+    "description": "设置样式left: -30px;"
+  },
+  {
+    "className": "l-n28",
+    "description": "设置样式left: -28px;"
+  },
+  {
+    "className": "l-n20",
+    "description": "设置样式left: -20px;"
+  },
+  {
+    "className": "l-n10",
+    "description": "设置样式left: -10px;"
+  },
+  {
+    "className": "l-n8",
+    "description": "设置样式left: -8px;"
+  },
+  {
+    "className": "l-n6",
+    "description": "设置样式left: -6px;"
+  },
+  {
+    "className": "l-n4",
+    "description": "设置样式left: -4px;"
+  },
+  {
+    "className": "l-0",
+    "description": "设置样式left: 0;"
+  },
+  {
+    "className": "l-2",
+    "description": "设置样式left: 2px;"
+  },
+  {
+    "className": "l-4",
+    "description": "设置样式left: 4px;"
+  },
+  {
+    "className": "l-6",
+    "description": "设置样式left: 6px;"
+  },
+  {
+    "className": "l-8",
+    "description": "设置样式left: 8px;"
+  },
+  {
+    "className": "l-12",
+    "description": "设置样式left: 12px;"
+  },
+  {
+    "className": "l-16",
+    "description": "设置样式left: 16px;"
+  },
+  {
+    "className": "l-20",
+    "description": "设置样式left: 20px;"
+  },
+  {
+    "className": "l-24",
+    "description": "设置样式left: 24px;"
+  },
+  {
+    "className": "l-30",
+    "description": "设置样式left: 30px;"
+  },
+  {
+    "className": "l-34",
+    "description": "设置样式left: 34px;"
+  },
+  {
+    "className": "l-40",
+    "description": "设置样式left: 40px;"
+  },
+  {
+    "className": "l-50",
+    "description": "设置样式left: 50px;"
+  },
+  {
+    "className": "l-60",
+    "description": "设置样式left: 60px;"
+  },
+  {
+    "className": "l-64",
+    "description": "设置样式left: 64px;"
+  },
+  {
+    "className": "l-80",
+    "description": "设置样式left: 80px;"
+  },
+  {
+    "className": "l-84",
+    "description": "设置样式left: 84px;"
+  },
+  {
+    "className": "l-100",
+    "description": "设置样式left: 100px;"
+  },
+  {
+    "className": "l-130",
+    "description": "设置样式left: 130px;"
+  },
+  {
+    "className": "l-134",
+    "description": "设置样式left: 134px;"
+  },
+  {
+    "className": "l-216",
+    "description": "设置样式left: 216px;"
+  },
+  {
+    "className": "l-282",
+    "description": "设置样式left: 282px;"
+  },
+  {
+    "className": "l-300",
+    "description": "设置样式left: 300px;"
+  },
+  {
+    "className": "r-unset",
+    "description": "设置样式right: unset;"
+  },
+  {
+    "className": "r-auto",
+    "description": "设置样式right: auto;"
+  },
+  {
+    "className": "r-n100vw",
+    "description": "设置样式right: -100vw;"
+  },
+  {
+    "className": "r-n88",
+    "description": "设置样式right: -88px;"
+  },
+  {
+    "className": "r-n56",
+    "description": "设置样式right: -56px;"
+  },
+  {
+    "className": "r-n40",
+    "description": "设置样式right: -40px;"
+  },
+  {
+    "className": "r-n37",
+    "description": "设置样式right: -37px;"
+  },
+  {
+    "className": "r-n30",
+    "description": "设置样式right: -30px;"
+  },
+  {
+    "className": "r-n24",
+    "description": "设置样式right: -24px;"
+  },
+  {
+    "className": "r-n16",
+    "description": "设置样式right: -16px;"
+  },
+  {
+    "className": "r-n12",
+    "description": "设置样式right: -12px;"
+  },
+  {
+    "className": "r-n8",
+    "description": "设置样式right: -8px;"
+  },
+  {
+    "className": "r-0",
+    "description": "设置样式right: 0;"
+  },
+  {
+    "className": "r-2",
+    "description": "设置样式right: 2px;"
+  },
+  {
+    "className": "r-4",
+    "description": "设置样式right: 4px;"
+  },
+  {
+    "className": "r-6",
+    "description": "设置样式right: 6px;"
+  },
+  {
+    "className": "r-8",
+    "description": "设置样式right: 8px;"
+  },
+  {
+    "className": "r-9",
+    "description": "设置样式right: 9px;"
+  },
+  {
+    "className": "r-10",
+    "description": "设置样式right: 10px;"
+  },
+  {
+    "className": "r-14",
+    "description": "设置样式right: 14px;"
+  },
+  {
+    "className": "r-16",
+    "description": "设置样式right: 16px;"
+  },
+  {
+    "className": "r-20",
+    "description": "设置样式right: 20px;"
+  },
+  {
+    "className": "r-24",
+    "description": "设置样式right: 24px;"
+  },
+  {
+    "className": "r-25",
+    "description": "设置样式right: 25px;"
+  },
+  {
+    "className": "r-30",
+    "description": "设置样式right: 30px;"
+  },
+  {
+    "className": "r-32",
+    "description": "设置样式right: 32px;"
+  },
+  {
+    "className": "r-38",
+    "description": "设置样式right: 38px;"
+  },
+  {
+    "className": "r-39",
+    "description": "设置样式right: 39px;"
+  },
+  {
+    "className": "r-40",
+    "description": "设置样式right: 40px;"
+  },
+  {
+    "className": "r-48",
+    "description": "设置样式right: 48px;"
+  },
+  {
+    "className": "r-60",
+    "description": "设置样式right: 60px;"
+  },
+  {
+    "className": "r-66",
+    "description": "设置样式right: 66px;"
+  },
+  {
+    "className": "r-72",
+    "description": "设置样式right: 72px;"
+  },
+  {
+    "className": "visibility-hidden",
+    "description": "隐藏元素,但是占用与未隐藏时一样的空间"
+  },
+  {
+    "className": "visibility-visible",
+    "description": "使元素变成可见的"
+  },
+  {
+    "className": "opacity-0",
+    "description": "透明度为0,使元素隐藏,不可见"
+  },
+  {
+    "className": "opacity-0d04",
+    "description": "设置样式opacity: 0.04;"
+  },
+  {
+    "className": "opacity-0d06",
+    "description": "设置样式opacity: 0.06;"
+  },
+  {
+    "className": "opacity-0d2",
+    "description": "设置样式opacity: 0.2;"
+  },
+  {
+    "className": "opacity-0d3",
+    "description": "设置样式opacity: 0.3;"
+  },
+  {
+    "className": "opacity-0d4",
+    "description": "透明度为0.4,常用于设置元素为禁用状态显示"
+  },
+  {
+    "className": "opacity-0d45",
+    "description": "设置样式opacity: 0.45;"
+  },
+  {
+    "className": "opacity-0d5",
+    "description": "设置样式opacity: 0.5;"
+  },
+  {
+    "className": "opacity-0d6",
+    "description": "设置样式opacity: 0.6;"
+  },
+  {
+    "className": "opacity-0d7",
+    "description": "设置样式opacity: 0.7;"
+  },
+  {
+    "className": "opacity-0d8",
+    "description": "设置样式opacity: 0.8;"
+  },
+  {
+    "className": "opacity-0d85",
+    "description": "设置样式opacity: 0.85;"
+  },
+  {
+    "className": "opacity-1",
+    "description": "透明度为1,可见"
+  },
+  {
+    "className": "ellipsis",
+    "description": "设置样式text-overflow: ellipsis;"
+  },
+  {
+    "className": "webkit-line-clamp-unset",
+    "description": "取消省略属性"
+  },
+  {
+    "className": "webkit-line-clamp-1",
+    "description": "一行省略属性"
+  },
+  {
+    "className": "webkit-line-clamp-2",
+    "description": "两行省略属性"
+  },
+  {
+    "className": "webkit-line-clamp-3",
+    "description": "三行省略属性"
+  },
+  {
+    "className": "text-left",
+    "description": "设置样式text-align: left;"
+  },
+  {
+    "className": "text-right",
+    "description": "设置样式text-align: right;"
+  },
+  {
+    "className": "text-center",
+    "description": "设置样式text-align: center;"
+  },
+  {
+    "className": "text-justify",
+    "description": "设置样式text-align: justify;"
+  },
+  {
+    "className": "vertical-middle",
+    "description": "设置样式vertical-align: middle;"
+  },
+  {
+    "className": "vertical-top",
+    "description": "设置样式vertical-align: top;"
+  },
+  {
+    "className": "vertical-bottom",
+    "description": "设置样式vertical-align: bottom;"
+  },
+  {
+    "className": "vertical-align-1",
+    "description": "设置样式vertical-align: 1px;"
+  },
+  {
+    "className": "vertical-align-2",
+    "description": "设置样式vertical-align: 2px;"
+  },
+  {
+    "className": "vertical-align-4",
+    "description": "设置样式vertical-align: 4px;"
+  },
+  {
+    "className": "vertical-align-6",
+    "description": "设置样式vertical-align: 6px;"
+  },
+  {
+    "className": "vertical-align-8",
+    "description": "设置样式vertical-align: 8px;"
+  },
+  {
+    "className": "vertical-align-n2",
+    "description": "设置样式vertical-align: -2px;"
+  },
+  {
+    "className": "vertical-align-n4",
+    "description": "设置样式vertical-align: -4px;"
+  },
+  {
+    "className": "vertical-align-n6",
+    "description": "设置样式vertical-align: -6px;"
+  },
+  {
+    "className": "vertical-align-n8",
+    "description": "设置样式vertical-align: -8px;"
+  },
+  {
+    "className": "word-break-normal",
+    "description": "设置样式word-break: normal;"
+  },
+  {
+    "className": "word-break-all",
+    "description": "设置样式word-break: break-all;"
+  },
+  {
+    "className": "word-break-word",
+    "description": "设置样式word-break: break-word;"
+  },
+  {
+    "className": "word-wrap-break-word",
+    "description": "设置样式word-wrap: break-word;"
+  },
+  {
+    "className": "word-wrap-normal",
+    "description": "设置样式word-wrap: normal;"
+  },
+  {
+    "className": "white-space-nowrap",
+    "description": "设置样式white-space: nowrap;"
+  },
+  {
+    "className": "white-space-normal",
+    "description": "设置样式white-space: normal;"
+  },
+  {
+    "className": "white-space-pre",
+    "description": "设置样式white-space: pre;"
+  },
+  {
+    "className": "white-space-initial",
+    "description": "设置样式white-space: initial;"
+  },
+  {
+    "className": "letter-spacing-0",
+    "description": "设置样式letter-spacing: 0;"
+  },
+  {
+    "className": "text-decoration-underline",
+    "description": "设置下划线"
+  },
+  {
+    "className": "text-decoration-none",
+    "description": "取消下划线"
+  },
+  {
+    "className": "transform-origin-0-0",
+    "description": "设置2D转换的中心位置为元素左上角,效果同left top"
+  },
+  {
+    "className": "transform-origin-0-top",
+    "description": "设置2D转换的中心位置为元素左上角,效果同left top"
+  },
+  {
+    "className": "transform-origin-0-100p",
+    "description": "设置2D转换的中心位置为元素左下角"
+  },
+  {
+    "className": "transform-origin-100p-0",
+    "description": "设置2D转换的中心位置为元素右上角"
+  },
+  {
+    "className": "transform-origin-left-top",
+    "description": "设置2D转换的中心位置为元素左上角,效果同 0 0"
+  },
+  {
+    "className": "transform-origin-center-center",
+    "description": "设置2D转换的中心位置为元素中心点"
+  },
+  {
+    "className": "transform-origin-center-0",
+    "description": "设置2D转换的中心位置为元素正上方中心点"
+  },
+  {
+    "className": "scale-0d5",
+    "description": "将元素整体缩放一半的比例"
+  },
+  {
+    "className": "scale-1",
+    "description": "将元素整体缩放比例设置成其初始大小"
+  },
+  {
+    "className": "scaleX-n1",
+    "description": "设置样式transform: scaleX(-1);"
+  },
+  {
+    "className": "scaleX-0d5",
+    "description": "作用于X轴,将元素缩放一半的比例"
+  },
+  {
+    "className": "scaleY-0d5",
+    "description": "作用于Y轴,将元素缩放一半的比例"
+  },
+  {
+    "className": "rotate-n315",
+    "description": "旋转至逆时针315度"
+  },
+  {
+    "className": "rotate-n180",
+    "description": "旋转至逆时针180度"
+  },
+  {
+    "className": "rotate-n90",
+    "description": "旋转至逆时针90度"
+  },
+  {
+    "className": "rotate-n45",
+    "description": "旋转至顺时针45度"
+  },
+  {
+    "className": "rotate-0",
+    "description": "旋转至顺时针0度"
+  },
+  {
+    "className": "rotate-45",
+    "description": "旋转至顺时针45度"
+  },
+  {
+    "className": "rotate-90",
+    "description": "旋转至顺时针90度"
+  },
+  {
+    "className": "rotate-180",
+    "description": "旋转至顺时针180度"
+  },
+  {
+    "className": "rotateY-180deg",
+    "description": "沿Y轴顺时针旋转180度"
+  },
+  {
+    "className": "translateX-n100p",
+    "description": "元素沿X轴往自身左侧位移,位移距离为元素在X轴上所占区域大小"
+  },
+  {
+    "className": "translateX-n50p",
+    "description": "元素沿X轴往自身左侧位移,位移距离为元素在X轴上所占区域大小的一半"
+  },
+  {
+    "className": "transform-translateX-n8",
+    "description": "元素沿X轴往自身左侧位移8px"
+  },
+  {
+    "className": "translateX-0",
+    "description": "元素沿X轴回到初始位置"
+  },
+  {
+    "className": "translateX-50p",
+    "description": "元素沿X轴往自身右侧位移,位移距离为元素在X轴上所占区域大小的一半"
+  },
+  {
+    "className": "translateX-100p",
+    "description": "元素沿X轴往自身右侧位移,位移距离为元素在X轴上所占区域大小"
+  },
+  {
+    "className": "translateY-n100p",
+    "description": "元素沿Y轴往自身上方位移,位移距离为元素在Y轴上所占区域大小"
+  },
+  {
+    "className": "translateY-n50p",
+    "description": "元素沿Y轴往自身上方位移,位移距离为元素在Y轴上所占区域大小的一半"
+  },
+  {
+    "className": "translateY-0",
+    "description": "元素沿Y轴位移到自身原来所在的位置"
+  },
+  {
+    "className": "translateY-50p",
+    "description": "元素沿Y轴往自身下方位移,位移距离为元素在Y轴上所占区域大小的一半"
+  },
+  {
+    "className": "translateY-100p",
+    "description": "元素沿Y轴往自身下方位移,位移距离为元素在Y轴上所占区域大小"
+  },
+  {
+    "className": "translateY-4",
+    "description": "元素沿Y轴往自身下方位移4px"
+  },
+  {
+    "className": "translate-n50p-n50p",
+    "description": "元素沿X轴和Y轴往自身左上方位移,位移距离为元素在X轴和Y轴上所占区域的一半"
+  },
+  {
+    "className": "translate-n50p-0",
+    "description": "元素沿X轴往自身左侧位移到其在X轴上所占区域的一半位置,沿Y轴位移回到自身初始位置"
+  },
+  {
+    "className": "translate-0-n50p",
+    "description": "元素沿X轴位移回到自身初始位置,沿Y轴往自身左上方位移到其在Y轴上所占区域的一半位置"
+  },
+  {
+    "className": "translate-0-0",
+    "description": "元素沿X轴和Y轴位移回到自身初始位置"
+  },
+  {
+    "className": "transform-translate3d-0-0-0",
+    "description": "设置样式transform: translate3d(0, 0, 0);"
+  },
+  {
+    "className": "transform-rotate-0deg",
+    "description": "设置样式transform: rotate(0deg);"
+  },
+  {
+    "className": "transform-skew-n8deg",
+    "description": "设置样式transform: skew(-8deg);"
+  },
+  {
+    "className": "transform-translate3d-0-n100vh-0",
+    "description": "设置样式transform: translate3d(0, -100vh, 0);"
+  },
+  {
+    "className": "transform-translateY-0p",
+    "description": "设置样式transform: translateY(0%);"
+  },
+  {
+    "className": "transform-skew-n8deg-translate-n50p-n50p",
+    "description": "设置样式transform: skew(-8deg) translate(-50%, -50%);"
+  },
+  {
+    "className": "transform-translateX-0p",
+    "description": "设置样式transform: translateX(0%);"
+  },
+  {
+    "className": "transform-translate-n50p-n50p",
+    "description": "设置样式transform: translate(-50%,-50%);"
+  },
+  {
+    "className": "transform-translate-70p-n70p",
+    "description": "设置样式transform: translate(70%, -70%);"
+  },
+  {
+    "className": "transform-scaleY-0d5-translateY-n50p",
+    "description": "设置样式transform: scaleY(0.5) translateY(-50%);"
+  },
+  {
+    "className": "transform-translate-n50p-0p",
+    "description": "设置样式transform: translate(-50%, 0%);"
+  },
+  {
+    "className": "transform-translateY-n50p-scaleY-0d5",
+    "description": "设置样式transform: translateY(-50%) scaleY(0.5);"
+  },
+  {
+    "className": "transform-translateY-n90",
+    "description": "设置样式transform: translateY(-90px);"
+  },
+  {
+    "className": "transform-scale-0d95-translateY-n40",
+    "description": "设置样式transform: scale(0.95) translateY(-40px);"
+  },
+  {
+    "className": "transform-scale-0d9-translateY-n80",
+    "description": "设置样式transform: scale(0.9) translateY(-80px);"
+  },
+  {
+    "className": "transform-translateY-n50",
+    "description": "设置样式transform: translateY(-50px);"
+  },
+  {
+    "className": "transform-scaleY-0d5-translate-24",
+    "description": "设置样式transform: scaleY(0.5) translate(24px);"
+  },
+  {
+    "className": "transform-translateX-12",
+    "description": "设置样式transform: translateX(12px);"
+  },
+  {
+    "className": "transform-translateX-n16",
+    "description": "设置样式transform: translateX(-16px);"
+  },
+  {
+    "className": "transform-origin-right-center",
+    "description": "设置样式transform-origin: right center;"
+  },
+  {
+    "className": "transform-origin-50vw-50vw",
+    "description": "设置样式transform-origin: 50vw 50vw;"
+  },
+  {
+    "className": "min-w-100p",
+    "description": "设置样式min-width: 100%;"
+  },
+  {
+    "className": "min-w-auto",
+    "description": "设置样式min-width: auto;"
+  },
+  {
+    "className": "min-w-0",
+    "description": "设置样式min-width: 0;"
+  },
+  {
+    "className": "min-w-4",
+    "description": "设置样式min-width: 4px;"
+  },
+  {
+    "className": "min-w-8",
+    "description": "设置样式min-width: 8px;"
+  },
+  {
+    "className": "min-w-16",
+    "description": "设置样式min-width: 16px;"
+  },
+  {
+    "className": "min-w-32",
+    "description": "设置样式min-width: 32px;"
+  },
+  {
+    "className": "min-w-34",
+    "description": "设置样式min-width: 34px;"
+  },
+  {
+    "className": "min-w-48",
+    "description": "设置样式min-width: 48px;"
+  },
+  {
+    "className": "min-w-56",
+    "description": "设置样式min-width: 56px;"
+  },
+  {
+    "className": "min-w-71",
+    "description": "设置样式min-width: 71px;"
+  },
+  {
+    "className": "min-w-84",
+    "description": "设置样式min-width: 84px;"
+  },
+  {
+    "className": "min-w-88",
+    "description": "设置样式min-width: 88px;"
+  },
+  {
+    "className": "min-w-90",
+    "description": "设置样式min-width: 90px;"
+  },
+  {
+    "className": "min-w-100",
+    "description": "设置样式min-width: 100px;"
+  },
+  {
+    "className": "min-w-108",
+    "description": "设置样式min-width: 108px;"
+  },
+  {
+    "className": "min-w-129",
+    "description": "设置样式min-width: 129px;"
+  },
+  {
+    "className": "min-w-200",
+    "description": "设置样式min-width: 200px;"
+  },
+  {
+    "className": "min-w-330",
+    "description": "设置样式min-width: 330px;"
+  },
+  {
+    "className": "min-w-376",
+    "description": "设置样式min-width: 376px;"
+  },
+  {
+    "className": "min-w-560",
+    "description": "设置样式min-width: 560px;"
+  },
+  {
+    "className": "max-w-unset",
+    "description": "设置样式max-width: unset;"
+  },
+  {
+    "className": "max-w-25p",
+    "description": "设置样式max-width: 25%;"
+  },
+  {
+    "className": "max-w-100p",
+    "description": "设置样式max-width: 100%;"
+  },
+  {
+    "className": "max-w-88",
+    "description": "设置样式max-width: 88px;"
+  },
+  {
+    "className": "max-w-120",
+    "description": "设置样式max-width: 120px;"
+  },
+  {
+    "className": "max-w-144",
+    "description": "设置样式max-width: 144px;"
+  },
+  {
+    "className": "max-w-152",
+    "description": "设置样式max-width: 152px;"
+  },
+  {
+    "className": "max-w-161",
+    "description": "设置样式max-width: 161px;"
+  },
+  {
+    "className": "max-w-180",
+    "description": "设置样式max-width: 180px;"
+  },
+  {
+    "className": "max-w-192",
+    "description": "设置样式max-width: 192px;"
+  },
+  {
+    "className": "max-w-200",
+    "description": "设置样式max-width: 200px;"
+  },
+  {
+    "className": "max-w-224",
+    "description": "设置样式max-width: 224px;"
+  },
+  {
+    "className": "max-w-230",
+    "description": "设置样式max-width: 230px;"
+  },
+  {
+    "className": "max-w-254",
+    "description": "设置样式max-width: 254px;"
+  },
+  {
+    "className": "max-w-268",
+    "description": "设置样式max-width: 268px;"
+  },
+  {
+    "className": "max-w-300",
+    "description": "设置样式max-width: 300px;"
+  },
+  {
+    "className": "max-w-440",
+    "description": "设置样式max-width: 440px;"
+  },
+  {
+    "className": "max-w-480",
+    "description": "设置样式max-width: 480px;"
+  },
+  {
+    "className": "max-w-500",
+    "description": "设置样式max-width: 500px;"
+  },
+  {
+    "className": "max-w-504",
+    "description": "设置样式max-width: 504px;"
+  },
+  {
+    "className": "max-w-506",
+    "description": "设置样式max-width: 506px;"
+  },
+  {
+    "className": "max-w-570",
+    "description": "设置样式max-width: 570px;"
+  },
+  {
+    "className": "max-w-1024",
+    "description": "设置样式max-width: 1024px;"
+  },
+  {
+    "className": "max-w-1140",
+    "description": "设置样式max-width: 1140px;"
+  },
+  {
+    "className": "max-w-1440",
+    "description": "设置样式max-width: 1440px;"
+  },
+  {
+    "className": "w-auto",
+    "description": "设置样式width: auto;"
+  },
+  {
+    "className": "w-100vw",
+    "description": "设置样式width: 100vw;"
+  },
+  {
+    "className": "w-0p",
+    "description": "设置样式width: 0%;"
+  },
+  {
+    "className": "w-10p",
+    "description": "设置样式width: 10%;"
+  },
+  {
+    "className": "w-20p",
+    "description": "设置样式width: 20%;"
+  },
+  {
+    "className": "w-25p",
+    "description": "设置样式width: 25%;"
+  },
+  {
+    "className": "w-30p",
+    "description": "设置样式width: 30%;"
+  },
+  {
+    "className": "w-36p",
+    "description": "设置样式width: 36%;"
+  },
+  {
+    "className": "w-40p",
+    "description": "设置样式width: 40%;"
+  },
+  {
+    "className": "w-45p",
+    "description": "设置样式width: 45%;"
+  },
+  {
+    "className": "w-50p",
+    "description": "设置样式width: 50%;"
+  },
+  {
+    "className": "w-60p",
+    "description": "设置样式width: 60%;"
+  },
+  {
+    "className": "w-70p",
+    "description": "设置样式width: 70%;"
+  },
+  {
+    "className": "w-80p",
+    "description": "设置样式width: 80%;"
+  },
+  {
+    "className": "w-100p",
+    "description": "设置样式width: 100%;"
+  },
+  {
+    "className": "w-200p",
+    "description": "设置样式width: 200%;"
+  },
+  {
+    "className": "w-0",
+    "description": "设置样式width: 0;"
+  },
+  {
+    "className": "w-1",
+    "description": "设置样式width: 1px;"
+  },
+  {
+    "className": "w-2",
+    "description": "设置样式width: 2px;"
+  },
+  {
+    "className": "w-3",
+    "description": "设置样式width: 3px;"
+  },
+  {
+    "className": "w-4",
+    "description": "设置样式width: 4px;"
+  },
+  {
+    "className": "w-5",
+    "description": "设置样式width: 5px;"
+  },
+  {
+    "className": "w-6",
+    "description": "设置样式width: 6px;"
+  },
+  {
+    "className": "w-8",
+    "description": "设置样式width: 8px;"
+  },
+  {
+    "className": "w-10",
+    "description": "设置样式width: 10px;"
+  },
+  {
+    "className": "w-12",
+    "description": "设置样式width: 12px;"
+  },
+  {
+    "className": "w-16",
+    "description": "设置样式width: 16px;"
+  },
+  {
+    "className": "w-18",
+    "description": "设置样式width: 18px;"
+  },
+  {
+    "className": "w-20",
+    "description": "设置样式width: 20px;"
+  },
+  {
+    "className": "w-22",
+    "description": "设置样式width: 22px;"
+  },
+  {
+    "className": "w-24",
+    "description": "设置样式width: 24px;"
+  },
+  {
+    "className": "w-26",
+    "description": "设置样式width: 26px;"
+  },
+  {
+    "className": "w-27",
+    "description": "设置样式width: 27px;"
+  },
+  {
+    "className": "w-28",
+    "description": "设置样式width: 28px;"
+  },
+  {
+    "className": "w-30",
+    "description": "设置样式width: 30px;"
+  },
+  {
+    "className": "w-32",
+    "description": "设置样式width: 32px;"
+  },
+  {
+    "className": "w-34",
+    "description": "设置样式width: 34px;"
+  },
+  {
+    "className": "w-36",
+    "description": "设置样式width: 36px;"
+  },
+  {
+    "className": "w-38",
+    "description": "设置样式width: 38px;"
+  },
+  {
+    "className": "w-40",
+    "description": "设置样式width: 40px;"
+  },
+  {
+    "className": "w-42",
+    "description": "设置样式width: 42px;"
+  },
+  {
+    "className": "w-43",
+    "description": "设置样式width: 43px;"
+  },
+  {
+    "className": "w-44",
+    "description": "设置样式width: 44px;"
+  },
+  {
+    "className": "w-45",
+    "description": "设置样式width: 45px;"
+  },
+  {
+    "className": "w-46",
+    "description": "设置样式width: 46px;"
+  },
+  {
+    "className": "w-48",
+    "description": "设置样式width: 48px;"
+  },
+  {
+    "className": "w-50",
+    "description": "设置样式width: 50px;"
+  },
+  {
+    "className": "w-52",
+    "description": "设置样式width: 52px;"
+  },
+  {
+    "className": "w-54",
+    "description": "设置样式width: 54px;"
+  },
+  {
+    "className": "w-56",
+    "description": "设置样式width: 56px;"
+  },
+  {
+    "className": "w-60",
+    "description": "设置样式width: 60px;"
+  },
+  {
+    "className": "w-62",
+    "description": "设置样式width: 62px;"
+  },
+  {
+    "className": "w-64",
+    "description": "设置样式width: 64px;"
+  },
+  {
+    "className": "w-65",
+    "description": "设置样式width: 65px;"
+  },
+  {
+    "className": "w-66",
+    "description": "设置样式width: 66px;"
+  },
+  {
+    "className": "w-67",
+    "description": "设置样式width: 67px;"
+  },
+  {
+    "className": "w-68",
+    "description": "设置样式width: 68px;"
+  },
+  {
+    "className": "w-69d1",
+    "description": "设置样式width: 69.1px;"
+  },
+  {
+    "className": "w-70",
+    "description": "设置样式width: 70px;"
+  },
+  {
+    "className": "w-72",
+    "description": "设置样式width: 72px;"
+  },
+  {
+    "className": "w-76",
+    "description": "设置样式width: 76px;"
+  },
+  {
+    "className": "w-79",
+    "description": "设置样式width: 79px;"
+  },
+  {
+    "className": "w-80",
+    "description": "设置样式width: 80px;"
+  },
+  {
+    "className": "w-81",
+    "description": "设置样式width: 81px;"
+  },
+  {
+    "className": "w-83",
+    "description": "设置样式width: 83px;"
+  },
+  {
+    "className": "w-84",
+    "description": "设置样式width: 84px;"
+  },
+  {
+    "className": "w-88",
+    "description": "设置样式width: 88px;"
+  },
+  {
+    "className": "w-90",
+    "description": "设置样式width: 90px;"
+  },
+  {
+    "className": "w-94",
+    "description": "设置样式width: 94px;"
+  },
+  {
+    "className": "w-96",
+    "description": "设置样式width: 96px;"
+  },
+  {
+    "className": "w-100",
+    "description": "设置样式width: 100px;"
+  },
+  {
+    "className": "w-104",
+    "description": "设置样式width: 104px;"
+  },
+  {
+    "className": "w-106",
+    "description": "设置样式width: 106px;"
+  },
+  {
+    "className": "w-110",
+    "description": "设置样式width: 110px;"
+  },
+  {
+    "className": "w-112",
+    "description": "设置样式width: 112px;"
+  },
+  {
+    "className": "w-116",
+    "description": "设置样式width: 116px;"
+  },
+  {
+    "className": "w-118",
+    "description": "设置样式width: 118px;"
+  },
+  {
+    "className": "w-120",
+    "description": "设置样式width: 120px;"
+  },
+  {
+    "className": "w-123",
+    "description": "设置样式width: 123px;"
+  },
+  {
+    "className": "w-124",
+    "description": "设置样式width: 124px;"
+  },
+  {
+    "className": "w-126",
+    "description": "设置样式width: 126px;"
+  },
+  {
+    "className": "w-127",
+    "description": "设置样式width: 127px;"
+  },
+  {
+    "className": "w-128",
+    "description": "设置样式width: 128px;"
+  },
+  {
+    "className": "w-129",
+    "description": "设置样式width: 129px;"
+  },
+  {
+    "className": "w-132",
+    "description": "设置样式width: 132px;"
+  },
+  {
+    "className": "w-135",
+    "description": "设置样式width: 135px;"
+  },
+  {
+    "className": "w-138",
+    "description": "设置样式width: 138px;"
+  },
+  {
+    "className": "w-140",
+    "description": "设置样式width: 140px;"
+  },
+  {
+    "className": "w-142",
+    "description": "设置样式width: 142px;"
+  },
+  {
+    "className": "w-144",
+    "description": "设置样式width: 144px;"
+  },
+  {
+    "className": "w-147",
+    "description": "设置样式width: 147px;"
+  },
+  {
+    "className": "w-148",
+    "description": "设置样式width: 148px;"
+  },
+  {
+    "className": "w-150",
+    "description": "设置样式width: 150px;"
+  },
+  {
+    "className": "w-154",
+    "description": "设置样式width: 154px;"
+  },
+  {
+    "className": "w-155",
+    "description": "设置样式width: 155px;"
+  },
+  {
+    "className": "w-157",
+    "description": "设置样式width: 157px;"
+  },
+  {
+    "className": "w-158",
+    "description": "设置样式width: 158px;"
+  },
+  {
+    "className": "w-160",
+    "description": "设置样式width: 160px;"
+  },
+  {
+    "className": "w-164",
+    "description": "设置样式width: 164px;"
+  },
+  {
+    "className": "w-165d6",
+    "description": "设置样式width: 165.6px;"
+  },
+  {
+    "className": "w-168",
+    "description": "设置样式width: 168px;"
+  },
+  {
+    "className": "w-170",
+    "description": "设置样式width: 170px;"
+  },
+  {
+    "className": "w-172",
+    "description": "设置样式width: 172px;"
+  },
+  {
+    "className": "w-175",
+    "description": "设置样式width: 175px;"
+  },
+  {
+    "className": "w-176",
+    "description": "设置样式width: 176px;"
+  },
+  {
+    "className": "w-178",
+    "description": "设置样式width: 178px;"
+  },
+  {
+    "className": "w-180",
+    "description": "设置样式width: 180px;"
+  },
+  {
+    "className": "w-183",
+    "description": "设置样式width: 183px;"
+  },
+  {
+    "className": "w-184",
+    "description": "设置样式width: 184px;"
+  },
+  {
+    "className": "w-188",
+    "description": "设置样式width: 188px;"
+  },
+  {
+    "className": "w-190",
+    "description": "设置样式width: 190px;"
+  },
+  {
+    "className": "w-192",
+    "description": "设置样式width: 192px;"
+  },
+  {
+    "className": "w-194",
+    "description": "设置样式width: 194px;"
+  },
+  {
+    "className": "w-196",
+    "description": "设置样式width: 196px;"
+  },
+  {
+    "className": "w-200",
+    "description": "设置样式width: 200px;"
+  },
+  {
+    "className": "w-206",
+    "description": "设置样式width: 206px;"
+  },
+  {
+    "className": "w-208",
+    "description": "设置样式width: 208px;"
+  },
+  {
+    "className": "w-210",
+    "description": "设置样式width: 210px;"
+  },
+  {
+    "className": "w-215",
+    "description": "设置样式width: 215px;"
+  },
+  {
+    "className": "w-216",
+    "description": "设置样式width: 216px;"
+  },
+  {
+    "className": "w-222",
+    "description": "设置样式width: 222px;"
+  },
+  {
+    "className": "w-224",
+    "description": "设置样式width: 224px;"
+  },
+  {
+    "className": "w-228",
+    "description": "设置样式width: 228px;"
+  },
+  {
+    "className": "w-230",
+    "description": "设置样式width: 230px;"
+  },
+  {
+    "className": "w-232",
+    "description": "设置样式width: 232px;"
+  },
+  {
+    "className": "w-234",
+    "description": "设置样式width: 234px;"
+  },
+  {
+    "className": "w-240",
+    "description": "设置样式width: 240px;"
+  },
+  {
+    "className": "w-246",
+    "description": "设置样式width: 246px;"
+  },
+  {
+    "className": "w-250",
+    "description": "设置样式width: 250px;"
+  },
+  {
+    "className": "w-252",
+    "description": "设置样式width: 252px;"
+  },
+  {
+    "className": "w-259",
+    "description": "设置样式width: 259px;"
+  },
+  {
+    "className": "w-266",
+    "description": "设置样式width: 266px;"
+  },
+  {
+    "className": "w-268",
+    "description": "设置样式width: 268px;"
+  },
+  {
+    "className": "w-269",
+    "description": "设置样式width: 269px;"
+  },
+  {
+    "className": "w-271",
+    "description": "设置样式width: 271px;"
+  },
+  {
+    "className": "w-272",
+    "description": "设置样式width: 272px;"
+  },
+  {
+    "className": "w-275",
+    "description": "设置样式width: 275px;"
+  },
+  {
+    "className": "w-276",
+    "description": "设置样式width: 276px;"
+  },
+  {
+    "className": "w-278",
+    "description": "设置样式width: 278px;"
+  },
+  {
+    "className": "w-280",
+    "description": "设置样式width: 280px;"
+  },
+  {
+    "className": "w-282",
+    "description": "设置样式width: 282px;"
+  },
+  {
+    "className": "w-283",
+    "description": "设置样式width: 283px;"
+  },
+  {
+    "className": "w-284",
+    "description": "设置样式width: 284px;"
+  },
+  {
+    "className": "w-294",
+    "description": "设置样式width: 294px;"
+  },
+  {
+    "className": "w-298",
+    "description": "设置样式width: 298px;"
+  },
+  {
+    "className": "w-300",
+    "description": "设置样式width: 300px;"
+  },
+  {
+    "className": "w-312",
+    "description": "设置样式width: 312px;"
+  },
+  {
+    "className": "w-314",
+    "description": "设置样式width: 314px;"
+  },
+  {
+    "className": "w-315",
+    "description": "设置样式width: 315px;"
+  },
+  {
+    "className": "w-316",
+    "description": "设置样式width: 316px;"
+  },
+  {
+    "className": "w-320",
+    "description": "设置样式width: 320px;"
+  },
+  {
+    "className": "w-321",
+    "description": "设置样式width: 321px;"
+  },
+  {
+    "className": "w-323",
+    "description": "设置样式width: 323px;"
+  },
+  {
+    "className": "w-326",
+    "description": "设置样式width: 326px;"
+  },
+  {
+    "className": "w-330",
+    "description": "设置样式width: 330px;"
+  },
+  {
+    "className": "w-337",
+    "description": "设置样式width: 337px;"
+  },
+  {
+    "className": "w-339",
+    "description": "设置样式width: 339px;"
+  },
+  {
+    "className": "w-340",
+    "description": "设置样式width: 340px;"
+  },
+  {
+    "className": "w-342",
+    "description": "设置样式width: 342px;"
+  },
+  {
+    "className": "w-350",
+    "description": "设置样式width: 350px;"
+  },
+  {
+    "className": "w-360",
+    "description": "设置样式width: 360px;"
+  },
+  {
+    "className": "w-364",
+    "description": "设置样式width: 364px;"
+  },
+  {
+    "className": "w-380",
+    "description": "设置样式width: 380px;"
+  },
+  {
+    "className": "w-387",
+    "description": "设置样式width: 387px;"
+  },
+  {
+    "className": "w-400",
+    "description": "设置样式width: 400px;"
+  },
+  {
+    "className": "w-415",
+    "description": "设置样式width: 415px;"
+  },
+  {
+    "className": "w-420",
+    "description": "设置样式width: 420px;"
+  },
+  {
+    "className": "w-424",
+    "description": "设置样式width: 424px;"
+  },
+  {
+    "className": "w-436",
+    "description": "设置样式width: 436px;"
+  },
+  {
+    "className": "w-440",
+    "description": "设置样式width: 440px;"
+  },
+  {
+    "className": "w-448",
+    "description": "设置样式width: 448px;"
+  },
+  {
+    "className": "w-456",
+    "description": "设置样式width: 456px;"
+  },
+  {
+    "className": "w-458",
+    "description": "设置样式width: 458px;"
+  },
+  {
+    "className": "w-460",
+    "description": "设置样式width: 460px;"
+  },
+  {
+    "className": "w-469",
+    "description": "设置样式width: 469px;"
+  },
+  {
+    "className": "w-480",
+    "description": "设置样式width: 480px;"
+  },
+  {
+    "className": "w-496",
+    "description": "设置样式width: 496px;"
+  },
+  {
+    "className": "w-500",
+    "description": "设置样式width: 500px;"
+  },
+  {
+    "className": "w-520",
+    "description": "设置样式width: 520px;"
+  },
+  {
+    "className": "w-530",
+    "description": "设置样式width: 530px;"
+  },
+  {
+    "className": "w-532",
+    "description": "设置样式width: 532px;"
+  },
+  {
+    "className": "w-540",
+    "description": "设置样式width: 540px;"
+  },
+  {
+    "className": "w-544",
+    "description": "设置样式width: 544px;"
+  },
+  {
+    "className": "w-550",
+    "description": "设置样式width: 550px;"
+  },
+  {
+    "className": "w-560",
+    "description": "设置样式width: 560px;"
+  },
+  {
+    "className": "w-561",
+    "description": "设置样式width: 561px;"
+  },
+  {
+    "className": "w-564",
+    "description": "设置样式width: 564px;"
+  },
+  {
+    "className": "w-596",
+    "description": "设置样式width: 596px;"
+  },
+  {
+    "className": "w-600",
+    "description": "设置样式width: 600px;"
+  },
+  {
+    "className": "w-607",
+    "description": "设置样式width: 607px;"
+  },
+  {
+    "className": "w-610",
+    "description": "设置样式width: 610px;"
+  },
+  {
+    "className": "w-620",
+    "description": "设置样式width: 620px;"
+  },
+  {
+    "className": "w-630",
+    "description": "设置样式width: 630px;"
+  },
+  {
+    "className": "w-640",
+    "description": "设置样式width: 640px;"
+  },
+  {
+    "className": "w-648",
+    "description": "设置样式width: 648px;"
+  },
+  {
+    "className": "w-660",
+    "description": "设置样式width: 660px;"
+  },
+  {
+    "className": "w-662",
+    "description": "设置样式width: 662px;"
+  },
+  {
+    "className": "w-670",
+    "description": "设置样式width: 670px;"
+  },
+  {
+    "className": "w-671",
+    "description": "设置样式width: 671px;"
+  },
+  {
+    "className": "w-674",
+    "description": "设置样式width: 674px;"
+  },
+  {
+    "className": "w-690",
+    "description": "设置样式width: 690px;"
+  },
+  {
+    "className": "w-712",
+    "description": "设置样式width: 712px;"
+  },
+  {
+    "className": "w-740",
+    "description": "设置样式width: 740px;"
+  },
+  {
+    "className": "w-749",
+    "description": "设置样式width: 749px;"
+  },
+  {
+    "className": "w-784",
+    "description": "设置样式width: 784px;"
+  },
+  {
+    "className": "w-750",
+    "description": "设置样式width: 750px;"
+  },
+  {
+    "className": "w-836",
+    "description": "设置样式width: 836px;"
+  },
+  {
+    "className": "w-960",
+    "description": "设置样式width: 960px;"
+  },
+  {
+    "className": "z-index-n1",
+    "description": "设置样式z-index: -1;"
+  },
+  {
+    "className": "z-index-0",
+    "description": "设置样式z-index: 0;"
+  },
+  {
+    "className": "z-index-1",
+    "description": "设置样式z-index: 1;"
+  },
+  {
+    "className": "z-index-2",
+    "description": "设置样式z-index: 2;"
+  },
+  {
+    "className": "z-index-3",
+    "description": "设置样式z-index: 3;"
+  },
+  {
+    "className": "z-index-4",
+    "description": "设置样式z-index: 4;"
+  },
+  {
+    "className": "z-index-5",
+    "description": "设置样式z-index: 5;"
+  },
+  {
+    "className": "z-index-6",
+    "description": "设置样式z-index: 6;"
+  },
+  {
+    "className": "z-index-8",
+    "description": "设置样式z-index: 8;"
+  },
+  {
+    "className": "z-index-9",
+    "description": "设置样式z-index: 9;"
+  },
+  {
+    "className": "z-index-10",
+    "description": "设置样式z-index: 10;"
+  },
+  {
+    "className": "z-index-11",
+    "description": "设置样式z-index: 11;"
+  },
+  {
+    "className": "z-index-20",
+    "description": "设置样式z-index: 20;"
+  },
+  {
+    "className": "z-index-50",
+    "description": "设置样式z-index: 50;"
+  },
+  {
+    "className": "z-index-51",
+    "description": "设置样式z-index: 51;"
+  },
+  {
+    "className": "z-index-99",
+    "description": "设置样式z-index: 99;"
+  },
+  {
+    "className": "z-index-100",
+    "description": "设置样式z-index: 100;"
+  },
+  {
+    "className": "z-index-101",
+    "description": "设置样式z-index: 101;"
+  },
+  {
+    "className": "z-index-110",
+    "description": "设置样式z-index: 110;"
+  },
+  {
+    "className": "z-index-999",
+    "description": "设置样式z-index: 999;"
+  },
+  {
+    "className": "z-index-1000",
+    "description": "设置样式z-index: 1000;"
+  },
+  {
+    "className": "z-index-1001",
+    "description": "设置样式z-index: 1001;"
+  },
+  {
+    "className": "p-24",
+    "description": "设置样式padding: 24px;"
+  },
+  {
+    "className": "m-24",
+    "description": "设置样式margin: 24px;"
+  }
+]

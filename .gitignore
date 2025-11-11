@@ -53,3 +53,57 @@ screenshots/
 # Temporary files
 *.tmp
 *.temp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+MANIFEST
+
+# Virtual environments (匹配所有目录下的虚拟环境)
+**/venv/
+**/env/
+**/ENV/
+**/env.bak/
+**/venv.bak/
+**/llama_env/
+**/train_env/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+llama_env/
+train_env/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# Model files and training outputs
+finetune/css_assistant_model/
+finetune/LLaMA-Factory/
+finetune/models/
+finetune/output/
+finetune/*.log
+finetune/runs/
+finetune/wandb/
+
+# Large data files
+*.bin
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+
+# Hugging Face cache
+.cache/
+huggingface/

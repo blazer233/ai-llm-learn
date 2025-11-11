@@ -1,0 +1,42 @@
+### 模型配置
+model_name_or_path: Qwen/Qwen2.5-3B-Instruct  # 基座模型
+
+### 数据配置
+dataset: css_assistant  # 数据集名称（在 dataset_info.json 中注册）
+template: qwen  # 使用 Qwen 的对话模板
+cutoff_len: 512  # 最大序列长度
+max_samples: 10406  # 使用全部数据
+overwrite_cache: true
+preprocessing_num_workers: 4
+
+### LoRA 配置
+finetuning_type: lora  # 使用 LoRA 微调
+lora_rank: 8  # LoRA 秩（越大效果越好，但显存占用越高）
+lora_alpha: 16  # LoRA alpha
+lora_dropout: 0.05  # Dropout
+lora_target: all  # 对所有线性层应用 LoRA
+
+### 训练参数
+stage: sft  # 监督微调
+do_train: true
+output_dir: /Users/songyanchao/Desktop/thing/zhishi/finetune/output_model  # 输出目录
+overwrite_output_dir: true
+
+### 优化器配置
+per_device_train_batch_size: 2  # 每个设备的批次大小
+gradient_accumulation_steps: 4  # 梯度累积步数（实际批次=2*4=8）
+learning_rate: 5.0e-5  # 学习率
+num_train_epochs: 3  # 训练轮数
+lr_scheduler_type: cosine  # 学习率调度器
+warmup_ratio: 0.1  # 预热比例
+
+### 保存配置
+save_steps: 500  # 每500步保存一次
+logging_steps: 10  # 每10步记录一次
+save_total_limit: 3  # 最多保存3个检查点
+
+### 其他配置
+fp16: false  # M1 不支持 fp16，使用 fp32
+bf16: true  # M1 Pro 支持 bf16
+ddp_timeout: 180000000
+report_to: none  # 不上报到 wandb 等平台
