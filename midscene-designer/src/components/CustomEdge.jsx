@@ -28,8 +28,8 @@ const CustomEdge = ({
   };
 
   const getEdgeLabel = () => {
-    if (data?.condition === 'success') return '✅ 成功';
-    if (data?.condition === 'failure') return '❌ 失败';
+    if (data?.condition === 'success') return '✅ 是';
+    if (data?.condition === 'failure') return '❌ 否';
     return '';
   };
 

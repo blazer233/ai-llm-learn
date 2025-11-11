@@ -73,7 +73,7 @@ export const nodeExecutors = {
   },
 
   /**
-   * AI验证节点 - 使用AI验证页面状态，支持成功/失败分支
+   * AI验证节点 - 使用AI验证页面状态，支持是/否分支
    */
   aiBoolean: async (data, { agent }) => {
     console.log(`✅ AI验证: "${data.config.instruction}"`);
@@ -82,7 +82,7 @@ export const nodeExecutors = {
     const executionTime = Date.now() - startTime;
     return {
       success: true,
-      message: `AI验证成功: ${data.config.instruction}：${assertResult}`,
+      message: `AI验证成功: ${data.config.instruction}：${assertResult ? '是' : '否'}`,
       executionTime,
       data: assertResult,
       branchType: assertResult ? 'success' : 'failure',
