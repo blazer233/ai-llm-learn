@@ -71,7 +71,7 @@ const CustomNode = ({ data, id }) => {
             }}
             title="查看截图"
           >
-            🖼️
+            [预览]
           </button>
         )}
       </div>
@@ -116,9 +116,9 @@ const CustomNode = ({ data, id }) => {
           fontSize: '8px',
           color: 'white'
         }}>
-          {data.executionStatus === 'success' ? '✓' : 
-           data.executionStatus === 'error' ? '✗' : 
-           data.executionStatus === 'running' ? '⟳' : ''}
+          {data.executionStatus === 'success' ? '√' : 
+           data.executionStatus === 'error' ? '×' : 
+           data.executionStatus === 'running' ? '...' : ''}
         </div>
       )}
       

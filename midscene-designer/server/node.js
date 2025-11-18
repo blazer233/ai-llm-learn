@@ -10,10 +10,10 @@ export const nodeExecutors = {
    * 导航节点 - 导航到指定URL
    */
   navigate: async (data, { page }) => {
-    console.log(`🌐 导航到: ${data.config.url}`);
+    console.log(`[导航] 导航到: ${data.config.url}`);
     const startTime = Date.now();
     await page.goto(data.config.url, {
-      waitUntil: 'domcontentloaded',
+      waitUntil: 'networkidle0',
       timeout: 30000,
     });
     const executionTime = Date.now() - startTime;
@@ -28,7 +28,7 @@ export const nodeExecutors = {
    * AI点击节点 - 使用AI智能识别并点击目标元素
    */
   aiTap: async (data, { agent }) => {
-    console.log(`👆 AI点击: "${data.config.target}"`);
+    console.log(`[AI点击] AI点击: "${data.config.target}"`);
     const startTime = Date.now();
     const aiResult = await agent.aiTap(data.config.target);
     const executionTime = Date.now() - startTime;
@@ -44,7 +44,7 @@ export const nodeExecutors = {
    * AI动作节点 - 执行AI动作
    */
   aiAction: async (data, { agent }) => {
-    console.log(`⌨️ AI Action: "${data.config.target}"`);
+    console.log(`[AI动作] AI Action: "${data.config.target}"`);
     const startTime = Date.now();
     const aiResult = await agent.aiAction(data.config.target);
     const executionTime = Date.now() - startTime;
@@ -60,7 +60,7 @@ export const nodeExecutors = {
    * AI输入节点 - 使用AI智能识别输入框并输入内容
    */
   aiInput: async (data, { agent }) => {
-    console.log(`⌨️ AI输入: "${data.config.target}" = "${data.config.value}"`);
+    console.log(`[AI输入] AI输入: "${data.config.target}" = "${data.config.value}"`);
     const startTime = Date.now();
     const aiResult = await agent.aiInput(data.config.value, data.config.target);
     const executionTime = Date.now() - startTime;
@@ -76,7 +76,7 @@ export const nodeExecutors = {
    * AI验证节点 - 使用AI验证页面状态，支持是/否分支
    */
   aiBoolean: async (data, { agent }) => {
-    console.log(`✅ AI验证: "${data.config.instruction}"`);
+    console.log(`[AI验证] AI验证: "${data.config.instruction}"`);
     const startTime = Date.now();
     const assertResult = await agent.aiBoolean(data.config.instruction);
     const executionTime = Date.now() - startTime;
@@ -93,12 +93,12 @@ export const nodeExecutors = {
    * 结束节点 - 结束流程并关闭浏览器
    */
   end: async (data, { browser, context, page, setBrowserState }) => {
-    console.log(`🏁 流程结束`);
+    console.log(`[结束] 流程结束`);
     if (browser) {
       // 如果配置了状态名称，保存状态
       if (data.config?.stateName && context && page) {
         try {
-          console.log(`💾 状态已保存: ${data.config.stateName}`);
+          console.log(`[保存] 状态已保存: ${data.config.stateName}`);
         } catch (error) {
           console.error('保存状态失败:', error);
         }
@@ -118,7 +118,7 @@ export const nodeExecutors = {
    * 截图节点 - 截取整张页面截图
    */
   screenshot: async (data, { page }) => {
-    console.log(`📸 截取页面截图`);
+    console.log(`[截图] 截取页面截图`);
     const startTime = Date.now();
 
     try {
@@ -131,7 +131,7 @@ export const nodeExecutors = {
       )}`;
       const executionTime = Date.now() - startTime;
 
-      console.log(`📸 截图完成，耗时: ${executionTime}ms`);
+      console.log(`[截图] 截图完成，耗时: ${executionTime}ms`);
 
       return {
         success: true,
@@ -141,7 +141,7 @@ export const nodeExecutors = {
       };
     } catch (error) {
       const executionTime = Date.now() - startTime;
-      console.error(`❌ 截图失败: ${error.message}`);
+      console.error(`[失败] 截图失败: ${error.message}`);
 
       return {
         success: false,
@@ -155,7 +155,7 @@ export const nodeExecutors = {
    * 等待节点 - 等待指定时间或条件
    */
   waitForTimeout: async (data, { agent, page }) => {
-    console.log(`⏰ 等待: ${data.config.value}`);
+    console.log(`[等待] 等待: ${data.config.value}`);
     const startTime = Date.now();
     if (isNaN(Number(data.config.value))) {
       // AI条件等待

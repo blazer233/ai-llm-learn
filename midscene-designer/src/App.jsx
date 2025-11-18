@@ -100,28 +100,28 @@ function ReactFlowContent({
             }}
             style={{
               padding: '8px 16px',
-              background: '#10b981',
+              background: '#5B9AA8',
               color: 'white',
               border: 'none',
               borderRadius: 4,
               cursor: 'pointer'
             }}
           >
-            📋 复制代码
+            复制代码
           </button>
           <button
             onClick={executeFlow}
             disabled={isExecuting || nodes.length === 0}
             style={{
               padding: '8px 16px',
-              background: isExecuting ? '#ccc' : '#3b82f6',
+              background: isExecuting ? '#ccc' : '#6B7FA8',
               color: 'white',
               border: 'none',
               borderRadius: 4,
               cursor: isExecuting ? 'not-allowed' : 'pointer'
             }}
           >
-            {isExecuting ? '⏳ 执行中...' : '🚀 执行测试'}
+            {isExecuting ? '执行中...' : '执行测试'}
           </button>
         </div>
       </Panel>
@@ -140,12 +140,12 @@ function ReactFlowContent({
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-              <h4 style={{ margin: 0 }}>🚀 执行结果</h4>
+              <h4 style={{ margin: 0 }}>执行结果</h4>
               <button
                 onClick={() => setExecutionResults(null)}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 16 }}
               >
-                ✕
+                ×
               </button>
             </div>
             {executionResults.results?.map((result, index) => (
@@ -158,7 +158,7 @@ function ReactFlowContent({
                 fontSize: 12
               }}>
                 <div style={{ fontWeight: 'bold', color: result.success ? '#16a34a' : '#dc2626' }}>
-                  {result.success ? '✅' : '❌'} {result.message}
+                  {result.success ? '[成功]' : '[失败]'} {result.message}
                 </div>
               </div>
             ))}
@@ -468,7 +468,7 @@ runTest();`;
     <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
       {/* 节点面板 */}
       <div style={{ width: 250, background: '#f5f5f5', padding: 20, overflowY: 'auto' }}>
-        <h3>🤖 MidsceneJS 节点</h3>
+        <h3>MidsceneJS 节点</h3>
 
         {/* 流程图管理按钮 */}
         <div style={{ marginBottom: 20, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -492,7 +492,7 @@ runTest();`;
             style={{
               width: '100%',
               padding: '8px 12px',
-              background: '#6366f1',
+              background: '#6B7FA8',
               color: 'white',
               border: 'none',
               borderRadius: 4,
@@ -501,7 +501,7 @@ runTest();`;
               fontWeight: 'bold'
             }}
           >
-            ➕ 新建流程图
+            新建流程图
           </button>
 
           <button
@@ -515,7 +515,7 @@ runTest();`;
             style={{
               width: '100%',
               padding: '8px 12px',
-              background: (nodes.length === 0 && edges.length === 0) ? '#ccc' : '#10b981',
+              background: (nodes.length === 0 && edges.length === 0) ? '#ccc' : '#5B9AA8',
               color: 'white',
               border: 'none',
               borderRadius: 4,
@@ -524,7 +524,7 @@ runTest();`;
               fontWeight: 'bold'
             }}
           >
-            💾 保存流程图
+            保存流程图
           </button>
 
           <button
@@ -532,7 +532,7 @@ runTest();`;
             style={{
               width: '100%',
               padding: '8px 12px',
-              background: '#f59e0b',
+              background: '#8A9BAD',
               color: 'white',
               border: 'none',
               borderRadius: 4,
@@ -541,7 +541,7 @@ runTest();`;
               fontWeight: 'bold'
             }}
           >
-            📂 {showFlowManager ? '隐藏' : '管理'}流程图 ({savedFlows.length})
+            {showFlowManager ? '隐藏' : '管理'}流程图 ({savedFlows.length})
           </button>
         </div>
 
@@ -593,7 +593,7 @@ runTest();`;
                       style={{
                         flex: 1,
                         padding: '4px 8px',
-                        background: '#3b82f6',
+                        background: '#6B7FA8',
                         color: 'white',
                         border: 'none',
                         borderRadius: 3,
@@ -601,14 +601,14 @@ runTest();`;
                         fontSize: 10
                       }}
                     >
-                      📂 加载
+                      加载
                     </button>
                     <button
                       onClick={() => deleteFlow(flow.name)}
                       style={{
                         flex: 1,
                         padding: '4px 8px',
-                        background: '#ef4444',
+                        background: '#A87C7C',
                         color: 'white',
                         border: 'none',
                         borderRadius: 3,
@@ -616,7 +616,7 @@ runTest();`;
                         fontSize: 10
                       }}
                     >
-                      🗑️ 删除
+                      删除
                     </button>
                   </div>
                 </div>
@@ -627,10 +627,10 @@ runTest();`;
         {Object.entries(getNodeTypesByCategory()).map(([category, nodeTypes]) => (
           <div key={category} style={{ marginBottom: 20 }}>
             <h4 style={{ fontSize: 14, margin: '10px 0 5px 0', color: '#666' }}>
-              {category === 'basic' ? '🌐 基础' :
-                category === 'ai' ? '🤖 AI功能' :
-                  category === 'tool' ? '🛠️ 工具' :
-                    category === 'control' ? '🎮 流程控制' : category}
+              {category === 'basic' ? '基础' :
+                category === 'ai' ? 'AI功能' :
+                  category === 'tool' ? '工具' :
+                    category === 'control' ? '流程控制' : category}
             </h4>
             {nodeTypes.map(nodeType => (
               <div

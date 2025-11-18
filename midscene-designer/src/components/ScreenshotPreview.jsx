@@ -71,12 +71,12 @@ const ScreenshotPreview = ({ screenshotData, onClose }) => {
           <body>
             <div class="container">
               <div class="header">
-                <h1>📸 页面截图</h1>
+                <h1>页面截图</h1>
                 <p>生成时间: ${new Date().toLocaleString()}</p>
               </div>
               ${screenshotData ? 
                 `<img src="${screenshotData}" alt="页面截图" />` : 
-                '<div class="error">❌ 截图数据不可用</div>'
+                '<div class="error">截图数据不可用</div>'
               }
             </div>
           </body>
@@ -116,7 +116,7 @@ const ScreenshotPreview = ({ screenshotData, onClose }) => {
           fontWeight: '600',
           color: '#374151'
         }}>
-          📸 截图预览
+          截图预览
         </span>
         <button
           onClick={onClose}
@@ -143,7 +143,7 @@ const ScreenshotPreview = ({ screenshotData, onClose }) => {
             e.target.style.color = '#6b7280';
           }}
         >
-          ✕
+          ×
         </button>
       </div>
       
@@ -199,7 +199,7 @@ const ScreenshotPreview = ({ screenshotData, onClose }) => {
             e.target.style.boxShadow = '0 2px 4px rgba(59, 130, 246, 0.3)';
           }}
         >
-          📥 下载
+          下载
         </button>
         <button
           onClick={openInNewWindow}
@@ -227,7 +227,7 @@ const ScreenshotPreview = ({ screenshotData, onClose }) => {
             e.target.style.boxShadow = '0 2px 4px rgba(16, 185, 129, 0.3)';
           }}
         >
-          🔍 查看大图
+          查看大图
         </button>
       </div>
     </div>

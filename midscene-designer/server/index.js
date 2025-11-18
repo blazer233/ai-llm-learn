@@ -79,14 +79,14 @@ app.post('/api/execute', async (req, res) => {
         // 配置 Midscene 的超时时间
         timeout: 60000,
       });
-      console.log('✅ 浏览器和AI代理已初始化');
+      console.log('[初始化] 浏览器和AI代理已初始化');
     }
 
     const results = [];
     const totalStartTime = Date.now();
     const { nodeMap, edgeMap } = buildExecutionFlow(nodes, edges);
 
-    console.log(`🚀 开始执行流程`);
+    console.log(`[开始] 开始执行流程`);
 
     // 找到起始节点（没有入边的节点）
     const incomingEdges = new Set(edges.map(e => e.target));
@@ -134,7 +134,7 @@ app.post('/api/execute', async (req, res) => {
 
         // 如果是结束节点，停止执行
         if (data.type === 'end') {
-          console.log(`🏁 执行流程结束`);
+          console.log(`[结束] 执行流程结束`);
           break;
         }
 
@@ -142,7 +142,7 @@ app.post('/api/execute', async (req, res) => {
         const nextNode = getNextNode(currentNode.id, result, edgeMap, nodeMap);
         currentNode = nextNode;
       } catch (error) {
-        console.error(`❌ 执行失败: ${error.message}`);
+        console.error(`[失败] 执行失败: ${error.message}`);
         const errorResult = {
           nodeId: currentNode.id,
           success: false,
@@ -164,7 +164,7 @@ app.post('/api/execute', async (req, res) => {
     }
 
     if (executionCount >= maxExecutions) {
-      console.log(`⚠️ 达到最大执行次数限制`);
+      console.log(`[警告] 达到最大执行次数限制`);
     }
 
     const totalTime = Date.now() - totalStartTime;
@@ -172,7 +172,7 @@ app.post('/api/execute', async (req, res) => {
     const failureCount = results.length - successCount;
 
     console.log(
-      `🏁 流程执行完成！成功: ${successCount}, 失败: ${failureCount}, 耗时: ${totalTime}ms`
+      `[完成] 流程执行完成！成功: ${successCount}, 失败: ${failureCount}, 耗时: ${totalTime}ms`
     );
 
     // 构建节点结果映射，包含截图数据
@@ -204,5 +204,5 @@ app.post('/api/execute', async (req, res) => {
 
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`🚀 MidsceneJS执行服务器启动: http://localhost:${PORT}`);
+  console.log(`[服务器] MidsceneJS执行服务器启动: http://localhost:${PORT}`);
 });
