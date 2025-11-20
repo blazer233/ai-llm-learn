@@ -101,10 +101,11 @@ class ClientLogger {
   }
 
   error(message: string, error?: Error, data?: unknown): void {
-    this.log(ClientLogLevel.ERROR, 'ERROR', message, {
-      ...data,
-      error: error?.stack || error?.message,
-    });
+    const errorData =
+      data && typeof data === 'object'
+        ? { ...data, error: error?.stack || error?.message }
+        : { error: error?.stack || error?.message };
+    this.log(ClientLogLevel.ERROR, 'ERROR', message, errorData);
   }
 }
 

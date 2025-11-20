@@ -1,6 +1,7 @@
 import { Layout as TLayout } from "tdesign-react";
 import { CheckCircleIcon } from "tdesign-icons-react";
 import "tdesign-react/dist/tdesign.css";
+
 import "./Layout.css";
 
 const { Header, Content, Footer } = TLayout;

@@ -30,8 +30,8 @@ export function responseLoggerMiddleware(
   }
 
   // 拦截原始 res.end 方法
-  const originalEnd = res.end;
-  res.end = function (...args: any[]) {
+  const originalEnd = res.end.bind(res);
+  res.end = function (chunk?: any, encoding?: any, cb?: any) {
     const duration = Date.now() - startTime;
 
     // 仅记录较慢的请求或错误
@@ -42,8 +42,8 @@ export function responseLoggerMiddleware(
       });
     }
 
-    return originalEnd.apply(res, args);
-  };
+    return originalEnd(chunk, encoding, cb);
+  } as typeof res.end;
 
   next();
 }
