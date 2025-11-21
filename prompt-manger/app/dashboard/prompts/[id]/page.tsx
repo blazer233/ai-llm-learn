@@ -316,83 +316,99 @@ export default function PromptDetailPage({
           <TabPanel value="content" label="提示词内容">
             <Card>
               <div style={{ 
-                whiteSpace: 'pre-wrap', 
-                fontFamily: 'monospace', 
-                background: '#f5f7fa', 
-                padding: '16px', 
-                borderRadius: '4px',
-                fontSize: '14px',
-                lineHeight: '1.6',
+                height: 'calc(100vh - 360px)',
+                overflowY: 'auto',
+                overflowX: 'hidden',
               }}>
-                {prompt.content}
+                <div style={{ 
+                  whiteSpace: 'pre-wrap', 
+                  fontFamily: 'monospace', 
+                  background: '#f5f7fa', 
+                  padding: '16px', 
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                }}>
+                  {prompt.content}
+                </div>
               </div>
             </Card>
           </TabPanel>
 
           <TabPanel value="test" label="在线测试">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr', 
+              gap: '16px',
+            }}>
               <Card title="测试配置">
-                <Form labelWidth={100}>
-                  <FormItem label="选择模型">
-                    <Select
-                      value={testForm.model}
-                      onChange={(value) => {
-                        const newModel = value as string;
-                        setTestForm({ 
-                          ...testForm, 
-                          model: newModel,
-                          apiKey: loadApiKey(newModel),
-                        });
-                      }}
-                    >
-                      <Select.Option value="qwen" label="通义千问 (Qwen)" />
-                      <Select.Option value="hunyuan" label="腾讯混元 (Hunyuan)" />
-                      <Select.Option value="deepseek" label="DeepSeek" />
-                      <Select.Option value="gemini" label="Google Gemini" />
-                    </Select>
-                  </FormItem>
-                  <FormItem label="模型版本" required>
-                    <Input
-                      placeholder="如：qwen-turbo, hunyuan-lite, deepseek-chat, gemini-pro"
-                      value={testForm.modelVersion}
-                      onChange={(value) => setTestForm({ ...testForm, modelVersion: value })}
-                    />
-                  </FormItem>
-                  <FormItem label="API Key" required>
-                    <Input
-                      type="password"
-                      placeholder={`请输入 ${testForm.model.charAt(0).toUpperCase() + testForm.model.slice(1)} API Key`}
-                      value={testForm.apiKey}
-                      onChange={(value) => setTestForm({ ...testForm, apiKey: value })}
-                      prefixIcon={<LockOnIcon />}
-                      tips={testForm.apiKey ? '已保存的 API Key' : '输入后将保存到浏览器本地'}
-                    />
-                  </FormItem>
-                  <FormItem label="测试内容">
-                    <Textarea
-                      placeholder="请输入测试内容"
-                      value={testForm.input}
-                      onChange={(value) => setTestForm({ ...testForm, input: value })}
-                      autosize={{ minRows: 6, maxRows: 12 }}
-                    />
-                  </FormItem>
-                  <FormItem>
-                    <Button
-                      theme="primary"
-                      icon={<PlayIcon />}
-                      onClick={handleTest}
-                      loading={testLoading}
-                      block
-                    >
-                      开始测试
-                    </Button>
-                  </FormItem>
-                </Form>
+                <div style={{ 
+                  height: 'calc(100vh - 400px)',
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                }}>
+                  <Form labelWidth={100}>
+                    <FormItem label="选择模型">
+                      <Select
+                        value={testForm.model}
+                        onChange={(value) => {
+                          const newModel = value as string;
+                          setTestForm({ 
+                            ...testForm, 
+                            model: newModel,
+                            apiKey: loadApiKey(newModel),
+                          });
+                        }}
+                      >
+                        <Select.Option value="qwen" label="通义千问 (Qwen)" />
+                        <Select.Option value="hunyuan" label="腾讯混元 (Hunyuan)" />
+                        <Select.Option value="deepseek" label="DeepSeek" />
+                        <Select.Option value="gemini" label="Google Gemini" />
+                      </Select>
+                    </FormItem>
+                    <FormItem label="模型版本" required>
+                      <Input
+                        placeholder="如：qwen-turbo, hunyuan-lite, deepseek-chat, gemini-pro"
+                        value={testForm.modelVersion}
+                        onChange={(value) => setTestForm({ ...testForm, modelVersion: value })}
+                      />
+                    </FormItem>
+                    <FormItem label="API Key" required>
+                      <Input
+                        type="password"
+                        placeholder={`请输入 ${testForm.model.charAt(0).toUpperCase() + testForm.model.slice(1)} API Key`}
+                        value={testForm.apiKey}
+                        onChange={(value) => setTestForm({ ...testForm, apiKey: value })}
+                        prefixIcon={<LockOnIcon />}
+                        tips={testForm.apiKey ? '已保存的 API Key' : '输入后将保存到浏览器本地'}
+                      />
+                    </FormItem>
+                    <FormItem label="测试内容">
+                      <Textarea
+                        placeholder="请输入测试内容"
+                        value={testForm.input}
+                        onChange={(value) => setTestForm({ ...testForm, input: value })}
+                        autosize={{ minRows: 8, maxRows: 20 }}
+                      />
+                    </FormItem>
+                    <FormItem>
+                      <Button
+                        theme="primary"
+                        icon={<PlayIcon />}
+                        onClick={handleTest}
+                        loading={testLoading}
+                        block
+                      >
+                        开始测试
+                      </Button>
+                    </FormItem>
+                  </Form>
+                </div>
               </Card>
 
               <Card title="测试结果">
                 <div style={{ 
-                  height: '600px', 
+                  height: 'calc(100vh - 400px)',
                   overflowY: 'auto',
                   overflowX: 'hidden',
                 }}>
@@ -401,7 +417,8 @@ export default function PromptDetailPage({
                       display: 'flex', 
                       justifyContent: 'center', 
                       alignItems: 'center', 
-                      height: '100%' 
+                      height: '100%',
+                      minHeight: '400px',
                     }}>
                       <Loading text="AI 生成中..." />
                     </div>
@@ -424,7 +441,8 @@ export default function PromptDetailPage({
                       justifyContent: 'center',
                       alignItems: 'center',
                       height: '100%',
-                      color: '#999' 
+                      minHeight: '400px',
+                      color: '#999',
                     }}>
                       <PlayIcon size="48px" style={{ marginBottom: '16px' }} />
                       <p>点击"开始测试"查看结果</p>
@@ -437,50 +455,63 @@ export default function PromptDetailPage({
 
           <TabPanel value="tests" label={`测试记录 (${prompt.testRecords?.length || 0})`}>
             <Card>
-              {prompt.testRecords && prompt.testRecords.length > 0 ? (
-                <Timeline>
-                  {prompt.testRecords.map((record) => (
-                    <Timeline.Item key={record.id} label={formatDateTime(record.createdAt)}>
-                      <div style={{ marginBottom: '8px' }}>
-                        <Tag>{record.model}</Tag>
-                        {record.rating && (
-                          <span style={{ marginLeft: '8px' }}>
-                            {'⭐'.repeat(record.rating)}
-                          </span>
-                        )}
-                      </div>
-                      <div style={{ marginBottom: '8px' }}>
-                        <strong>输入：</strong>
-                        <div style={{ 
-                          background: '#f5f7fa', 
-                          padding: '8px', 
-                          borderRadius: '4px',
-                          marginTop: '4px',
-                          fontSize: '14px',
-                        }}>
-                          {record.input}
+              <div style={{ 
+                height: 'calc(100vh - 360px)',
+                overflowY: 'auto',
+                overflowX: 'hidden',
+              }}>
+                {prompt.testRecords && prompt.testRecords.length > 0 ? (
+                  <Timeline>
+                    {prompt.testRecords.map((record) => (
+                      <Timeline.Item key={record.id} label={formatDateTime(record.createdAt)}>
+                        <div style={{ marginBottom: '8px' }}>
+                          <Tag>{record.model}</Tag>
+                          {record.rating && (
+                            <span style={{ marginLeft: '8px' }}>
+                              {'⭐'.repeat(record.rating)}
+                            </span>
+                          )}
                         </div>
-                      </div>
-                      <div>
-                        <strong>输出：</strong>
-                        <div style={{ 
-                          background: '#f5f7fa', 
-                          padding: '8px', 
-                          borderRadius: '4px',
-                          marginTop: '4px',
-                          fontSize: '14px',
-                        }}>
-                          {record.output}
+                        <div style={{ marginBottom: '8px' }}>
+                          <strong>输入：</strong>
+                          <div style={{ 
+                            background: '#f5f7fa', 
+                            padding: '8px', 
+                            borderRadius: '4px',
+                            marginTop: '4px',
+                            fontSize: '14px',
+                          }}>
+                            {record.input}
+                          </div>
                         </div>
-                      </div>
-                    </Timeline.Item>
-                  ))}
-                </Timeline>
-              ) : (
-                <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-                  <p>暂无测试记录</p>
-                </div>
-              )}
+                        <div>
+                          <strong>输出：</strong>
+                          <div style={{ 
+                            background: '#f5f7fa', 
+                            padding: '8px', 
+                            borderRadius: '4px',
+                            marginTop: '4px',
+                            fontSize: '14px',
+                          }}>
+                            {record.output}
+                          </div>
+                        </div>
+                      </Timeline.Item>
+                    ))}
+                  </Timeline>
+                ) : (
+                  <div style={{ 
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    minHeight: '400px',
+                    color: '#999',
+                  }}>
+                    <p>暂无测试记录</p>
+                  </div>
+                )}
+              </div>
             </Card>
           </TabPanel>
         </Tabs>

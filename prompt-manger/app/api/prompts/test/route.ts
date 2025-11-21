@@ -10,29 +10,27 @@ interface TestRequest {
 
 // 通义千问 API 调用
 async function callQwen(apiKey: string, modelVersion: string, prompt: string, input: string) {
-  const url = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
+  // 使用 DashScope API
+  const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
   
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${apiKey}`,
-      'X-DashScope-SSE': 'disable',
     },
     body: JSON.stringify({
       model: modelVersion,
-      input: {
-        messages: [
-          {
-            role: 'system',
-            content: prompt,
-          },
-          {
-            role: 'user',
-            content: input,
-          },
-        ],
-      },
+      messages: [
+        {
+          role: 'system',
+          content: prompt,
+        },
+        {
+          role: 'user',
+          content: input,
+        },
+      ],
     }),
   });
 
@@ -42,7 +40,7 @@ async function callQwen(apiKey: string, modelVersion: string, prompt: string, in
   }
 
   const data = await response.json();
-  return data.output?.text || data.output?.choices?.[0]?.message?.content || '无响应';
+  return data.choices?.[0]?.message?.content || '无响应';
 }
 
 // 腾讯混元 API 调用

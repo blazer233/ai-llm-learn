@@ -34,6 +34,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <Layout style={{ height: '100vh' }}>
       <Header style={{ 
+        height: '64px',
         background: '#fff', 
         borderBottom: '1px solid #e7e7e7',
         padding: '0 24px',
@@ -45,8 +46,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           提示词管理平台
         </div>
       </Header>
-      <Layout>
-        <Aside style={{ background: '#fff', borderRight: '1px solid #e7e7e7' }}>
+      <Layout style={{ height: 'calc(100vh - 64px)' }}>
+        <Aside style={{ 
+          width: '200px',
+          background: '#fff', 
+          borderRight: '1px solid #e7e7e7',
+        }}>
           <Menu
             value={pathname}
             onChange={(value) => router.push(value as string)}
@@ -59,7 +64,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             ))}
           </Menu>
         </Aside>
-        <Content style={{ padding: '24px', overflowY: 'auto' }}>
+        <Content style={{ 
+          padding: '24px', 
+          overflowY: 'auto',
+          height: '100%',
+        }}>
           {children}
         </Content>
       </Layout>
