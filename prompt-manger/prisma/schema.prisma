@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // 关联关系
+  scenes    Scene[]
+  prompts   Prompt[]
+  
+  @@map("users")
+}
+
+// 场景表
+model Scene {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  color       String?  // 场景标签颜色
+  icon        String?  // 场景图标
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // 关联关系
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompts     Prompt[]
+  
+  @@index([userId])
+  @@map("scenes")
+}
+
+// 提示词表
+model Prompt {
+  id          String   @id @default(uuid())
+  title       String
+  content     String   @db.Text
+  description String?  @db.Text
+  tags        String?  // JSON 字符串，存储标签数组
+  model       String?  // 推荐使用的模型
+  temperature Float?   // 温度参数
+  maxTokens   Int?     // 最大 token 数
+  sceneId     String?
+  userId      String
+  isPublic    Boolean  @default(false) // 是否公开分享
+  viewCount   Int      @default(0)     // 浏览次数
+  likeCount   Int      @default(0)     // 点赞次数
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // 关联关系
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scene       Scene?            @relation(fields: [sceneId], references: [id], onDelete: SetNull)
+  testRecords TestRecord[]
+  
+  @@index([userId])
+  @@index([sceneId])
+  @@map("prompts")
+}
+
+// 测试记录表
+model TestRecord {
+  id          String   @id @default(uuid())
+  promptId    String
+  model       String   // 使用的模型
+  input       String   @db.Text // 测试输入
+  output      String   @db.Text // 模型输出
+  temperature Float?
+  maxTokens   Int?
+  duration    Int?     // 响应时间（毫秒）
+  tokenUsed   Int?     // 消耗的 token 数
+  rating      Int?     // 评分 1-5
+  notes       String?  @db.Text // 测试备注
+  createdAt   DateTime @default(now())
+  
+  // 关联关系
+  prompt      Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  
+  @@index([promptId])
+  @@map("test_records")
+}
