@@ -16,11 +16,6 @@ export async function GET(request: Request) {
       orderBy: { createdAt: 'desc' },
       include: {
         scene: true,
-        _count: {
-          select: {
-            testRecords: true,
-          },
-        },
       },
     });
 

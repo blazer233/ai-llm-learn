@@ -16,10 +16,6 @@ export async function GET(
       },
       include: {
         scene: true,
-        testRecords: {
-          orderBy: { createdAt: 'desc' },
-          take: 10,
-        },
       },
     });
 

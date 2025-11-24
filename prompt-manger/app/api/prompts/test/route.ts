@@ -6,11 +6,24 @@ interface TestRequest {
   apiKey: string;
   prompt: string;
   input: string;
+  baseUrl?: string; // 用于 Ollama 和其他自定义端点
+}
+
+interface TestResponse {
+  success: boolean;
+  output: string;
+  model: string;
+  modelVersion: string;
+  usage?: {
+    promptTokens: number;
+    completionTokens: number;
+    totalTokens: number;
+  };
+  error?: string;
 }
 
 // 通义千问 API 调用
 async function callQwen(apiKey: string, modelVersion: string, prompt: string, input: string) {
-  // 使用 DashScope API
   const url = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
   
   const response = await fetch(url, {
@@ -40,14 +53,63 @@ async function callQwen(apiKey: string, modelVersion: string, prompt: string, in
   }
 
   const data = await response.json();
-  return data.choices?.[0]?.message?.content || '无响应';
+  
+  return {
+    content: data.choices?.[0]?.message?.content || '无响应',
+    usage: data.usage ? {
+      promptTokens: data.usage.prompt_tokens || 0,
+      completionTokens: data.usage.completion_tokens || 0,
+      totalTokens: data.usage.total_tokens || 0,
+    } : undefined,
+  };
 }
 
 // 腾讯混元 API 调用
+// 使用内部简化 API 端点（仅需单个 Key）
 async function callHunyuan(apiKey: string, modelVersion: string, prompt: string, input: string) {
-  // 腾讯混元需要使用腾讯云 SDK，这里提供一个简化的示例
-  // 实际使用时需要安装 tencentcloud-sdk-nodejs 并配置 SecretId 和 SecretKey
-  throw new Error('腾讯混元需要使用腾讯云 SDK，请参考文档配置：https://cloud.tencent.com/document/product/1729');
+  const url = 'http://hunyuanapi.woa.com/openapi/v1/chat/completions';
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: modelVersion,
+      messages: [
+        {
+          role: 'system',
+          content: prompt,
+        },
+        {
+          role: 'user',
+          content: input,
+        },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Hunyuan API Error: ${error}`);
+  }
+
+  const data = await response.json();
+  
+  // 检查响应错误
+  if (data.error) {
+    throw new Error(`Hunyuan API Error: ${data.error.message || JSON.stringify(data.error)}`);
+  }
+  
+  return {
+    content: data.choices?.[0]?.message?.content || '无响应',
+    usage: data.usage ? {
+      promptTokens: data.usage.prompt_tokens || 0,
+      completionTokens: data.usage.completion_tokens || 0,
+      totalTokens: data.usage.total_tokens || 0,
+    } : undefined,
+  };
 }
 
 // DeepSeek API 调用
@@ -81,12 +143,22 @@ async function callDeepSeek(apiKey: string, modelVersion: string, prompt: string
   }
 
   const data = await response.json();
-  return data.choices?.[0]?.message?.content || '无响应';
+  
+  return {
+    content: data.choices?.[0]?.message?.content || '无响应',
+    usage: data.usage ? {
+      promptTokens: data.usage.prompt_tokens || 0,
+      completionTokens: data.usage.completion_tokens || 0,
+      totalTokens: data.usage.total_tokens || 0,
+    } : undefined,
+  };
 }
 
-// Google Gemini API 调用
-async function callGemini(apiKey: string, modelVersion: string, prompt: string, input: string) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelVersion}:generateContent?key=${apiKey}`;
+// Ollama API 调用（本地部署）
+async function callOllama(baseUrl: string, modelVersion: string, prompt: string, input: string) {
+  // 移除末尾的斜杠
+  const cleanBaseUrl = baseUrl.replace(/\/$/, '');
+  const url = `${cleanBaseUrl}/api/generate`;
   
   const response = await fetch(url, {
     method: 'POST',
@@ -94,55 +166,73 @@ async function callGemini(apiKey: string, modelVersion: string, prompt: string, 
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text: `${prompt}\n\n${input}`,
-            },
-          ],
-        },
-      ],
+      model: modelVersion,
+      prompt: `${prompt}\n\n${input}`,
+      stream: false,
     }),
   });
 
   if (!response.ok) {
     const error = await response.text();
-    throw new Error(`Gemini API Error: ${error}`);
+    throw new Error(`Ollama API Error: ${response.status} ${error}`);
   }
 
   const data = await response.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || '无响应';
+  
+  return {
+    content: data.response || '无响应',
+    usage: data.prompt_eval_count !== undefined && data.eval_count !== undefined ? {
+      promptTokens: data.prompt_eval_count || 0,
+      completionTokens: data.eval_count || 0,
+      totalTokens: (data.prompt_eval_count || 0) + (data.eval_count || 0),
+    } : undefined,
+  };
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: TestRequest = await request.json();
-    const { model, modelVersion, apiKey, prompt, input } = body;
+    const { model, modelVersion, apiKey, prompt, input, baseUrl } = body;
 
     // 验证必填字段
-    if (!model || !modelVersion || !apiKey || !prompt || !input) {
+    if (!model || !modelVersion || !prompt || !input) {
       return NextResponse.json(
         { error: '缺少必填字段' },
         { status: 400 }
       );
     }
 
-    let output = '';
+    // Ollama 不需要 API Key，其他模型需要
+    if (model !== 'ollama' && !apiKey) {
+      return NextResponse.json(
+        { error: 'API Key 是必填项' },
+        { status: 400 }
+      );
+    }
+
+    // Ollama 需要 baseUrl
+    if (model === 'ollama' && !baseUrl) {
+      return NextResponse.json(
+        { error: 'Ollama 需要配置 Base URL' },
+        { status: 400 }
+      );
+    }
+
+    let result: { content: string; usage?: { promptTokens: number; completionTokens: number; totalTokens: number } };
 
     // 根据模型类型调用对应的 API
     switch (model) {
       case 'qwen':
-        output = await callQwen(apiKey, modelVersion, prompt, input);
+        result = await callQwen(apiKey, modelVersion, prompt, input);
         break;
       case 'hunyuan':
-        output = await callHunyuan(apiKey, modelVersion, prompt, input);
+        result = await callHunyuan(apiKey, modelVersion, prompt, input);
         break;
       case 'deepseek':
-        output = await callDeepSeek(apiKey, modelVersion, prompt, input);
+        result = await callDeepSeek(apiKey, modelVersion, prompt, input);
         break;
-      case 'gemini':
-        output = await callGemini(apiKey, modelVersion, prompt, input);
+      case 'ollama':
+        result = await callOllama(baseUrl!, modelVersion, prompt, input);
         break;
       default:
         return NextResponse.json(
@@ -151,12 +241,15 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    return NextResponse.json({
+    const response: TestResponse = {
       success: true,
-      output,
+      output: result.content,
       model,
       modelVersion,
-    });
+      usage: result.usage,
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Test API Error:', error);
     return NextResponse.json(

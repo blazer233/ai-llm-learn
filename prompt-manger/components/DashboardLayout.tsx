@@ -6,6 +6,7 @@ import { Layout, Menu } from 'tdesign-react';
 import {
   FolderIcon,
   FileIcon,
+  CodeIcon,
 } from 'tdesign-icons-react';
 
 const { Header, Aside, Content } = Layout;
@@ -28,6 +29,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       value: '/dashboard/prompts',
       label: '提示词库',
       icon: <FileIcon />,
+    },
+    {
+      value: '/dashboard/functions',
+      label: '函数模板库',
+      icon: <CodeIcon />,
     },
   ];
 

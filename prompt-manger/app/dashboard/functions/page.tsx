@@ -20,7 +20,7 @@ import {
 } from 'tdesign-react';
 import {
   AddIcon,
-  FileIcon,
+  CodeIcon,
   DeleteIcon,
   EditIcon,
   ViewListIcon,
@@ -32,17 +32,20 @@ import PageHeader from '@/components/PageHeader';
 import StatCard from '@/components/StatCard';
 import EmptyState from '@/components/EmptyState';
 import { safeJSONParse, copyToClipboard } from '@/lib/utils';
-import { AI_MODELS } from '@/lib/constants';
+import { LANGUAGES, CATEGORIES } from '@/lib/constants';
 
 const { FormItem } = Form;
 
-interface Prompt {
+interface FunctionTemplate {
   id: string;
-  title: string;
-  content: string;
+  name: string;
+  code: string;
   description?: string;
+  language: string;
+  category?: string;
   tags?: string;
-  model?: string;
+  params?: string;
+  returnType?: string;
   sceneId?: string;
   scene?: {
     name: string;
@@ -56,36 +59,42 @@ interface Scene {
   name: string;
 }
 
-export default function PromptsPage() {
+export default function FunctionsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sceneId = searchParams.get('sceneId');
   
   const [loading, setLoading] = useState(true);
-  const [prompts, setPrompts] = useState<Prompt[]>([]);
+  const [functions, setFunctions] = useState<FunctionTemplate[]>([]);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [editingPrompt, setEditingPrompt] = useState<Prompt | null>(null);
+  const [editingFunction, setEditingFunction] = useState<FunctionTemplate | null>(null);
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
+    name: '',
+    code: '',
     description: '',
+    language: 'typescript',
+    category: 'utility',
     tags: [] as string[],
-    model: '',
+    returnType: '',
     sceneId: sceneId || '',
   });
 
-  const fetchPrompts = async () => {
+  const fetchFunctions = async () => {
     try {
-      const url = sceneId ? `/api/prompts?sceneId=${sceneId}` : '/api/prompts';
+      const params = new URLSearchParams();
+      if (sceneId) params.append('sceneId', sceneId);
+      
+      const url = `/api/functions${params.toString() ? `?${params.toString()}` : ''}`;
       const response = await fetch(url);
+      
       if (response.ok) {
         const data = await response.json();
-        setPrompts(data.prompts || []);
+        setFunctions(data.functions || []);
       }
     } catch (error) {
-      console.error('Fetch prompts error:', error);
-      MessagePlugin.error('获取提示词列表失败');
+      console.error('Fetch functions error:', error);
+      MessagePlugin.error('获取函数模板列表失败');
     } finally {
       setLoading(false);
     }
@@ -104,47 +113,51 @@ export default function PromptsPage() {
   };
 
   useEffect(() => {
-    fetchPrompts();
+    fetchFunctions();
     fetchScenes();
   }, [sceneId]);
 
   const handleCreate = () => {
-    setEditingPrompt(null);
+    setEditingFunction(null);
     setFormData({
-      title: '',
-      content: '',
+      name: '',
+      code: '',
       description: '',
+      language: 'typescript',
+      category: 'utility',
       tags: [],
-      model: 'qwen',
+      returnType: '',
       sceneId: sceneId || '',
     });
     setDialogVisible(true);
   };
 
-  const handleEdit = useCallback((prompt: Prompt) => {
-    setEditingPrompt(prompt);
+  const handleEdit = useCallback((func: FunctionTemplate) => {
+    setEditingFunction(func);
     setFormData({
-      title: prompt.title || '',
-      content: prompt.content || '',
-      description: prompt.description || '',
-      tags: safeJSONParse(prompt.tags, []),
-      model: prompt.model || 'qwen',
-      sceneId: prompt.sceneId || '',
+      name: func.name || '',
+      code: func.code || '',
+      description: func.description || '',
+      language: func.language || 'typescript',
+      category: func.category || 'utility',
+      tags: safeJSONParse(func.tags, []),
+      returnType: func.returnType || '',
+      sceneId: func.sceneId || '',
     });
     setTimeout(() => setDialogVisible(true), 0);
   }, []);
 
   const handleSubmit = async () => {
-    if (!formData.title || !formData.content) {
-      MessagePlugin.warning('请填写标题和内容');
+    if (!formData.name || !formData.code) {
+      MessagePlugin.warning('请填写函数名称和代码');
       return;
     }
 
     try {
-      const url = editingPrompt
-        ? `/api/prompts/${editingPrompt.id}`
-        : '/api/prompts';
-      const method = editingPrompt ? 'PUT' : 'POST';
+      const url = editingFunction
+        ? `/api/functions/${editingFunction.id}`
+        : '/api/functions';
+      const method = editingFunction ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
@@ -153,42 +166,42 @@ export default function PromptsPage() {
       });
 
       if (response.ok) {
-        MessagePlugin.success(editingPrompt ? '更新成功' : '创建成功');
+        MessagePlugin.success(editingFunction ? '更新成功' : '创建成功');
         setDialogVisible(false);
-        fetchPrompts();
+        fetchFunctions();
       } else {
         const data = await response.json();
         MessagePlugin.error(data.error || '操作失败');
       }
     } catch (error) {
-      console.error('Submit prompt error:', error);
+      console.error('Submit function error:', error);
       MessagePlugin.error('操作失败');
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`/api/prompts/${id}`, {
+      const response = await fetch(`/api/functions/${id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         MessagePlugin.success('删除成功');
-        fetchPrompts();
+        fetchFunctions();
       } else {
         const data = await response.json();
         MessagePlugin.error(data.error || '删除失败');
       }
     } catch (error) {
-      console.error('Delete prompt error:', error);
+      console.error('Delete function error:', error);
       MessagePlugin.error('删除失败');
     }
   };
 
-  const handleCopy = useCallback(async (prompt: Prompt) => {
-    const success = await copyToClipboard(prompt.content);
+  const handleCopy = useCallback(async (func: FunctionTemplate) => {
+    const success = await copyToClipboard(func.code);
     if (success) {
-      MessagePlugin.success('提示词内容已复制到剪贴板');
+      MessagePlugin.success('代码已复制到剪贴板');
     } else {
       MessagePlugin.error('复制失败，请手动复制');
     }
@@ -196,12 +209,14 @@ export default function PromptsPage() {
 
   const columns = [
     {
-      colKey: 'title',
-      title: '标题',
+      colKey: 'name',
+      title: '函数名称',
       width: 200,
-      cell: ({ row }: { row: Prompt }) => (
+      cell: ({ row }: { row: FunctionTemplate }) => (
         <div>
-          <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{row.title}</div>
+          <div style={{ fontWeight: 'bold', marginBottom: '4px', fontFamily: 'monospace' }}>
+            {row.name}
+          </div>
           {row.description && (
             <div style={{ fontSize: '12px', color: '#999' }}>{row.description}</div>
           )}
@@ -209,10 +224,30 @@ export default function PromptsPage() {
       ),
     },
     {
+      colKey: 'language',
+      title: '语言',
+      width: 100,
+      cell: ({ row }: { row: FunctionTemplate }) => (
+        <Tag theme="success" variant="light">
+          {row.language}
+        </Tag>
+      ),
+    },
+    {
+      colKey: 'category',
+      title: '分类',
+      width: 100,
+      cell: ({ row }: { row: FunctionTemplate }) => (
+        <Tag theme="primary" variant="light">
+          {CATEGORIES.find(c => c.value === row.category)?.label || row.category}
+        </Tag>
+      ),
+    },
+    {
       colKey: 'scene',
       title: '场景',
       width: 120,
-      cell: ({ row }: { row: Prompt }) =>
+      cell: ({ row }: { row: FunctionTemplate }) =>
         row.scene ? (
           <Tag theme="primary" style={{ background: row.scene.color }}>
             {row.scene.name}
@@ -222,22 +257,26 @@ export default function PromptsPage() {
         ),
     },
     {
-      colKey: 'model',
-      title: '推荐模型',
+      colKey: 'returnType',
+      title: '返回类型',
       width: 120,
-      cell: ({ row }: { row: Prompt }) => row.model || '-',
+      cell: ({ row }: { row: FunctionTemplate }) => (
+        <code style={{ fontSize: '12px', color: '#666' }}>
+          {row.returnType || 'void'}
+        </code>
+      ),
     },
     {
       colKey: 'actions',
       title: '操作',
       width: 280,
-      cell: ({ row }: { row: Prompt }) => (
+      cell: ({ row }: { row: FunctionTemplate }) => (
         <Space size="small">
           <Button
             size="small"
             variant="outline"
             icon={<ViewListIcon />}
-            onClick={() => router.push(`/dashboard/prompts/${row.id}`)}
+            onClick={() => router.push(`/dashboard/functions/${row.id}`)}
           >
             详情
           </Button>
@@ -247,7 +286,7 @@ export default function PromptsPage() {
             icon={<CopyIcon />}
             onClick={() => handleCopy(row)}
           >
-            复制
+            复制代码
           </Button>
           <Button
             size="small"
@@ -287,7 +326,7 @@ export default function PromptsPage() {
   }
 
   const stats = {
-    totalPrompts: prompts.length,
+    totalFunctions: functions.length,
     totalScenes: scenes.length,
   };
 
@@ -295,13 +334,13 @@ export default function PromptsPage() {
     <DashboardLayout>
       <div>
         <PageHeader
-          title="提示词库"
-          action={{ label: '新建提示词', icon: <AddIcon />, onClick: handleCreate }}
+          title="函数模板库"
+          action={{ label: '新建函数模板', icon: <AddIcon />, onClick: handleCreate }}
         />
 
         <Row gutter={12} style={{ marginBottom: '20px' }}>
           <Col flex="1">
-            <StatCard icon={<FileIcon />} value={prompts.length} label="提示词总数" />
+            <StatCard icon={<CodeIcon />} value={functions.length} label="函数总数" />
           </Col>
           <Col flex="1">
             <StatCard
@@ -313,12 +352,12 @@ export default function PromptsPage() {
           </Col>
         </Row>
 
-        {prompts.length === 0 ? (
-          <EmptyState icon={<FileIcon />} message="暂无提示词，点击右上角按钮创建" />
+        {functions.length === 0 ? (
+          <EmptyState icon={<CodeIcon />} message="暂无函数模板，点击右上角按钮创建" />
         ) : (
           <Card>
             <Table
-              data={prompts}
+              data={functions}
               columns={columns}
               rowKey="id"
               stripe
@@ -328,39 +367,79 @@ export default function PromptsPage() {
         )}
 
         <Dialog
-          key={editingPrompt ? editingPrompt.id : 'new'}
-          header={editingPrompt ? '编辑提示词' : '新建提示词'}
+          key={editingFunction ? editingFunction.id : 'new'}
+          header={editingFunction ? '编辑函数模板' : '新建函数模板'}
           visible={dialogVisible}
           onClose={() => setDialogVisible(false)}
           onConfirm={handleSubmit}
           confirmBtn="保存"
           cancelBtn="取消"
-          width="800px"
+          width="900px"
           destroyOnClose
         >
-          <Form labelWidth={80} data={formData}>
-            <FormItem label="标题" name="title">
+          <Form labelWidth={100} data={formData}>
+            <FormItem label="函数名称" name="name">
               <Input
-                placeholder="请输入提示词标题"
-                value={formData.title}
-                onChange={(value) => setFormData({ ...formData, title: value })}
+                placeholder="请输入函数名称（如：formatDate）"
+                value={formData.name}
+                onChange={(value) => setFormData({ ...formData, name: value })}
               />
             </FormItem>
-            <FormItem label="内容" name="content">
+            
+            <Row gutter={16}>
+              <Col span={6}>
+                <FormItem label="编程语言" name="language">
+                  <Select
+                    value={formData.language}
+                    onChange={(value) => setFormData({ ...formData, language: value as string })}
+                  >
+                    {LANGUAGES.map((lang) => (
+                      <Select.Option key={lang.value} value={lang.value} label={lang.label} />
+                    ))}
+                  </Select>
+                </FormItem>
+              </Col>
+              <Col span={6}>
+                <FormItem label="分类" name="category">
+                  <Select
+                    value={formData.category}
+                    onChange={(value) => setFormData({ ...formData, category: value as string })}
+                  >
+                    {CATEGORIES.map((cat) => (
+                      <Select.Option key={cat.value} value={cat.value} label={cat.label} />
+                    ))}
+                  </Select>
+                </FormItem>
+              </Col>
+            </Row>
+
+            <FormItem label="函数代码" name="code">
               <Textarea
-                placeholder="请输入提示词内容"
-                value={formData.content}
-                onChange={(value) => setFormData({ ...formData, content: value })}
-                autosize={{ minRows: 6, maxRows: 12 }}
+                placeholder="请输入函数代码"
+                value={formData.code}
+                onChange={(value) => setFormData({ ...formData, code: value })}
+                autosize={{ minRows: 12, maxRows: 20 }}
+                style={{ fontFamily: 'monospace', fontSize: '13px' }}
               />
             </FormItem>
-            <FormItem label="描述" name="description">
+            
+            <FormItem label="返回类型" name="returnType">
+              <Input
+                placeholder="如：string | number | Promise<User>"
+                value={formData.returnType}
+                onChange={(value) => setFormData({ ...formData, returnType: value })}
+              />
+            </FormItem>
+
+            <FormItem label="函数描述" name="description">
               <Textarea
-                placeholder="请输入提示词描述"
+                placeholder="请输入函数描述和用途说明"
                 value={formData.description}
                 onChange={(value) => setFormData({ ...formData, description: value })}
+                autosize={{ minRows: 3, maxRows: 6 }}
               />
             </FormItem>
+
             <FormItem label="所属场景" name="sceneId">
               <Select
                 placeholder="请选择场景"
@@ -370,17 +449,6 @@ export default function PromptsPage() {
               >
                 {scenes.map((scene) => (
                   <Select.Option key={scene.id} value={scene.id} label={scene.name} />
-                ))}
-              </Select>
-            </FormItem>
-            <FormItem label="推荐模型" name="model">
-              <Select
-                placeholder="请选择推荐使用的模型"
-                value={formData.model}
-                onChange={(value) => setFormData({ ...formData, model: value as string })}
-              >
-                {AI_MODELS.map(model => (
-                  <Select.Option key={model.value} value={model.value} label={model.label} />
                 ))}
               </Select>
             </FormItem>

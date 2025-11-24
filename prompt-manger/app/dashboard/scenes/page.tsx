@@ -251,7 +251,7 @@ export default function ScenesPage() {
           cancelBtn="取消"
         >
           <Form labelWidth={80}>
-            <FormItem label="场景名称" required>
+            <FormItem label="场景名称">
               <Input
                 placeholder="请输入场景名称"
                 value={formData.name}

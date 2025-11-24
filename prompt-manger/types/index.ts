@@ -45,19 +45,36 @@ export interface PromptVersion {
   createdAt: Date;
 }
 
-export interface TestRecord {
+export interface FunctionTemplate {
   id: string;
-  promptId: string;
-  model: string;
-  input: string;
-  output: string;
-  temperature?: number;
-  maxTokens?: number;
-  duration?: number;
-  tokenUsed?: number;
-  rating?: number;
-  notes?: string;
+  name: string;
+  code: string;
+  description?: string;
+  language: string;
+  category?: string;
+  tags?: string[];
+  params?: FunctionParam[];
+  returnType?: string;
+  examples?: FunctionExample[];
+  sceneId?: string;
+  userId: string;
+  isPublic: boolean;
   createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface FunctionParam {
+  name: string;
+  type: string;
+  description?: string;
+  required?: boolean;
+  defaultValue?: string;
+}
+
+export interface FunctionExample {
+  title: string;
+  code: string;
+  description?: string;
 }
 
 export interface LoginRequest {
@@ -101,4 +118,22 @@ export interface TestPromptRequest {
   input: string;
   temperature?: number;
   maxTokens?: number;
+}
+
+export interface CreateFunctionTemplateRequest {
+  name: string;
+  code: string;
+  description?: string;
+  language?: string;
+  category?: string;
+  tags?: string[];
+  params?: FunctionParam[];
+  returnType?: string;
+  examples?: FunctionExample[];
+  sceneId?: string;
+  isPublic?: boolean;
+}
+
+export interface UpdateFunctionTemplateRequest extends Partial<CreateFunctionTemplateRequest> {
+  id: string;
 }

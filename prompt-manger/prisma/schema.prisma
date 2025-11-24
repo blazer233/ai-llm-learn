@@ -12,35 +12,37 @@ datasource db {
 
 // 用户表
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  username  String   @unique
-  password  String
-  avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String             @id @default(uuid())
+  email             String             @unique
+  username          String             @unique
+  password          String
+  avatar            String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   
   // 关联关系
-  scenes    Scene[]
-  prompts   Prompt[]
+  scenes            Scene[]
+  prompts           Prompt[]
+  functionTemplates FunctionTemplate[]
   
   @@map("users")
 }
 
 // 场景表
 model Scene {
-  id          String   @id @default(uuid())
-  name        String
-  description String?  @db.Text
-  color       String?  // 场景标签颜色
-  icon        String?  // 场景图标
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String             @id @default(uuid())
+  name              String
+  description       String?            @db.Text
+  color             String?            // 场景标签颜色
+  icon              String?            // 场景图标
+  userId            String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   
   // 关联关系
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  prompts     Prompt[]
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompts           Prompt[]
+  functionTemplates FunctionTemplate[]
   
   @@index([userId])
   @@map("scenes")
@@ -65,33 +67,39 @@ model Prompt {
   updatedAt   DateTime @updatedAt
   
   // 关联关系
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  scene       Scene?            @relation(fields: [sceneId], references: [id], onDelete: SetNull)
-  testRecords TestRecord[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scene       Scene?   @relation(fields: [sceneId], references: [id], onDelete: SetNull)
   
   @@index([userId])
   @@index([sceneId])
   @@map("prompts")
 }
 
-// 测试记录表
-model TestRecord {
+// 函数模板表
+model FunctionTemplate {
   id          String   @id @default(uuid())
-  promptId    String
-  model       String   // 使用的模型
-  input       String   @db.Text // 测试输入
-  output      String   @db.Text // 模型输出
-  temperature Float?
-  maxTokens   Int?
-  duration    Int?     // 响应时间（毫秒）
-  tokenUsed   Int?     // 消耗的 token 数
-  rating      Int?     // 评分 1-5
-  notes       String?  @db.Text // 测试备注
+  name        String   // 函数名称
+  code        String   @db.Text // 函数代码
+  description String?  @db.Text // 函数描述
+  language    String   @default("typescript") // 编程语言
+  category    String?  // 分类（工具函数、业务逻辑等）
+  tags        String?  // JSON 字符串，存储标签数组
+  params      String?  @db.Text // JSON 字符串，参数定义
+  returnType  String?  // 返回类型
+  examples    String?  @db.Text // JSON 字符串，使用示例
+  sceneId     String?
+  userId      String
+  isPublic    Boolean  @default(false) // 是否公开分享
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   
   // 关联关系
-  prompt      Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scene       Scene?   @relation(fields: [sceneId], references: [id], onDelete: SetNull)
   
-  @@index([promptId])
-  @@map("test_records")
+  @@index([userId])
+  @@index([sceneId])
+  @@index([language])
+  @@index([category])
+  @@map("function_templates")
 }
