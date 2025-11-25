@@ -404,8 +404,8 @@ export default function PromptDetailPage({
           </div>
         </Card>
 
-        <Tabs defaultValue="content" destroyInactivePanel={false}>
-          <TabPanel value="content" label="提示词内容">
+        <Tabs defaultValue="content">
+          <TabPanel value="content" label="提示词内容" destroyOnHide={false}>
             <div style={{ padding: '12px' }}>
               <Card>
                 <div
@@ -433,7 +433,7 @@ export default function PromptDetailPage({
             </div>
           </TabPanel>
 
-          <TabPanel value="test" label="在线测试">
+          <TabPanel value="test" label="在线测试" destroyOnHide={false}>
             <div
               style={{
                 padding: '12px',

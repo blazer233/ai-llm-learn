@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-
+import { FunctionTemplate } from '@prisma/client';
 const DEFAULT_USER_ID = 'default-user';
 
 export async function GET(request: Request) {
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
       where.category = category;
     }
 
-    const functions = await prisma.functionTemplate.findMany({
+const functions = await (prisma as any).functionTemplate.findMany({
       where,
       include: {
         scene: {
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const functionTemplate = await prisma.functionTemplate.create({
+const functionTemplate = await (prisma as any).functionTemplate.create({
       data: {
         name,
         code,
