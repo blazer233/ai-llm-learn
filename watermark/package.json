@@ -1,0 +1,30 @@
+{
+  "name": "rgb-watermark",
+  "version": "1.0.0",
+  "description": "基于LSB算法的RGB隐水印工具，支持在图片中嵌入和提取隐藏文本",
+  "main": "index.js",
+  "bin": {
+    "watermark": "./index.js"
+  },
+  "scripts": {
+    "embed": "node index.js embed",
+    "extract": "node index.js extract",
+    "diff": "node index.js diff"
+  },
+  "keywords": [
+    "watermark",
+    "steganography",
+    "lsb",
+    "image",
+    "隐写术",
+    "水印"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}

@@ -1,0 +1,83 @@
+//dfs 翻转二叉树
+var invertTree = function (root) {
+  if(!root)return null
+  [root.left,root.right] = [invertTree(root.right), invertTree(root.left)]
+  return root
+};
+
+//是否为对称二叉树
+var isSymmetric = function (root) {
+  const dfs = (l,r) =>{
+    if(!l && !r)return true
+    if(!l || !r)return false
+    if(l.val !== r.val)return false
+    return dfs(l.left,r.right) && dfs(l.right,r.left) 
+  }
+  return dfs(root.left,root.right)
+};
+
+//最近公共祖先
+var lowestCommonAncestor = function (root, p, q) {
+ if(!root || root === p || root === q)return root
+ const l = lowestCommonAncestor(root.left, p, q)
+ const r = lowestCommonAncestor(root.r, p, q)
+ if(l && r) return root 
+ return l || r
+};
+
+//反转链表
+function reverse(head) {
+  let cur = head
+  let pre = null
+  while(cur){
+    const next = cur.next
+    cur.next = pre
+    [pre, cur] = [cur, next]
+  }
+  return pre
+}
+
+//删除链表的倒数第 N 个结点
+let removeNthFromEnd1 = function (head, n) {
+  let length = 0
+  let cur = head
+  while(cur){
+    cur = cur.next
+    length++
+  }
+  if(n == length)return head.next
+  cur = head
+  for(let i=0;i<length-n-1;i++){
+    cur = cur.next
+  }
+  cur.next = cur.next.next
+  return head
+};
+
+
+// promise 并发
+const asyncPool = async (iteratorFn, limit) => {
+  let idx = 0
+  const queue = []
+
+  const handleFunc=()=>{
+    if(idx >= limit || !queue.length) return 
+    const [func, arg, resolve, reject] = queue.shift()
+    idx++
+    func(arg).then(resolve).catch(reject).finally(()=>{
+      idx--
+      handleFunc()
+    })
+  }
+
+  return (arg)=> new Promise((res,rej)=>{
+    queue.push([iteratorFn, arg, res, rej])
+    handleFunc()
+  })
+};
+
+function new(cunstructor,...arg){
+  const obj = Object.create(constructor.prototype)
+  const result = cunstructor.apply(obj, args)
+  return result
+}

@@ -1,0 +1,26 @@
+{
+  "name": "lsb-error-monitor",
+  "version": "1.0.0",
+  "description": "基于 LSB 隐写技术的前端错误监控方案",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "lsb",
+    "steganography",
+    "error-monitoring",
+    "frontend"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sharp": "^0.32.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
