@@ -134,8 +134,14 @@ export class A2UIAgent extends AbstractAgent {
         console.log(`🔄 第 ${attempt} 次尝试生成界面`);
 
         const prompt = buildA2UIPrompt(currentQuery);
+        console.log('📝 发送给大模型的提示词:', prompt);
+        
         const responseText = await this.aiService.generateContent(prompt);
+        console.log('🤖 大模型原始响应内容:', responseText);
+        
         const parsed = this.parseAIResponse(responseText);
+        console.log('🔍 解析后的JSON结构:', JSON.stringify(parsed, null, 2));
+        
         const validation = validateA2UIResponse(parsed);
 
         if (!validation.valid) {
@@ -156,6 +162,12 @@ export class A2UIAgent extends AbstractAgent {
         }
 
         console.log('✅ A2UI 生成成功');
+        console.log('🎯 最终返回的A2UI数据:', JSON.stringify({
+          text: parsed.message || '已为您生成界面：',
+          a2ui: parsed.a2ui,
+          timestamp: new Date().toISOString(),
+        }, null, 2));
+        
         return {
           text: parsed.message || '已为您生成界面：',
           a2ui: parsed.a2ui,
@@ -163,6 +175,7 @@ export class A2UIAgent extends AbstractAgent {
         };
       } catch (error) {
         console.error(`❌ 第 ${attempt} 次尝试失败:`, error.message);
+        console.error('❌ 错误堆栈:', error.stack);
         lastError = error;
 
         if (attempt <= MAX_RETRIES && error.name === 'SyntaxError') {

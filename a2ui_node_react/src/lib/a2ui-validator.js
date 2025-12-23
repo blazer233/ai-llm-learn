@@ -101,10 +101,15 @@ const validate = ajv.compile(A2UI_SCHEMA);
  * @returns {object} { valid: boolean, errors: array }
  */
 export function validateA2UIResponse(data) {
+  console.log('🔍 开始验证A2UI响应数据:', JSON.stringify(data, null, 2));
+  
   const valid = validate(data);
   
   if (!valid) {
-    console.error('❌ A2UI 验证失败:', validate.errors);
+    console.error('❌ A2UI 验证失败:');
+    console.error('❌ 验证错误详情:', JSON.stringify(validate.errors, null, 2));
+    console.error('❌ 验证失败的数据:', JSON.stringify(data, null, 2));
+    
     return {
       valid: false,
       errors: validate.errors.map(err => ({
@@ -118,12 +123,16 @@ export function validateA2UIResponse(data) {
   // 额外验证：检查 children 引用的组件是否存在
   if (data.a2ui && data.a2ui.components) {
     const componentIds = new Set(data.a2ui.components.map(c => c.id));
+    console.log('🔍 组件ID列表:', Array.from(componentIds));
+    
     const invalidRefs = [];
 
     for (const component of data.a2ui.components) {
       if (component.children) {
+        console.log(`🔍 检查组件 "${component.id}" 的子组件引用:`, component.children);
         for (const childId of component.children) {
           if (!componentIds.has(childId)) {
+            console.error(`❌ 组件 "${component.id}" 引用了不存在的子组件: "${childId}"`);
             invalidRefs.push({
               componentId: component.id,
               missingChildId: childId
@@ -147,6 +156,7 @@ export function validateA2UIResponse(data) {
   }
 
   console.log('✅ A2UI 验证通过');
+  console.log('✅ 验证通过的数据结构:', JSON.stringify(data, null, 2));
   return { valid: true, errors: [] };
 }
 
