@@ -162,7 +162,7 @@ export const A2UI_STANDARD_CATALOG = {
     },
     popover: {
       type: 'popover',
-      description: '气泡卡片',
+      description: '气泡卡片（使用Popup组件实现）',
       props: ['content', 'text', 'placement']
     },
     
@@ -212,17 +212,35 @@ export function buildA2UIPrompt(userMessage) {
 
 用户需求: "${userMessage}"
 
+# ⚠️ 关键要求（必须遵守）
+
+**返回格式必须是纯JSON对象，包含以下两个必需字段：**
+
+1. **message** (必需，string类型): 简短的提示语（不超过一句话）
+2. **a2ui** (必需，object或null): 组件定义对象，如果不需要UI则为 null
+
+**示例格式：**
+\`\`\`json
+{
+  "message": "这里是提示语",
+  "a2ui": { "components": [...] }
+}
+\`\`\`
+
+或
+
+\`\`\`json
+{
+  "message": "这里是回复",
+  "a2ui": null
+}
+\`\`\`
+
 # A2UI 标准组件目录
 
 ${componentList}
 
-# 返回格式
-
-请返回 JSON 格式，包含两个字段：
-1. message: 简短的提示语（不超过一句话）
-2. a2ui: 组件定义对象，如果不需要UI则为 null
-
-## A2UI 组件定义格式（重要！）
+# A2UI 组件定义格式（重要！）
 
 **关键规则**：
 1. 所有组件必须扁平化定义在 components 数组中
@@ -255,8 +273,9 @@ ${componentList}
 5. ✅ children 数组中的ID必须对应已定义的组件
 6. ✅ 所有组件都在 components 数组顶层，通过 children 引用建立层级关系
 7. ✅ message 应该简短友好，不要重复解释需求
-8. ✅ 只返回 JSON，不要其他解释
-9. ✅ **何时返回组件 vs 纯文字**：
+8. ✅ **必须返回包含 message 和 a2ui 两个字段的JSON对象**
+9. ✅ 只返回 JSON，不要其他解释
+10. ✅ **何时返回组件 vs 纯文字**：
    - 返回组件（a2ui）：需要用户输入、选择、填表、查看结构化数据时
    - 返回纯文字（a2ui: null）：普通对话、问候、感谢、简单问答时
 

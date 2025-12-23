@@ -100,9 +100,7 @@ const validate = ajv.compile(A2UI_SCHEMA);
  * @param {object} data - 待验证的数据
  * @returns {object} { valid: boolean, errors: array }
  */
-export function validateA2UIResponse(data) {
-  console.log('🔍 开始验证A2UI响应数据:', JSON.stringify(data, null, 2));
-  
+export function validateA2UIResponse(data) {  
   const valid = validate(data);
   
   if (!valid) {

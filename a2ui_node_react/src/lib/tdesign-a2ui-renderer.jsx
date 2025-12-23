@@ -30,7 +30,7 @@ import {
   Breadcrumb,
   Dropdown,
   Tooltip,
-  Popover,
+  Popup,
   Image,
   Typography
 } from 'tdesign-react';
@@ -79,13 +79,19 @@ function renderA2UIComponent(component, allComponents, index) {
   const { id, type, props = {}, children = [] } = component;
   const key = index || id;
 
+  // 确保props是对象类型，避免类型错误
+  const safeProps = typeof props === 'object' && props !== null ? props : {};
+  
+  // 安全地处理options/items属性，确保是数组
+  const safeOptions = Array.isArray(safeProps.options) ? safeProps.options : (Array.isArray(safeProps.items) ? safeProps.items : []);
+
   const componentMap = {
     // 表单组件
     form: () => (
       <Form key={key}>
-        {props.title && (
+        {safeProps.title && (
           <>
-            <h2 style={{ margin: 0, fontSize: 20, fontWeight: 600 }}>{props.title}</h2>
+            <h2 style={{ margin: 0, fontSize: 20, fontWeight: 600 }}>{safeProps.title}</h2>
             <Divider />
           </>
         )}
@@ -99,8 +105,8 @@ function renderA2UIComponent(component, allComponents, index) {
     container: () => (
       <Space 
         key={key}
-        direction={props.direction === 'row' ? 'horizontal' : 'vertical'}
-        size={props.gap === '8px' ? 'small' : props.gap === '24px' ? 'large' : 'medium'}
+        direction={safeProps.direction === 'row' ? 'horizontal' : 'vertical'}
+        size={safeProps.gap === '8px' ? 'small' : safeProps.gap === '24px' ? 'large' : 'medium'}
         style={{ width: '100%' }}
       >
         {renderChildren(children, allComponents, id)}
@@ -112,24 +118,24 @@ function renderA2UIComponent(component, allComponents, index) {
       <Button 
         key={key} 
         variant="base" 
-        theme={props.variant === 'primary' ? 'primary' : props.variant === 'danger' ? 'danger' : 'default'} 
-        disabled={props.disabled}
-        size={props.size || 'medium'}
+        theme={safeProps.variant === 'primary' ? 'primary' : safeProps.variant === 'danger' ? 'danger' : 'default'} 
+        disabled={safeProps.disabled}
+        size={safeProps.size || 'medium'}
       >
-        {props.label || props.text}
+        {safeProps.label || safeProps.text}
       </Button>
     ),
 
     // 文本输入
     textInput: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
         <Input 
-          placeholder={props.placeholder} 
-          defaultValue={props.value} 
-          disabled={props.disabled} 
-          type={props.type || 'text'}
-          clearable={props.clearable}
+          placeholder={safeProps.placeholder} 
+          defaultValue={safeProps.value} 
+          disabled={safeProps.disabled} 
+          type={safeProps.type || 'text'}
+          clearable={safeProps.clearable}
         />
       </div>
     ),
@@ -137,37 +143,37 @@ function renderA2UIComponent(component, allComponents, index) {
     // 文本域
     textArea: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
         <Input 
           type="textarea" 
-          placeholder={props.placeholder} 
-          defaultValue={props.value} 
-          rows={props.rows || 4}
-          maxlength={props.maxLength}
+          placeholder={safeProps.placeholder} 
+          defaultValue={safeProps.value} 
+          rows={safeProps.rows || 4}
+          maxlength={safeProps.maxLength}
         />
       </div>
     ),
 
     // 复选框
     checkbox: () => (
-      <Checkbox key={key} defaultChecked={props.checked} disabled={props.disabled}>
-        {props.label}
+      <Checkbox key={key} defaultChecked={safeProps.checked} disabled={safeProps.disabled}>
+        {safeProps.label}
       </Checkbox>
     ),
 
     // 单选框
     radio: () => (
-      <Radio key={key} defaultChecked={props.checked} disabled={props.disabled}>
-        {props.label}
+      <Radio key={key} defaultChecked={safeProps.checked} disabled={safeProps.disabled}>
+        {safeProps.label}
       </Radio>
     ),
 
     // 单选框组
     radioGroup: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
-        <RadioGroup defaultValue={props.value}>
-          {props.options?.map((opt, idx) => (
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
+        <RadioGroup defaultValue={safeProps.value}>
+          {safeProps.options?.map((opt, idx) => (
             <Radio key={idx} value={opt.value}>
               {opt.label}
             </Radio>
@@ -179,13 +185,13 @@ function renderA2UIComponent(component, allComponents, index) {
     // 下拉选择
     select: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
         <Select 
-          defaultValue={props.value}
-          placeholder={props.placeholder}
-          disabled={props.disabled}
-          clearable={props.clearable}
-          options={props.options || []}
+          defaultValue={safeProps.value}
+          placeholder={safeProps.placeholder}
+          disabled={safeProps.disabled}
+          clearable={safeProps.clearable}
+          options={safeProps.options || []}
         />
       </div>
     ),
@@ -193,21 +199,21 @@ function renderA2UIComponent(component, allComponents, index) {
     // 开关
     switch: () => (
       <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        {props.label && <span>{props.label}</span>}
-        <Switch defaultValue={props.checked} disabled={props.disabled} />
+        {safeProps.label && <span>{safeProps.label}</span>}
+        <Switch defaultValue={safeProps.checked} disabled={safeProps.disabled} />
       </div>
     ),
 
     // 滑块
     slider: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} />}
+        {safeProps.label && <FormLabel label={safeProps.label} />}
         <Slider 
-          defaultValue={props.value || 0}
-          min={props.min || 0}
-          max={props.max || 100}
-          step={props.step || 1}
-          disabled={props.disabled}
+          defaultValue={safeProps.value || 0}
+          min={safeProps.min || 0}
+          max={safeProps.max || 100}
+          step={safeProps.step || 1}
+          disabled={safeProps.disabled}
         />
       </div>
     ),
@@ -215,12 +221,12 @@ function renderA2UIComponent(component, allComponents, index) {
     // 日期选择器
     datePicker: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
         <DatePicker 
-          defaultValue={props.value}
-          placeholder={props.placeholder}
-          disabled={props.disabled}
-          clearable={props.clearable}
+          defaultValue={safeProps.value}
+          placeholder={safeProps.placeholder}
+          disabled={safeProps.disabled}
+          clearable={safeProps.clearable}
         />
       </div>
     ),
@@ -228,12 +234,12 @@ function renderA2UIComponent(component, allComponents, index) {
     // 时间选择器
     timePicker: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
         <TimePicker 
-          defaultValue={props.value}
-          placeholder={props.placeholder}
-          disabled={props.disabled}
-          clearable={props.clearable}
+          defaultValue={safeProps.value}
+          placeholder={safeProps.placeholder}
+          disabled={safeProps.disabled}
+          clearable={safeProps.clearable}
         />
       </div>
     ),
@@ -241,12 +247,12 @@ function renderA2UIComponent(component, allComponents, index) {
     // 文件上传
     upload: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} required={props.required} />}
+        {safeProps.label && <FormLabel label={safeProps.label} required={safeProps.required} />}
         <Upload 
-          theme={props.theme || 'file'}
-          disabled={props.disabled}
-          multiple={props.multiple}
-          max={props.max}
+          theme={safeProps.theme || 'file'}
+          disabled={safeProps.disabled}
+          multiple={safeProps.multiple}
+          max={safeProps.max}
         >
           <Button variant="outline">选择文件</Button>
         </Upload>
@@ -255,36 +261,36 @@ function renderA2UIComponent(component, allComponents, index) {
 
     // 标题
     heading: () => {
-      if (props.level && Typography?.Title) {
+      if (safeProps.level && Typography?.Title) {
         return (
-          <Typography.Title key={key} level={`h${props.level || 2}`}>
-            {props.text}
+          <Typography.Title key={key} level={`h${safeProps.level || 2}`}>
+            {safeProps.text}
           </Typography.Title>
         );
       }
-      const HeadingTag = `h${props.level || 2}`;
+      const HeadingTag = `h${safeProps.level || 2}`;
       return React.createElement(HeadingTag, {
         key,
         style: { 
           margin: '16px 0 8px 0', 
-          fontSize: HEADING_SIZES[props.level || 2], 
+          fontSize: HEADING_SIZES[safeProps.level || 2], 
           fontWeight: 600 
         }
-      }, props.text);
+      }, safeProps.text);
     },
 
     // 段落
     paragraph: () => {
       if (Typography?.Paragraph) {
         return (
-          <Typography.Paragraph key={key} ellipsis={props.ellipsis}>
-            {props.text}
+          <Typography.Paragraph key={key} ellipsis={safeProps.ellipsis}>
+            {safeProps.text}
           </Typography.Paragraph>
         );
       }
       return (
         <p key={key} style={{ margin: '8px 0', lineHeight: 1.6, color: '#4b5563' }}>
-          {props.text}
+          {safeProps.text}
         </p>
       );
     },
@@ -295,35 +301,35 @@ function renderA2UIComponent(component, allComponents, index) {
         return (
           <Typography.Text 
             key={key} 
-            type={props.type}
-            underline={props.underline}
-            mark={props.mark}
-            strong={props.strong}
+            type={safeProps.type}
+            underline={safeProps.underline}
+            mark={safeProps.mark}
+            strong={safeProps.strong}
           >
-            {props.value || props.text}
+            {safeProps.value || safeProps.text}
           </Typography.Text>
         );
       }
       return (
         <span key={key} style={{ color: '#374151' }}>
-          {props.value || props.text}
+          {safeProps.value || safeProps.text}
         </span>
       );
     },
 
     // 链接
     link: () => (
-      <Link key={key} href={props.href} target={props.target || '_self'} hover={props.hover}>
-        {props.text}
+      <Link key={key} href={safeProps.href} target={safeProps.target || '_self'} hover={safeProps.hover}>
+        {safeProps.text}
       </Link>
     ),
 
     // 卡片
     card: () => (
-      <Card key={key} title={props.title} bordered={props.bordered !== false}>
-        {props.subtitle && (
+      <Card key={key} title={safeProps.title} bordered={safeProps.bordered !== false}>
+        {safeProps.subtitle && (
           <p style={{ color: '#6b7280', marginBottom: 12, fontSize: 14 }}>
-            {props.subtitle}
+            {safeProps.subtitle}
           </p>
         )}
         {renderChildren(children, allComponents, id)}
@@ -334,11 +340,11 @@ function renderA2UIComponent(component, allComponents, index) {
     table: () => (
       <Table 
         key={key}
-        data={props.data || []}
-        columns={props.columns || []}
-        bordered={props.bordered}
-        stripe={props.stripe}
-        pagination={props.pagination}
+        data={safeProps.data || []}
+        columns={safeProps.columns || []}
+        bordered={safeProps.bordered}
+        stripe={safeProps.stripe}
+        pagination={safeProps.pagination}
       />
     ),
 
@@ -346,18 +352,18 @@ function renderA2UIComponent(component, allComponents, index) {
     tag: () => (
       <Tag 
         key={key}
-        theme={props.theme || 'default'}
-        variant={props.variant || 'dark'}
-        closable={props.closable}
-        icon={props.icon}
+        theme={safeProps.theme || 'default'}
+        variant={safeProps.variant || 'dark'}
+        closable={safeProps.closable}
+        icon={safeProps.icon}
       >
-        {props.text || props.label}
+        {safeProps.text || safeProps.label}
       </Tag>
     ),
 
     // 徽章
     badge: () => (
-      <Badge key={key} count={props.count} dot={props.dot} maxCount={props.maxCount}>
+      <Badge key={key} count={safeProps.count} dot={safeProps.dot} maxCount={safeProps.maxCount}>
         {renderChildren(children, allComponents, id)}
       </Badge>
     ),
@@ -366,11 +372,11 @@ function renderA2UIComponent(component, allComponents, index) {
     avatar: () => (
       <Avatar 
         key={key}
-        image={props.image}
-        size={props.size || 'medium'}
-        shape={props.shape || 'circle'}
+        image={safeProps.image}
+        size={safeProps.size || 'medium'}
+        shape={safeProps.shape || 'circle'}
       >
-        {props.text}
+        {safeProps.text}
       </Avatar>
     ),
 
@@ -378,22 +384,22 @@ function renderA2UIComponent(component, allComponents, index) {
     alert: () => (
       <Alert 
         key={key}
-        theme={props.theme || 'info'}
-        message={props.message || props.text}
-        title={props.title}
-        closable={props.closable}
+        theme={safeProps.theme || 'info'}
+        message={safeProps.message || safeProps.text}
+        title={safeProps.title}
+        closable={safeProps.closable}
       />
     ),
 
     // 进度条
     progress: () => (
       <div key={key}>
-        {props.label && <FormLabel label={props.label} />}
+        {safeProps.label && <FormLabel label={safeProps.label} />}
         <Progress 
-          percentage={props.percentage || 0}
-          theme={props.theme}
-          status={props.status}
-          label={props.showLabel}
+          percentage={safeProps.percentage || 0}
+          theme={safeProps.theme}
+          status={safeProps.status}
+          label={safeProps.showLabel}
         />
       </div>
     ),
@@ -402,21 +408,23 @@ function renderA2UIComponent(component, allComponents, index) {
     list: () => (
       <List 
         key={key}
-        split={props.split !== false}
-        stripe={props.stripe}
+        split={safeProps.split !== false}
+        stripe={safeProps.stripe}
       >
-        {props.items?.map((item, idx) => (
-          <List.ListItem key={idx}>{item}</List.ListItem>
+        {safeOptions.map((item, idx) => (
+          <List.ListItem key={idx}>
+            {typeof item === 'string' ? item : (item?.label || item?.text || item?.value || '')}
+          </List.ListItem>
         )) || renderChildren(children, allComponents, id)}
       </List>
     ),
 
     // 标签页
     tabs: () => (
-      <Tabs key={key} defaultValue={props.defaultValue}>
-        {props.items?.map((item, idx) => (
+      <Tabs key={key} defaultValue={safeProps.defaultValue}>
+        {safeOptions.map((item, idx) => (
           <Tabs.TabPanel key={idx} value={item.value} label={item.label}>
-            {item.content}
+            {typeof item.content === 'string' ? item.content : ''}
           </Tabs.TabPanel>
         )) || renderChildren(children, allComponents, id)}
       </Tabs>
@@ -424,9 +432,13 @@ function renderA2UIComponent(component, allComponents, index) {
 
     // 步骤条
     steps: () => (
-      <Steps key={key} current={props.current || 0} theme={props.theme}>
-        {props.items?.map((item, idx) => (
-          <Steps.StepItem key={idx} title={item.title} content={item.content} />
+      <Steps key={key} current={safeProps.current || 0} theme={safeProps.theme}>
+        {safeOptions.map((item, idx) => (
+          <Steps.StepItem 
+            key={idx} 
+            title={typeof item === 'string' ? item : (item?.title || '')} 
+            content={typeof item === 'object' ? (item?.content || '') : ''}
+          />
         ))}
       </Steps>
     ),
@@ -435,17 +447,17 @@ function renderA2UIComponent(component, allComponents, index) {
     pagination: () => (
       <Pagination 
         key={key}
-        total={props.total || 0}
-        pageSize={props.pageSize || 10}
-        current={props.current || 1}
-        showJumper={props.showJumper}
+        total={safeProps.total || 0}
+        pageSize={safeProps.pageSize || 10}
+        current={safeProps.current || 1}
+        showJumper={safeProps.showJumper}
       />
     ),
 
     // 面包屑
     breadcrumb: () => (
       <Breadcrumb key={key}>
-        {props.items?.map((item, idx) => (
+        {safeProps.items?.map((item, idx) => (
           <Breadcrumb.BreadcrumbItem key={idx} href={item.href}>
             {item.label}
           </Breadcrumb.BreadcrumbItem>
@@ -457,35 +469,35 @@ function renderA2UIComponent(component, allComponents, index) {
     dropdown: () => (
       <Dropdown 
         key={key}
-        options={props.options || []}
-        disabled={props.disabled}
+        options={safeProps.options || []}
+        disabled={safeProps.disabled}
       >
-        <Button>{props.text || '下拉菜单'}</Button>
+        <Button>{safeProps.text || '下拉菜单'}</Button>
       </Dropdown>
     ),
 
     // 提示框
     tooltip: () => (
-      <Tooltip key={key} content={props.content} placement={props.placement}>
-        {renderChildren(children, allComponents, id) || <span>{props.text}</span>}
+      <Tooltip key={key} content={safeProps.content} placement={safeProps.placement}>
+        {renderChildren(children, allComponents, id) || <span>{safeProps.text}</span>}
       </Tooltip>
     ),
 
     // 气泡卡片
     popover: () => (
-      <Popover key={key} content={props.content} placement={props.placement}>
-        {renderChildren(children, allComponents, id) || <Button>{props.text}</Button>}
-      </Popover>
+      <Popup key={key} content={safeProps.content} placement={safeProps.placement}>
+        {renderChildren(children, allComponents, id) || <Button>{safeProps.text}</Button>}
+      </Popup>
     ),
 
     // 图片
     image: () => (
       <Image 
         key={key}
-        src={props.src}
-        alt={props.alt}
-        fit={props.fit || 'cover'}
-        lazy={props.lazy}
+        src={safeProps.src}
+        alt={safeProps.alt}
+        fit={safeProps.fit || 'cover'}
+        lazy={safeProps.lazy}
       />
     ),
 
@@ -493,10 +505,10 @@ function renderA2UIComponent(component, allComponents, index) {
     divider: () => (
       <Divider 
         key={key}
-        layout={props.layout || 'horizontal'}
-        dashed={props.dashed}
+        layout={safeProps.layout || 'horizontal'}
+        dashed={safeProps.dashed}
       >
-        {props.text}
+        {safeProps.text}
       </Divider>
     ),
 
@@ -504,9 +516,9 @@ function renderA2UIComponent(component, allComponents, index) {
     space: () => (
       <Space 
         key={key}
-        direction={props.direction || 'horizontal'}
-        size={props.size || 'medium'}
-        align={props.align}
+        direction={safeProps.direction || 'horizontal'}
+        size={safeProps.size || 'medium'}
+        align={safeProps.align}
       >
         {renderChildren(children, allComponents, id)}
       </Space>

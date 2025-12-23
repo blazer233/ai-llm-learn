@@ -133,9 +133,7 @@ export class A2UIAgent extends AbstractAgent {
       try {
         console.log(`🔄 第 ${attempt} 次尝试生成界面`);
 
-        const prompt = buildA2UIPrompt(currentQuery);
-        console.log('📝 发送给大模型的提示词:', prompt);
-        
+        const prompt = buildA2UIPrompt(currentQuery);        
         const responseText = await this.aiService.generateContent(prompt);
         console.log('🤖 大模型原始响应内容:', responseText);
         
