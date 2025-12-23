@@ -4,7 +4,7 @@
  * 使用 RxJS Observable 实现流式响应
  */
 import { getAIService } from './ai-service';
-import { buildA2UIPrompt } from './a2ui-spec';
+import { buildSystemPrompt, buildUserPrompt } from './a2ui-spec';
 import { validateA2UIResponse } from './a2ui-validator';
 import { Observable } from 'rxjs';
 import { AbstractAgent } from '@ag-ui/client';
@@ -126,15 +126,19 @@ export class A2UIAgent extends AbstractAgent {
    * 包含重试机制：JSON 解析失败或验证失败时自动重试
    */
   async processMessage(userMessage) {
-    let currentQuery = userMessage;
+    let currentUserPrompt = buildUserPrompt(userMessage);
+    const systemPrompt = buildSystemPrompt(); // 系统提示词保持不变
     let lastError = null;
 
     for (let attempt = 1; attempt <= MAX_RETRIES + 1; attempt++) {
       try {
         console.log(`🔄 第 ${attempt} 次尝试生成界面`);
 
-        const prompt = buildA2UIPrompt(currentQuery);        
-        const responseText = await this.aiService.generateContent(prompt);
+        // 使用分离的系统提示词和用户提示词
+        const responseText = await this.aiService.generateContent({
+          system: systemPrompt,
+          user: currentUserPrompt,
+        });
         console.log('🤖 大模型原始响应内容:', responseText);
         
         const parsed = this.parseAIResponse(responseText);
@@ -149,7 +153,8 @@ export class A2UIAgent extends AbstractAgent {
           console.warn('⚠️ A2UI 验证失败:', errors);
 
           if (attempt <= MAX_RETRIES) {
-            currentQuery = this.buildRetryQuery(
+            // 重试时更新用户提示词，加入错误信息
+            currentUserPrompt = this.buildRetryUserPrompt(
               userMessage,
               `Validation errors: ${errors}`
             );
@@ -177,7 +182,8 @@ export class A2UIAgent extends AbstractAgent {
         lastError = error;
 
         if (attempt <= MAX_RETRIES && error.name === 'SyntaxError') {
-          currentQuery = this.buildRetryQuery(
+          // JSON 解析失败，更新用户提示词
+          currentUserPrompt = this.buildRetryUserPrompt(
             userMessage,
             `Invalid JSON format: ${error.message}`
           );
@@ -191,10 +197,21 @@ export class A2UIAgent extends AbstractAgent {
   }
 
   /**
-   * 构建重试查询（告诉 AI 上次出错的原因）
+   * 构建重试用户提示词（告诉 AI 上次出错的原因）
    */
-  buildRetryQuery(originalMessage, errorInfo) {
-    return `Your previous response had errors: ${errorInfo}\n\nPlease ensure:\n1. All strings are properly closed with double quotes\n2. No trailing commas\n3. All braces and brackets are properly closed\n4. Return ONLY the JSON object, no markdown code blocks\n5. Follow the A2UI JSON schema exactly\n\nOriginal request: "${originalMessage}"`;
+  buildRetryUserPrompt(originalMessage, errorInfo) {
+    return `用户需求: ${originalMessage}
+
+⚠️ 上次生成失败，错误信息: ${errorInfo}
+
+请修正以下问题：
+1. 确保所有字符串使用双引号
+2. 不要有尾随逗号
+3. 确保所有花括号和方括号正确闭合
+4. 只返回 JSON 对象，不要包含 markdown 代码块
+5. 严格遵循 A2UI JSON Schema
+
+请重新生成符合规范的 JSON 格式。`;
   }
 
   /**

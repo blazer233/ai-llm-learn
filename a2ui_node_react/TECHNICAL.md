@@ -208,16 +208,196 @@ export class A2UIAgent extends AbstractAgent {
 
 ---
 
-### 3. RxJS
+### 3. RxJS Observable
 
 **版本:** `rxjs@^7.8.1`
 
 **作用:** 实现流式响应，支持异步事件流
 
-**核心概念:**
+#### 为什么要使用 Observable？
 
-- **Observable** - 可观察对象（数据流）
-- **Observer** - 观察者（订阅数据）
+在 A2UI 项目中使用 Observable 而不是 Promise/async-await 的核心原因：
+
+##### 1. **多值异步流的天然支持**
+
+**Promise 的限制：**
+```javascript
+// Promise 只能返回单个值
+async function run() {
+  const result = await generateUI();
+  return result; // 只能返回一次
+}
+```
+
+**Observable 的优势：**
+```javascript
+// Observable 可以发送多个事件
+function run() {
+  return new Observable(observer => {
+    observer.next({ type: 'RUN_STARTED' });      // 事件1: 开始
+    observer.next({ type: 'TEXT_MESSAGE' });     // 事件2: 文本
+    observer.next({ type: 'ACTIVITY_SNAPSHOT' }); // 事件3: 组件
+    observer.next({ type: 'RUN_FINISHED' });     // 事件4: 完成
+    observer.complete();                         // 标记流结束
+  });
+}
+```
+
+**在 A2UI 中的应用：**
+- 先发送文本消息给用户（"正在生成界面..."）
+- 再发送生成的 UI 组件
+- 最后发送完成信号
+
+这种**渐进式反馈**用 Promise 无法实现。
+
+##### 2. **CopilotKit 框架强制要求**
+
+CopilotKit 的 `AbstractAgent` 基类定义了 `run()` 方法必须返回 Observable：
+
+```typescript
+// @ag-ui/client 源码定义
+abstract class AbstractAgent {
+  abstract run(input: AgentInput): Observable<AgentEvent>;
+}
+```
+
+**为什么 CopilotKit 选择 Observable？**
+
+因为 AI 对话场景天然需要流式响应：
+- ChatGPT 式的逐字输出
+- 中间状态更新（思考中、生成中）
+- 多模态输出（文本 + 图片 + 组件）
+
+Promise 只能"全有或全无"，无法实现这些效果。
+
+##### 3. **流式输出的用户体验优势**
+
+**对比效果：**
+
+| Promise (等待全部完成) | Observable (流式输出) |
+|---|---|
+| 用户等待 3 秒 → 突然显示完整界面 | 立即显示"正在生成" → 1 秒后显示文本 → 2 秒后显示组件 |
+| 无法感知进度 | 实时反馈，降低焦虑 |
+| 卡顿感强 | 流畅体验 |
+
+**实际代码实现：**
+```javascript
+run(input) {
+  return new Observable(observer => {
+    (async () => {
+      // 立即反馈：开始处理
+      observer.next({ type: 'RUN_STARTED', runId, threadId });
+      
+      // 1秒后：显示提示文本
+      const messageId = this.generateMessageId();
+      observer.next({ type: 'TEXT_MESSAGE_START', messageId });
+      observer.next({ type: 'TEXT_MESSAGE_CONTENT', messageId, delta: '正在生成界面...' });
+      observer.next({ type: 'TEXT_MESSAGE_END', messageId });
+      
+      // 调用 AI（可能需要 2-3 秒）
+      const result = await this.processMessage(userInput);
+      
+      // AI 返回后：立即显示组件
+      if (result.a2ui?.components?.length) {
+        observer.next({
+          type: 'ACTIVITY_SNAPSHOT',
+          messageId: this.generateMessageId(),
+          activityType: 'a2ui-surface',
+          content: { operations: [result.a2ui] },
+        });
+      }
+      
+      // 标记完成
+      observer.next({ type: 'RUN_FINISHED', runId, threadId });
+      observer.complete();
+    })();
+  });
+}
+```
+
+##### 4. **错误处理的灵活性**
+
+**Promise 错误处理：**
+```javascript
+async function run() {
+  try {
+    return await generateUI();
+  } catch (error) {
+    throw error; // 整个流程中断
+  }
+}
+```
+
+**Observable 错误处理：**
+```javascript
+return new Observable(observer => {
+  (async () => {
+    try {
+      observer.next({ type: 'RUN_STARTED' });
+      const result = await generateUI();
+      observer.next({ type: 'RESULT', result });
+      observer.complete();
+    } catch (error) {
+      // 可以发送错误事件而不中断整个流
+      observer.next({ 
+        type: 'RUN_ERROR', 
+        message: `生成失败: ${error.message}` 
+      });
+      observer.error(error); // 可选：彻底终止
+    }
+  })();
+});
+```
+
+**优势：**
+- 可以发送部分结果后再报错
+- 错误信息可以作为事件发送给前端显示
+- 不会丢失已经发送的数据
+
+##### 5. **事件驱动架构的标准模式**
+
+Observable 是**响应式编程 (Reactive Programming)** 的核心：
+
+```javascript
+// 订阅 Observable
+agent.run(input).subscribe({
+  next: (event) => {
+    // 处理每个事件
+    switch(event.type) {
+      case 'RUN_STARTED': 
+        console.log('开始运行');
+        break;
+      case 'TEXT_MESSAGE_CONTENT':
+        appendMessage(event.delta); // 逐字显示
+        break;
+      case 'ACTIVITY_SNAPSHOT':
+        renderComponent(event.content); // 渲染组件
+        break;
+    }
+  },
+  error: (err) => console.error('错误:', err),
+  complete: () => console.log('流结束'),
+});
+```
+
+**类比理解：**
+- **Promise** = 一次性快递（寄了就等收货）
+- **Observable** = 直播流（持续推送画面）
+
+#### Observable 核心概念
+
+**Observable（可观察对象）：**
+- 数据流的生产者
+- 惰性求值（订阅时才执行）
+- 可以发送多个值
+
+**Observer（观察者）：**
+- 数据流的消费者
+- 定义三个回调：`next`, `error`, `complete`
+
+**Subscription（订阅）：**
+- 连接 Observable 和 Observer
+- 可以取消订阅释放资源
 
 #### 流式响应实现
 
@@ -230,9 +410,11 @@ run(input) {
       // 1. 开始运行
       observer.next({ type: 'RUN_STARTED', runId, threadId });
 
-      // 2. 发送文本消息
+      // 2. 发送文本消息（可以分多次发送，实现打字机效果）
       observer.next({ type: 'TEXT_MESSAGE_START', messageId });
-      observer.next({ type: 'TEXT_MESSAGE_CONTENT', delta: '内容' });
+      observer.next({ type: 'TEXT_MESSAGE_CONTENT', delta: '正在' });
+      observer.next({ type: 'TEXT_MESSAGE_CONTENT', delta: '生成' });
+      observer.next({ type: 'TEXT_MESSAGE_CONTENT', delta: '界面...' });
       observer.next({ type: 'TEXT_MESSAGE_END', messageId });
 
       // 3. 发送 A2UI 组件
@@ -244,24 +426,114 @@ run(input) {
 
       // 4. 完成
       observer.next({ type: 'RUN_FINISHED', runId, threadId });
-      observer.complete();
+      observer.complete(); // 标记流结束
     })();
   });
 }
 ```
 
-**事件类型:**
+#### CopilotKit 事件类型
 
-- `RUN_STARTED` / `RUN_FINISHED` - 运行生命周期
-- `TEXT_MESSAGE_*` - 文本消息
-- `ACTIVITY_SNAPSHOT` - 自定义内容（A2UI）
-- `RUN_ERROR` - 错误
+| 事件类型 | 说明 | 触发时机 |
+|---------|------|---------|
+| `RUN_STARTED` | 运行开始 | Agent 开始处理请求 |
+| `TEXT_MESSAGE_START` | 文本消息开始 | 准备发送文本 |
+| `TEXT_MESSAGE_CONTENT` | 文本内容 | 发送文本片段（可多次） |
+| `TEXT_MESSAGE_END` | 文本消息结束 | 文本发送完成 |
+| `ACTIVITY_SNAPSHOT` | 自定义内容快照 | 发送 A2UI 组件 |
+| `RUN_FINISHED` | 运行完成 | Agent 处理完成 |
+| `RUN_ERROR` | 运行错误 | 发生错误 |
 
-**优势:**
+#### Observable vs Promise 对比
 
-- ✅ 支持流式输出（逐步显示）
-- ✅ 多类型事件（文本 + 组件）
-- ✅ CopilotKit 原生支持
+| 特性 | Promise | Observable |
+|-----|---------|-----------|
+| **返回值数量** | 单个 | 多个（流） |
+| **执行时机** | 立即执行 | 订阅时执行（惰性） |
+| **取消能力** | ❌ 无法取消 | ✅ 可以取消订阅 |
+| **错误处理** | catch/finally | error 回调 |
+| **适用场景** | HTTP 请求、单次异步操作 | 流式数据、事件流、实时通信 |
+| **CopilotKit 支持** | ❌ 不支持 | ✅ 原生支持 |
+
+#### 最佳实践
+
+**1. 始终调用 `complete()`**
+```javascript
+return new Observable(observer => {
+  try {
+    observer.next({ type: 'DATA', data });
+    observer.complete(); // ✅ 必须调用
+  } catch (error) {
+    observer.error(error);
+  }
+});
+```
+
+**2. 使用 async/await 处理异步逻辑**
+```javascript
+return new Observable(observer => {
+  (async () => {
+    // 异步操作
+    const result = await fetchData();
+    observer.next({ type: 'RESULT', result });
+    observer.complete();
+  })();
+});
+```
+
+**3. 错误优先发送事件**
+```javascript
+try {
+  observer.next({ type: 'DATA', data });
+} catch (error) {
+  observer.next({ type: 'ERROR', message: error.message }); // 发送错误事件
+  observer.error(error); // 终止流
+}
+```
+
+#### 为什么不用其他方案？
+
+**为什么不用 Generator？**
+```javascript
+// Generator 无法处理异步
+function* run() {
+  yield { type: 'START' };
+  // ❌ 无法 await
+  yield { type: 'END' };
+}
+```
+
+**为什么不用 EventEmitter？**
+```javascript
+// EventEmitter 不是标准返回值，CopilotKit 不支持
+function run() {
+  const emitter = new EventEmitter();
+  emitter.emit('data', {...});
+  return emitter; // ❌ 不符合接口定义
+}
+```
+
+**为什么不用 AsyncIterator？**
+```javascript
+// AsyncIterator 语法复杂，CopilotKit 不支持
+async function* run() {
+  yield { type: 'START' };
+  yield { type: 'END' };
+}
+```
+
+#### 总结
+
+**Observable 在 A2UI 项目中是最佳选择，因为：**
+
+1. ✅ **框架要求** - CopilotKit 强制使用 Observable
+2. ✅ **多事件流** - 可以发送文本、组件、状态等多种事件
+3. ✅ **流式体验** - 实现渐进式反馈，提升用户体验
+4. ✅ **错误处理** - 灵活的错误传递机制
+5. ✅ **标准模式** - 响应式编程的工业标准
+6. ✅ **取消能力** - 支持订阅取消，释放资源
+
+**简而言之：Promise 只能"说一次话"，Observable 可以"持续对话"，而 AI 对话场景天然需要持续的、流式的交互。**
 
 ---
 

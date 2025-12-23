@@ -25,15 +25,26 @@ class AIService {
   }
 
   /**
-   * 生成内容
-   * @param {string} prompt - 用户提示词
+   * 生成内容（使用系统提示词+用户提示词）
+   * @param {object} prompts - { system: string, user: string }
    * @returns {Promise<string>} AI 生成的内容
    */
-  async generateContent(prompt) {
+  async generateContent(prompts) {
     const startTime = Date.now();
+    
+    if (!prompts.system || !prompts.user) {
+      throw new Error('Invalid prompt format. Expected {system, user}');
+    }
+
+    const messages = [
+      { role: 'system', content: prompts.system },
+      { role: 'user', content: prompts.user },
+    ];
+
     console.log('📤 发送请求到混元 API:', {
       model: this.config.model,
-      promptLength: prompt.length,
+      systemLength: prompts.system.length,
+      userLength: prompts.user.length,
     });
 
     try {
@@ -45,7 +56,7 @@ class AIService {
         },
         body: JSON.stringify({
           model: this.config.model,
-          messages: [{ role: 'user', content: prompt }],
+          messages,
           temperature: this.config.temperature,
           max_tokens: this.config.maxTokens,
           top_p: this.config.topP,
