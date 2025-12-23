@@ -1,8 +1,10 @@
 import './globals.css';
+import '@copilotkit/react-core/v2/styles.css';
+import 'tdesign-react/es/style/index.css';
 
 export const metadata = {
-  title: 'A2UI Next.js App',
-  description: '基于 Google A2UI 的智能对话界面应用',
+  title: 'A2UI 智能界面生成助手',
+  description: '基于 CopilotKit + TDesign 的 AI 对话式 UI 生成系统',
 };
 
 export default function RootLayout({ children }) {

@@ -1,6 +1,6 @@
 /**
  * A2UI 0.8 规范定义
- * 基于 Google A2UI 标准组件目录
+ * 基于 Google A2UI 标准 + TDesign 组件映射
  */
 
 export const A2UI_STANDARD_CATALOG = {
@@ -12,44 +12,79 @@ export const A2UI_STANDARD_CATALOG = {
       description: '通用容器组件',
       props: ['direction', 'gap', 'padding', 'alignment']
     },
+    space: {
+      type: 'space',
+      description: '间距布局组件',
+      props: ['direction', 'size', 'align']
+    },
+    divider: {
+      type: 'divider',
+      description: '分割线',
+      props: ['layout', 'dashed', 'text']
+    },
     
     // 输入组件
     textInput: {
       type: 'textInput',
       description: '单行文本输入',
-      props: ['label', 'placeholder', 'value', 'required', 'disabled']
+      props: ['label', 'placeholder', 'value', 'required', 'disabled', 'clearable', 'type']
     },
     textArea: {
       type: 'textArea',
       description: '多行文本输入',
-      props: ['label', 'placeholder', 'value', 'rows', 'required']
+      props: ['label', 'placeholder', 'value', 'rows', 'required', 'maxLength']
     },
     datePicker: {
       type: 'datePicker',
       description: '日期选择器',
-      props: ['label', 'value', 'min', 'max']
+      props: ['label', 'value', 'placeholder', 'required', 'clearable', 'disabled']
+    },
+    timePicker: {
+      type: 'timePicker',
+      description: '时间选择器',
+      props: ['label', 'value', 'placeholder', 'required', 'clearable', 'disabled']
     },
     select: {
       type: 'select',
       description: '下拉选择',
-      props: ['label', 'options', 'value', 'required']
+      props: ['label', 'options', 'value', 'required', 'placeholder', 'clearable', 'disabled']
     },
     checkbox: {
       type: 'checkbox',
       description: '复选框',
-      props: ['label', 'checked', 'value']
+      props: ['label', 'checked', 'disabled']
     },
     radio: {
       type: 'radio',
       description: '单选按钮',
-      props: ['label', 'name', 'value', 'checked']
+      props: ['label', 'checked', 'disabled']
+    },
+    radioGroup: {
+      type: 'radioGroup',
+      description: '单选按钮组',
+      props: ['label', 'value', 'options', 'required']
+    },
+    switch: {
+      type: 'switch',
+      description: '开关',
+      props: ['label', 'checked', 'disabled']
+    },
+    slider: {
+      type: 'slider',
+      description: '滑块',
+      props: ['label', 'value', 'min', 'max', 'step', 'disabled']
+    },
+    upload: {
+      type: 'upload',
+      description: '文件上传',
+      props: ['label', 'theme', 'multiple', 'max', 'disabled', 'required']
     },
     
     // 展示组件
     text: {
       type: 'text',
       description: '文本显示',
-      props: ['value', 'variant', 'align']
+      props: ['value', 'text', 'type', 'underline', 'mark', 'strong']
     },
     heading: {
       type: 'heading',
@@ -59,80 +94,108 @@ export const A2UI_STANDARD_CATALOG = {
     paragraph: {
       type: 'paragraph',
       description: '段落',
-      props: ['text']
+      props: ['text', 'ellipsis']
     },
     list: {
       type: 'list',
       description: '列表',
-      props: ['items', 'ordered']
+      props: ['items', 'split', 'stripe']
     },
     table: {
       type: 'table',
       description: '表格',
-      props: ['columns', 'rows', 'sortable']
+      props: ['columns', 'data', 'bordered', 'stripe', 'pagination']
+    },
+    tag: {
+      type: 'tag',
+      description: '标签',
+      props: ['text', 'label', 'theme', 'variant', 'closable', 'icon']
+    },
+    badge: {
+      type: 'badge',
+      description: '徽章',
+      props: ['count', 'dot', 'maxCount']
+    },
+    avatar: {
+      type: 'avatar',
+      description: '头像',
+      props: ['image', 'text', 'size', 'shape']
+    },
+    image: {
+      type: 'image',
+      description: '图片',
+      props: ['src', 'alt', 'fit', 'lazy']
     },
     
     // 交互组件
     button: {
       type: 'button',
       description: '按钮',
-      props: ['label', 'variant', 'action', 'disabled']
+      props: ['label', 'text', 'variant', 'theme', 'disabled', 'size']
     },
     link: {
       type: 'link',
       description: '链接',
-      props: ['text', 'href', 'target']
+      props: ['text', 'href', 'target', 'hover']
+    },
+    dropdown: {
+      type: 'dropdown',
+      description: '下拉菜单',
+      props: ['text', 'options', 'disabled']
     },
     
     // 反馈组件
-    rating: {
-      type: 'rating',
-      description: '评分',
-      props: ['label', 'value', 'max', 'readOnly']
+    alert: {
+      type: 'alert',
+      description: '警告提示',
+      props: ['message', 'text', 'title', 'theme', 'closable']
     },
     progress: {
       type: 'progress',
       description: '进度条',
-      props: ['value', 'max', 'label']
+      props: ['percentage', 'label', 'theme', 'status', 'showLabel']
+    },
+    tooltip: {
+      type: 'tooltip',
+      description: '提示框',
+      props: ['content', 'text', 'placement']
+    },
+    popover: {
+      type: 'popover',
+      description: '气泡卡片',
+      props: ['content', 'text', 'placement']
     },
     
     // 复合组件
     form: {
       type: 'form',
       description: '表单容器',
-      props: ['title', 'children', 'onSubmit']
+      props: ['title']
     },
     card: {
       type: 'card',
       description: '卡片',
-      props: ['title', 'subtitle', 'children', 'actions']
-    },
-    accordion: {
-      type: 'accordion',
-      description: '手风琴',
-      props: ['items', 'expandedIndex']
+      props: ['title', 'subtitle', 'bordered']
     },
     tabs: {
       type: 'tabs',
       description: '标签页',
-      props: ['tabs', 'activeTab']
+      props: ['defaultValue', 'items']
     },
-    
-    // 媒体组件
-    image: {
-      type: 'image',
-      description: '图片',
-      props: ['src', 'alt', 'width', 'height', 'fit']
+    steps: {
+      type: 'steps',
+      description: '步骤条',
+      props: ['current', 'theme', 'items']
     },
-    chart: {
-      type: 'chart',
-      description: '图表',
-      props: ['type', 'data', 'options']
+    pagination: {
+      type: 'pagination',
+      description: '分页',
+      props: ['total', 'pageSize', 'current', 'showJumper']
     },
-    map: {
-      type: 'map',
-      description: '地图',
-      props: ['latitude', 'longitude', 'zoom', 'markers']
+    breadcrumb: {
+      type: 'breadcrumb',
+      description: '面包屑',
+      props: ['items']
     }
   }
 };
